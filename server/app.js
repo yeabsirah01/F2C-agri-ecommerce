@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 5000;
 
 //Routes
 app.use(function (req, res, next) {
-  console.log(req.header("Origin"));
+  // console.log(req.header("Origin"));
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -69,7 +69,7 @@ app.use(errorHandlerMiddleware);
 app.use(notFoundMiddleware);
 
 app.use(function (req, res, next) {
-  console.log(req.header("Origin"));
+  // console.log(req.header("Origin"));
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",

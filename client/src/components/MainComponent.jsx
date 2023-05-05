@@ -10,6 +10,7 @@ import Home from "./../pages/home";
 import { Routes, Route } from "react-router-dom";
 import Profile from "./../pages/profile";
 import Cart from "./../pages/cart/indes";
+import OrderSuccess from "../pages/cart/OrderSuccess";
 import { setCart } from "./../features/cartSlice";
 import Product from "./../pages/product";
 import ProductPage from "./../pages/product/productsPage";
@@ -19,6 +20,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import FarmerApplicationForm from "../pages/waitlist/FarmerForm";
 import WaitlistTable from "./../pages/Dashboard/AdminDashoard/Waitlist";
 import UpdateUserInfo from "../pages/Dashboard/UserDashboard/UpdateUserInfo";
+import Checkout from "../pages/checkout/CheckOut";
 
 function MainComponent({ user }) {
   const dispatch = useDispatch();
@@ -50,12 +52,19 @@ function MainComponent({ user }) {
             element={<FarmerApplicationForm user={user} />}
           />
           <Route path="/Products" element={<ProductPage />} />
+          <Route path="/products/chekkout" element={<Checkout />} />
           {/* <Route path="/dashboard/create" element={<CreateProduct />} />
           <Route path="/dashboard/wait" element={<WaitlistTable />} />
           <Route path="/dashboard/profile" element={<Profile />} /> */}
           <Route path="/edit/:id" element={<EditProduct />} />
           <Route path="/:id" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
+          <Route
+            path="/success"
+            element={
+              <OrderSuccess ticketNumber="123456" paymentHandler="YenePay" />
+            }
+          />
         </Routes>
       </Layout>
     </>

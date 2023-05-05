@@ -8,17 +8,29 @@ const {
   deleteProduct,
   reviewProduct,
 } = require("../controllers/product");
-const { CheckoutCart } = require("../controllers/checkOut");
+const {
+  CheckoutCart,
+  PaymentSuccessReturnUrl,
+  IPNDestination,
+  PaymentCancelReturnUrl,
+} = require("../controllers/checkOut");
 const authorizationMiddleware = require("./../middleware/authorization");
 const router = express.Router();
+
+router.post("/checkout", CheckoutCart);
+router.get("/PaymentSuccess", PaymentSuccessReturnUrl);
+router.get("/PaymentCancel", PaymentCancelReturnUrl);
+router.post("/IPNDestination", IPNDestination);
 
 router
   .route("/")
   .post(authorizationMiddleware, createProduct)
   .get(getAllProducts);
-router.route("/:id").get(getProduct).delete(deleteProduct).put(updateProduct);
+
 router.route("/review/:id").put(authorizationMiddleware, reviewProduct);
+
+router.route("/:id").get(getProduct).put(updateProduct).delete(deleteProduct);
+
 router.get("/user/:userId", getAllProducts);
-router.post("/checkout", CheckoutCart);
 
 module.exports = router;

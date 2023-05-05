@@ -3,15 +3,15 @@
 var ypco = require("yenepaysdk");
 
 var sellerCode = "SB2294 ",
-  successUrlReturn = "http://localhost:3000/Home/PaymentSuccessReturnUrl", //"YOUR_SUCCESS_URL",
-  ipnUrlReturn = "http://localhost:3000/Home/IPNDestination", //"YOUR_IPN_URL",
+  successUrlReturn = "http://localhost:3000/success", //"YOUR_SUCCESS_URL",//// handle the paymentsucess
+  ipnUrlReturn = "http://localhost:5000/api/v1/products/IPNDestination", //"YOUR_IPN_URL",
   cancelUrlReturn = "", //"YOUR_CANCEL_URL",
   failureUrlReturn = "", //"YOUR_FAILURE_URL",
   pdtToken = "qnRsW9VBtr9hnq",
   useSandbox = true,
   currency = "USD";
 
-exports.CheckoutExpress = function (req, res) {
+const CheckoutExpress = function (req, res) {
   var merchantOrderId = "12-34"; //"YOUR_UNIQUE_ID_FOR_THIS_ORDER";  //can also be set null
   var expiresAfter = 2880; //"NUMBER_OF_MINUTES_BEFORE_THE_ORDER_EXPIRES"; //setting null means it never expires
   var checkoutOptions = ypco.checkoutOptions(
@@ -34,7 +34,7 @@ exports.CheckoutExpress = function (req, res) {
   res.redirect(url);
 };
 
-exports.CheckoutCart = function (req, res) {
+const CheckoutCart = function (req, res) {
   var merchantOrderId = "ab-cd"; //"YOUR_UNIQUE_ID_FOR_THIS_ORDER";  //can also be set null
   var expiresAfter = 2880; //"NUMBER_OF_MINUTES_BEFORE_THE_ORDER_EXPIRES"; //setting null means it never expires
   var checkoutOptions = ypco.checkoutOptions(
@@ -78,7 +78,7 @@ exports.CheckoutCart = function (req, res) {
   // console.log(url);
 };
 
-exports.IPNDestination = function (req, res) {
+const IPNDestination = function (req, res) {
   var ipnModel = req.body;
   ypco.checkout
     .IsIPNAuthentic(ipnModel, useSandbox)
@@ -92,7 +92,7 @@ exports.IPNDestination = function (req, res) {
     });
 };
 
-exports.PaymentSuccessReturnUrl = function (req, res) {
+const PaymentSuccessReturnUrl = function (req, res) {
   var params = req.query;
   var pdtRequestModel = new ypco.pdtRequestModel(
     pdtToken,
@@ -123,7 +123,7 @@ exports.PaymentSuccessReturnUrl = function (req, res) {
     });
 };
 
-exports.PaymentCancelReturnUrl = function (req, res) {
+const PaymentCancelReturnUrl = function (req, res) {
   var params = req.query;
   var pdtRequestModel = new ypco.pdtRequestModel(
     pdtToken,
@@ -149,4 +149,12 @@ exports.PaymentCancelReturnUrl = function (req, res) {
 
       res.json({ result: "Failed" });
     });
+};
+
+module.exports = {
+  CheckoutExpress,
+  CheckoutCart,
+  IPNDestination,
+  PaymentSuccessReturnUrl,
+  PaymentCancelReturnUrl,
 };
