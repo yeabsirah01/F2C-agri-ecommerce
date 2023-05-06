@@ -192,11 +192,7 @@ const Cart = ({ onClose }) => {
       .forEach((v) => {
         query[v.split("=")[0]] = v.split("=")[1];
       });
-    if (query.clear_cart === "true") {
-      axiosConfig.patch("/products/none", { products });
-      dispatch(clearCart());
-      toast.success("Product ordered successfully", { toastId: "ordered" });
-    }
+
     // eslint-disable-next-line
   }, [location.search, dispatch]);
 

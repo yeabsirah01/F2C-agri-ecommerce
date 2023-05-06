@@ -10,7 +10,7 @@ import Home from "./../pages/home";
 import { Routes, Route } from "react-router-dom";
 import Profile from "./../pages/profile";
 import Cart from "./../pages/cart/indes";
-import OrderSuccess from "../pages/cart/OrderSuccess";
+
 import { setCart } from "./../features/cartSlice";
 import Product from "./../pages/product";
 import ProductPage from "./../pages/product/productsPage";
@@ -59,12 +59,12 @@ function MainComponent({ user }) {
           <Route path="/edit/:id" element={<EditProduct />} />
           <Route path="/:id" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
-          <Route
+          {/* <Route
             path="/success"
             element={
               <OrderSuccess ticketNumber="123456" paymentHandler="YenePay" />
             }
-          />
+          /> */}
         </Routes>
       </Layout>
     </>

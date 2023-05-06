@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Stepper, Button, Group, Text } from "@mantine/core";
+import { Stepper, Button, Group, Text, Modal } from "@mantine/core";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axiosConfig from "../../axiosConfig";
 import { clearCart } from "../../features/cartSlice";
 import { toast } from "react-toastify";
 
 function ShippingDetailsStep({ onNext }) {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => setModalOpen(true);
+
+  var stepper;
   const [formData, setFormData] = useState({
     name: "",
     address: "",
@@ -28,6 +33,55 @@ function ShippingDetailsStep({ onNext }) {
     // If there are no errors, move to next step
     if (Object.keys(errors).length === 0) onNext();
     else setErrors(errors);
+  };
+
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const query = {};
+  location.search
+    .slice(1)
+    .split("&")
+    .forEach((v) => {
+      query[v.split("=")[0]] = v.split("=")[1];
+    });
+  const { products, totalCartAmount } = useSelector((state) => state.cart);
+
+  useEffect(() => {
+    const query = {};
+    location.search
+      .slice(1)
+      .split("&")
+      .forEach((v) => {
+        query[v.split("=")[0]] = v.split("=")[1];
+      });
+    if (query.clear_cart === "true") {
+      const clearCartAndNotify = async () => {
+        await axiosConfig.put("/products/none", { products });
+        dispatch(clearCart());
+        toast.success("Product ordered successfully", { toastId: "ordered" });
+        setModalOpen(true);
+      };
+      clearCartAndNotify();
+    }
+  }, [location.search, dispatch, products]);
+
+  console.log(products);
+  const Ticket = {
+    TotalAmount: query.TotalAmount,
+    BuyerId: query.BuyerId,
+    MerchantOrderId: query.MerchantOrderId,
+    MerchantCode: query.MerchantCode,
+    MerchantId: query.MerchantId,
+    TransactionCode: query.TransactionCode,
+    Status: query.Status,
+    Currency: query.Currency,
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    navigate(-3); // replace with your desired redirect URL
   };
 
   return (
@@ -79,15 +133,29 @@ function ShippingDetailsStep({ onNext }) {
         <Button variant="default">Back</Button>
         <Button type="submit">Next step</Button>
       </Group>
+      <Modal
+        opened={modalOpen}
+        onClose={handleCloseModal}
+        title="Order Status"
+        size="xs"
+      >
+        <p>successssss</p>
+        {Object.entries(Ticket).map(([key, value]) => (
+          <>
+            <Text weight={500}>{key}</Text>
+            <Text>{value}</Text>
+          </>
+        ))}
+      </Modal>
     </form>
   );
 }
 
 function PaymentStep({ onPrev, onNext }) {
   const [formData, setFormData] = useState({
-    cardNumber: "",
-    expiryDate: "",
-    cvv: "",
+    cardNumber: "34",
+    expiryDate: "321",
+    cvv: "2134",
   });
   const [errors, setErrors] = useState({});
 
@@ -153,7 +221,8 @@ function PaymentStep({ onPrev, onNext }) {
 
 function OrderSummaryStep({ onPrev }) {
   const { products, totalCartAmount } = useSelector((state) => state.cart);
-  console.log(products);
+  const [product, setProduct] = useState({});
+  const [seller, setSeller] = useState({});
 
   const newItemsArray = products.map((product) => {
     const item = {
@@ -164,24 +233,36 @@ function OrderSummaryStep({ onPrev }) {
     };
     return item;
   });
-
-  const location = useLocation();
-  const dispatch = useDispatch();
+  const id = newItemsArray[0].ItemId;
   useEffect(() => {
-    const query = {};
-    location.search
-      .slice(1)
-      .split("&")
-      .forEach((v) => {
-        query[v.split("=")[0]] = v.split("=")[1];
-      });
-    if (query.clear_cart === "true") {
-      axiosConfig.patch("/products/none", { products });
-      dispatch(clearCart());
-      toast.success("Product ordered successfully", { toastId: "ordered" });
-    }
-    // eslint-disable-next-line
-  }, [location.search, dispatch]);
+    const getProductData = async () => {
+      try {
+        const { data: product } = await axiosConfig.get("/products/" + id);
+        const { data: seller } = await axiosConfig.get(
+          "/users/" + product.createdBy
+        );
+        setProduct(product);
+        setSeller(seller);
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          console.log("unathorized");
+          toast.error("Unauthorized Access! Please log in.");
+          // Handle HTTP 401 error
+          // Show a message to the user indicating they are not authorized to access the resource
+          // Redirect the user to the login page or take any other appropriate action
+        } else {
+          // Handle other errors
+        }
+      }
+    };
+    getProductData();
+  }, [id]);
+
+  console.log(product, seller);
+
+  // const creatorId = response.data.createdBy;
+  // const creatorResponse = axiosConfig.get(`/users/${creatorId}`);
+  // setCreator(creatorResponse.data);
 
   const checkOut = async () => {
     try {
@@ -192,29 +273,33 @@ function OrderSummaryStep({ onPrev }) {
         .then(function (response) {
           if (response.data) {
             window.location = response.data.redirectUrl;
+            console.log(data);
           }
         })
+
         .catch(function (error) {
           console.log(error);
         });
-      console.log(data);
+
       console.log(data);
       window.location = data.payment_url;
     } catch (error) {
       toast.error(error?.response?.data?.msg || "Something went wrong");
     }
+    console.log(product, seller);
   };
 
+  // console.log(product);
+  // console.log(product, response);
   return (
     <div>
       <Text size="xl" weight={500} mb="sm">
-        Order Summary
+        Order Summary n
       </Text>
-      <Text>
-        {" "}
-        {products._id}
-        {products.name}
-      </Text>
+      <Text>abebe {product.createdBy}</Text>
+      {product.name}
+      {/* {product}
+      {seller} */}
       <Group position="center" mt="xl">
         <Button variant="default" onClick={onPrev}>
           Back

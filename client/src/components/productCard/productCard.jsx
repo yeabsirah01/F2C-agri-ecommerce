@@ -50,6 +50,8 @@ const ProductCard = ({ product, cartItem, deleteProduct }) => {
       toast.success("Product added to cart");
     }
   };
+
+  let stock = parseInt(product.stock);
   return (
     <div className="productCard">
       <div className="product__image">
@@ -110,10 +112,12 @@ const ProductCard = ({ product, cartItem, deleteProduct }) => {
                   {({ field }) => (
                     <NumberInput
                       {...field}
+                      stepHoldDelay={500}
+                      stepHoldInterval={100}
                       label="Quantity"
                       placeholder="Enter Quantity"
                       min={1}
-                      max={10}
+                      max={stock}
                       onChange={(value) => setFieldValue("quantity", value)}
                       error={touched.quantity && errors.quantity}
                       formatter={(value) =>

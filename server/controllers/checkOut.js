@@ -3,13 +3,13 @@
 var ypco = require("yenepaysdk");
 
 var sellerCode = "SB2294 ",
-  successUrlReturn = "http://localhost:3000/success", //"YOUR_SUCCESS_URL",//// handle the paymentsucess
+  successUrlReturn = "http://localhost:3000/products/chekkout?clear_cart=true", //"YOUR_SUCCESS_URL",//// handle the paymentsucess
   ipnUrlReturn = "http://localhost:5000/api/v1/products/IPNDestination", //"YOUR_IPN_URL",
   cancelUrlReturn = "", //"YOUR_CANCEL_URL",
   failureUrlReturn = "", //"YOUR_FAILURE_URL",
   pdtToken = "qnRsW9VBtr9hnq",
   useSandbox = true,
-  currency = "USD";
+  currency = "ETB";
 
 const CheckoutExpress = function (req, res) {
   var merchantOrderId = "12-34"; //"YOUR_UNIQUE_ID_FOR_THIS_ORDER";  //can also be set null
@@ -100,25 +100,28 @@ const PaymentSuccessReturnUrl = function (req, res) {
     params.MerchantOrderId,
     useSandbox
   );
+  // console.log(req);
   console.log("success url called");
   ypco.checkout
     .RequestPDT(pdtRequestModel)
     .then((pdtJson) => {
       if (pdtJson.result == "SUCCESS") {
-        // or `pdtJson.Status == 'Paid'`
         console.log("success url called - Paid");
-        //This means the payment is completed.
-        //You can extract more information of the transaction from the pdtResponse
-        //You can now mark the order as "Paid" or "Completed" here and start the delivery process
+        console.log("TransactionId: " + pdtJson.TransactionId);
+        console.log("MerchantOrderId: " + pdtJson.MerchantOrderId);
+        console.log("Amount: " + pdtJson.Amount);
+        console.log("TransactionDate: " + pdtJson.TransactionDate);
+        console.log("Buyer name: " + pdtJson.Buyer.Name);
+        console.log("Buyer email: " + pdtJson.Buyer.Email);
+        console.log("Seller name: " + pdtJson.Seller.Name);
+        console.log("Seller email: " + pdtJson.Seller.Email);
+        res.status(200).json({ message: "Payment successful" });
+      } else {
+        res.status(400).json({ message: "Payment failed" });
       }
       res.redirect("/");
     })
     .catch((err) => {
-      //This means the pdt request has failed.
-      //possible reasons are
-      //1. the TransactionId is not valid
-      //2. the PDT_Key is incorrect
-
       res.redirect("/");
     });
 };
