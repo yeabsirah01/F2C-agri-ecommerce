@@ -78,6 +78,8 @@ import WaitlistTable from "./AdminDashoard/Waitlist";
 import UpdateUserInfo from "./UserDashboard/UpdateUserInfo";
 import AllUsers from "./AdminDashoard/AllUsers";
 import UserDetails from "./AdminDashoard/UserDetails";
+import MyOrders from "./UserDashboard/MyOrders";
+import Orders from "./FarmerDashboard/Orders";
 // import { useSelector } from "react-redux";
 
 function Breadcrumbs() {
@@ -117,13 +119,19 @@ function Dashboard({ children }) {
               <li>
                 <Link to="/dashboard/updateuserinfo">My Profile</Link>
               </li>
+              <li>
+                <Link to="/dashboard/myorders">My Orders</Link>
+              </li>
               {role === "Farmer" && (
                 <>
                   <li>
                     <Link to="/dashboard/create">Create product</Link>
                   </li>
                   <li>
-                    <Link to="/dashboard/profile">Profile</Link>
+                    <Link to="/dashboard/profile">profile</Link>
+                  </li>
+                  <li>
+                    <Link to="/dashboard/orders">Orders</Link>
                   </li>
                 </>
               )}
@@ -155,6 +163,8 @@ function Dashboard({ children }) {
         <Routes>
           <Route exact path="/create" element={<CreateProduct />} />
           <Route exact path="/profile" element={<Profile />} />
+          <Route exact path="/myorders" element={<MyOrders />} />
+          <Route exact path="/orders" element={<Orders />} />
           <Route exact path="/waitlist" element={<WaitlistTable />} />
           <Route exact path="/users" element={<AllUsers />} />
           <Route exact path="/updateuserinfo" element={<UpdateUserInfo />} />

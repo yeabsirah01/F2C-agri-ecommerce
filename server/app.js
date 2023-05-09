@@ -6,6 +6,7 @@ const { clientURL } = require("./URI");
 const express = require("express");
 const connectDB = require("./db/connect");
 const path = require("path");
+const bodyParser = require("body-parser");
 
 //security dependencies
 
@@ -17,8 +18,8 @@ const xss = require("xss-clean");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-// app.use(bodyParser.json({ limit: "1mb" }));
-// app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+app.use(bodyParser.json({ limit: "1000mb" }));
+app.use(bodyParser.urlencoded({ limit: "1000mb", extended: true }));
 
 //Routes
 app.use(function (req, res, next) {
@@ -38,6 +39,7 @@ const authRouter = require("./routes/auth");
 const productRouter = require("./routes/product");
 const userRouter = require("./routes/user");
 const waitlistRouter = require("./routes/WaitlistRoute");
+const orderRouter = require("./routes/Order");
 
 //middle wares
 
@@ -63,6 +65,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/waitlist", waitlistRouter);
 app.use("/api/v1/users", authorizationMiddleware, userRouter);
+app.use("/api/v1/orders", authorizationMiddleware, orderRouter);
 // authorizationMiddleware
 
 app.use(errorHandlerMiddleware);

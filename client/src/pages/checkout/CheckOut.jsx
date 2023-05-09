@@ -9,35 +9,13 @@ import { toast } from "react-toastify";
 function ShippingDetailsStep({ onNext }) {
   const [modalOpen, setModalOpen] = useState(false);
 
-  const openModal = () => setModalOpen(true);
-
-  var stepper;
-  const [formData, setFormData] = useState({
-    name: "",
-    address: "",
-    city: "",
-    country: "",
-  });
-  const [errors, setErrors] = useState({});
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Perform validation
-    const errors = {};
-    if (!formData.name) errors.name = "Name is required";
-    if (!formData.address) errors.address = "Address is required";
-    if (!formData.city) errors.city = "City is required";
-    if (!formData.country) errors.country = "Country is required";
-
-    // If there are no errors, move to next step
-    if (Object.keys(errors).length === 0) onNext();
-    else setErrors(errors);
-  };
+  const { products, totalCartAmount } = useSelector((state) => state.cart);
 
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const openModal = () => setModalOpen(true);
 
   const query = {};
   location.search
@@ -46,9 +24,40 @@ function ShippingDetailsStep({ onNext }) {
     .forEach((v) => {
       query[v.split("=")[0]] = v.split("=")[1];
     });
-  const { products, totalCartAmount } = useSelector((state) => state.cart);
 
+  const [order, setOrder] = useState({
+    shippingDetails: {
+      address: "",
+      city: "",
+      state: "",
+      zipCode: "",
+    },
+    paymentInfo: {
+      ticketNumber: "",
+    },
+  });
+
+  console.log(order);
+
+  const [errors, setErrors] = useState({});
+
+  // // Perform validation
+  // const errors = {};
+  // if (!order.name) errors.name = "Name is required";
+  // if (!order.address) errors.address = "Address is required";
+  // if (!order.city) errors.city = "City is required";
+  // if (!order.country) errors.country = "Country is required";
+
+  // // If there are no errors, move to next step
+  // if (Object.keys(errors).length === 0) onNext();
+  // else setErrors(errors);
+
+  const prods = JSON.parse(localStorage.getItem("products"));
+  // const cartStateJSON = JSON.stringify(cartState);
+  const token = `Bearer ${localStorage.getItem("cookie")}`;
   useEffect(() => {
+    const savedOrder = JSON.parse(localStorage.getItem("order"));
+
     const query = {};
     location.search
       .slice(1)
@@ -56,18 +65,35 @@ function ShippingDetailsStep({ onNext }) {
       .forEach((v) => {
         query[v.split("=")[0]] = v.split("=")[1];
       });
+
+    console.log(prods);
+
     if (query.clear_cart === "true") {
+      const orderData = {
+        ...savedOrder,
+        sellerInfo: prods[0].createdBy,
+      };
+      console.log(orderData);
       const clearCartAndNotify = async () => {
-        await axiosConfig.put("/products/none", { products });
+        // insert the upload post method here
+
+        const response = await axiosConfig.post("/orders", orderData, {
+          headers: {
+            Authorization: token,
+            // "content-type": "multipart/form-data",
+          },
+        });
+        console.log(response.data);
+        // do something with the response, such as displaying a success message to the user
         dispatch(clearCart());
-        toast.success("Product ordered successfully", { toastId: "ordered" });
         setModalOpen(true);
+        toast.success("Product ordered successfully", { toastId: "ordered" });
       };
       clearCartAndNotify();
+      localStorage.removeItem("order");
     }
   }, [location.search, dispatch, products]);
 
-  console.log(products);
   const Ticket = {
     TotalAmount: query.TotalAmount,
     BuyerId: query.BuyerId,
@@ -82,57 +108,143 @@ function ShippingDetailsStep({ onNext }) {
   const handleCloseModal = () => {
     setModalOpen(false);
     navigate(-3); // replace with your desired redirect URL
+    // window.location.replace(window.location.href);
+  };
+  const handleSubmit = async (e) => {
+    localStorage.setItem("order", JSON.stringify(order));
+    // localStorage.setItem("cartState", cartStateJSON);
+    localStorage.setItem("products", JSON.stringify(products));
+    // orm validation
+    // const errors = {};
+    // if (!order.name) errors.name = "Name is required";
+    // if (!order.address) errors.address = "Address is required";
+    // if (!order.city) errors.city = "City is required";
+    // if (!order.country) errors.country = "Country is required";
+
+    // If there are no errors, move to next step
+    // if (Object.keys(errors).length === 0)
+    onNext();
+    // else setErrors(errors);
+    // e.preventDefault();
+    // try {
+    //   const response = await axiosConfig.post("/orders", order);
+    //   console.log(response.data);
+    //   // do something with the response, such as displaying a success message to the user
+    // } catch (error) {
+    //   console.log(error);
+    //   // handle the error, such as displaying an error message to the user
+    // }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setOrder((prevOrder) => ({
+      ...prevOrder,
+      [name]: value,
+    }));
+  };
+
+  const handleShippingChange = (e) => {
+    const { name, value } = e.target;
+    setOrder((prevOrder) => ({
+      ...prevOrder,
+      shippingDetails: {
+        ...prevOrder.shippingDetails,
+        [name]: value,
+      },
+    }));
+  };
+
+  const handlePaymentChange = (e) => {
+    const { name, value } = e.target;
+    setOrder((prevOrder) => ({
+      ...prevOrder,
+      paymentInfo: {
+        ...prevOrder.paymentInfo,
+        [name]: value,
+      },
+    }));
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <Text size="xl" weight={500} mb="sm">
-        Shipping Details
-      </Text>
       <label>
-        Name
+        Order Number:
         <input
           type="text"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          name="orderNumber"
+          value={order.orderNumber}
+          onChange={handleChange}
         />
-        {errors.name && <div>{errors.name}</div>}
       </label>
       <label>
-        Address
+        Seller Info:
         <input
           type="text"
-          value={formData.address}
-          onChange={(e) =>
-            setFormData({ ...formData, address: e.target.value })
-          }
+          name="sellerInfo"
+          value={order.sellerInfo}
+          onChange={handleChange}
         />
-        {errors.address && <div>{errors.address}</div>}
       </label>
       <label>
-        City
+        Buyer Info:
         <input
           type="text"
-          value={formData.city}
-          onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+          name="buyerInfo"
+          value={order.buyerInfo}
+          onChange={handleChange}
         />
-        {errors.city && <div>{errors.city}</div>}
       </label>
       <label>
-        Country
+        Address:
         <input
           type="text"
-          value={formData.country}
-          onChange={(e) =>
-            setFormData({ ...formData, country: e.target.value })
-          }
+          name="address"
+          value={order.shippingDetails.address}
+          onChange={handleShippingChange}
         />
-        {errors.country && <div>{errors.country}</div>}
+      </label>
+      <label>
+        City:
+        <input
+          type="text"
+          name="city"
+          value={order.shippingDetails.city}
+          onChange={handleShippingChange}
+        />
+      </label>
+      <label>
+        State:
+        <input
+          type="text"
+          name="state"
+          value={order.shippingDetails.state}
+          onChange={handleShippingChange}
+        />
+      </label>
+      <label>
+        Zip Code:
+        <input
+          type="text"
+          name="zipCode"
+          value={order.shippingDetails.zipCode}
+          onChange={handleShippingChange}
+        />
+      </label>
+      <label>
+        Ticket Number:
+        <input
+          type="text"
+          name="ticketNumber"
+          value={order.paymentInfo.ticketNumber}
+          onChange={handlePaymentChange}
+        />
       </label>
       <Group position="center" mt="xl">
         <Button variant="default">Back</Button>
         <Button type="submit">Next step</Button>
       </Group>
+
       <Modal
         opened={modalOpen}
         onClose={handleCloseModal}
@@ -223,7 +335,7 @@ function OrderSummaryStep({ onPrev }) {
   const { products, totalCartAmount } = useSelector((state) => state.cart);
   const [product, setProduct] = useState({});
   const [seller, setSeller] = useState({});
-
+  const dispatch = useDispatch();
   const newItemsArray = products.map((product) => {
     const item = {
       ItemId: product._id,
@@ -265,6 +377,15 @@ function OrderSummaryStep({ onPrev }) {
   // setCreator(creatorResponse.data);
 
   const checkOut = async () => {
+    const prods = JSON.parse(localStorage.getItem("products"));
+    // console.log(prods);
+    const id = products[0]._id;
+
+    console.log(prods);
+
+    await axiosConfig.put(`/products/${id}`, { products });
+    // Handle successful response here
+
     try {
       const { data } = await axiosConfig
         .post("/products/checkout", {
@@ -297,7 +418,11 @@ function OrderSummaryStep({ onPrev }) {
         Order Summary n
       </Text>
       <Text>abebe {product.createdBy}</Text>
-      {product.name}
+      <ul>
+        {products.map((product) => (
+          <li key={product.id}>{product.name}</li>
+        ))}
+      </ul>
       {/* {product}
       {seller} */}
       <Group position="center" mt="xl">
@@ -312,8 +437,11 @@ function OrderSummaryStep({ onPrev }) {
 
 function CheckOut() {
   const [activeStep, setActiveStep] = useState(0);
+  const { products, totalCartAmount } = useSelector((state) => state.cart);
 
-  const handleNext = () => setActiveStep(activeStep + 1);
+  const handleNext = () => {
+    setActiveStep(activeStep + 1);
+  };
   const handlePrev = () => setActiveStep(activeStep - 1);
 
   const renderStep = (step) => {

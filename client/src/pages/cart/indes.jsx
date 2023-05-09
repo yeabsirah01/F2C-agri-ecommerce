@@ -184,18 +184,21 @@ const Cart = ({ onClose }) => {
 
   const location = useLocation();
   const dispatch = useDispatch();
-  useEffect(() => {
-    const query = {};
-    location.search
-      .slice(1)
-      .split("&")
-      .forEach((v) => {
-        query[v.split("=")[0]] = v.split("=")[1];
-      });
-
-    // eslint-disable-next-line
-  }, [location.search, dispatch]);
-
+  // useEffect(() => {
+  //   const query = {};
+  //   location.search
+  //     .slice(1)
+  //     .split("&")
+  //     .forEach((v) => {
+  //       query[v.split("=")[0]] = v.split("=")[1];
+  //     });
+  //   if (query.clear_cart === "true") {
+  //     // axiosConfig.put("/products/none", { products });
+  //     // dispatch(clearCart());
+  //     toast.success("Product ordered successfully", { toastId: "ordered" });
+  //   }
+  //   // eslint-disable-next-line
+  // }, [location.search, dispatch]);
   const navigate = useNavigate();
 
   const checkOut = async () => {
