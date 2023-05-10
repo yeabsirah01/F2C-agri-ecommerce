@@ -21,6 +21,7 @@ import FarmerApplicationForm from "../pages/waitlist/FarmerForm";
 import WaitlistTable from "./../pages/Dashboard/AdminDashoard/Waitlist";
 import UpdateUserInfo from "../pages/Dashboard/UserDashboard/UpdateUserInfo";
 import Checkout from "../pages/checkout/CheckOut";
+import TawkToWidget from "./widget/TawkToWidget";
 
 function MainComponent({ user }) {
   const dispatch = useDispatch();
@@ -67,6 +68,7 @@ function MainComponent({ user }) {
           /> */}
         </Routes>
       </Layout>
+      {/* <TawkToWidget /> */}
     </>
   );
 }

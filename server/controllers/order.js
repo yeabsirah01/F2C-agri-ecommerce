@@ -50,7 +50,7 @@ const getOrder = async (req, res) => {
 };
 
 const getMyOrders = async (req, res) => {
-  console.log(req.user.id);
+  //   console.log(req.user.id);
   try {
     const userId = req.user.id; // assuming the user ID is stored in the _id field of the user object
     const buyerId = mongoose.Types.ObjectId(userId);
@@ -58,7 +58,7 @@ const getMyOrders = async (req, res) => {
       buyerInfo: buyerId,
     });
     res.json(orders);
-    console.log(orders);
+    // console.log(orders);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error" });
