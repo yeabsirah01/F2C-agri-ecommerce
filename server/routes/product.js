@@ -15,6 +15,7 @@ const {
   PaymentCancelReturnUrl,
 } = require("../controllers/checkOut");
 const authorizationMiddleware = require("./../middleware/authorization");
+const checkSubscription = require("../middleware/checkSubscription");
 const router = express.Router();
 
 router.post("/checkout", CheckoutCart);
@@ -24,12 +25,23 @@ router.post("/IPNDestination", IPNDestination);
 
 router
   .route("/")
-  .post(authorizationMiddleware, createProduct)
+  .post(authorizationMiddleware, checkSubscription, createProduct)
   .get(getAllProducts);
 
-router.route("/review/:id").put(authorizationMiddleware, reviewProduct);
+router
+  .route("/review/:id")
+  .put(authorizationMiddleware, checkSubscription, reviewProduct);
 
-router.route("/:id").get(getProduct).put(updateProduct).delete(deleteProduct);
+router
+  .route("/:id")
+  .get(
+    authorizationMiddleware,
+    authorizationMiddleware,
+    checkSubscription,
+    getProduct
+  )
+  .put(checkSubscription, updateProduct)
+  .delete(deleteProduct);
 
 router.get("/user/:userId", getAllProducts);
 

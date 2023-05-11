@@ -18,7 +18,7 @@ import axiosConfig from "../../axiosConfig";
 function AvatarIcon() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { role, firstName, profilePicture } = useSelector(
+  const { role, firstName, profilePicture, subscription } = useSelector(
     (state) => state.user
   );
   const [avatarUrl, setAvatarUrl] = useState(
@@ -32,7 +32,7 @@ function AvatarIcon() {
     position: "relative",
     overflow: "hidden",
   };
-
+  // console.log(subscription);
   const imageStyles = {
     borderRadius: "50%",
     objectFit: "cover",
@@ -40,6 +40,7 @@ function AvatarIcon() {
     width: "100%",
     height: "100%",
   };
+
   return (
     <Menu shadow="md" width={200}>
       <Menu.Target>
@@ -56,8 +57,8 @@ function AvatarIcon() {
       </Menu.Target>
 
       <Menu.Dropdown>
-        {/* <Menu.Label>{name}</Menu.Label> */}
-        Hello {firstName}
+        <Menu.Item>Hello {firstName}</Menu.Item>
+
         <Menu.Item
           icon={<IconDashboard size={14} />}
           onClick={() => navigate("/dashboard")}

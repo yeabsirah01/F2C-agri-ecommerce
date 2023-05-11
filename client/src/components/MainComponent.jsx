@@ -10,7 +10,6 @@ import Home from "./../pages/home";
 import { Routes, Route } from "react-router-dom";
 import Profile from "./../pages/profile";
 import Cart from "./../pages/cart/indes";
-
 import { setCart } from "./../features/cartSlice";
 import Product from "./../pages/product";
 import ProductPage from "./../pages/product/productsPage";
@@ -22,6 +21,7 @@ import WaitlistTable from "./../pages/Dashboard/AdminDashoard/Waitlist";
 import UpdateUserInfo from "../pages/Dashboard/UserDashboard/UpdateUserInfo";
 import Checkout from "../pages/checkout/CheckOut";
 import TawkToWidget from "./widget/TawkToWidget";
+import SubscriptionPage from "../pages/subscription/SubscriptionPage";
 
 function MainComponent({ user }) {
   const dispatch = useDispatch();
@@ -40,6 +40,7 @@ function MainComponent({ user }) {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/pricing" element={<SubscriptionPage />} />
           <Route path="/dashboard/*" element={<Dashboard />}>
             <Route path="create" element={<CreateProduct />} />
             <Route path="updateuserinfo" element={<UpdateUserInfo />} />

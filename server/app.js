@@ -21,6 +21,15 @@ const PORT = process.env.PORT || 5000;
 app.use(bodyParser.json({ limit: "1000mb" }));
 app.use(bodyParser.urlencoded({ limit: "1000mb", extended: true }));
 
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 //Routes
 app.use(function (req, res, next) {
   // console.log(req.header("Origin"));
@@ -40,12 +49,14 @@ const productRouter = require("./routes/product");
 const userRouter = require("./routes/user");
 const waitlistRouter = require("./routes/WaitlistRoute");
 const orderRouter = require("./routes/Order");
+const subscriptionRouter = require("./routes/subscription");
 
 //middle wares
 
 const errorHandlerMiddleware = require("./middleware/error-handler");
 const authorizationMiddleware = require("./middleware/authorization");
 const notFoundMiddleware = require("./middleware/not-found");
+const checkSubscription = require("./middleware/checkSubscription");
 
 app.use(xss());
 app.use(helmet());
@@ -65,7 +76,13 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/waitlist", waitlistRouter);
 app.use("/api/v1/users", authorizationMiddleware, userRouter);
-app.use("/api/v1/orders", authorizationMiddleware, orderRouter);
+app.use(
+  "/api/v1/orders",
+  checkSubscription,
+  authorizationMiddleware,
+  orderRouter
+);
+app.use("/api/v1/subscribe", authorizationMiddleware, subscriptionRouter);
 // authorizationMiddleware
 
 app.use(errorHandlerMiddleware);

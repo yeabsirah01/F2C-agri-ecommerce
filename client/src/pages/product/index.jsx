@@ -50,9 +50,14 @@ const Product = () => {
         if (error.response && error.response.status === 401) {
           console.log("unathorized");
           toast.error("Unauthorized Access! Please log in.");
-          // Handle HTTP 401 error
-          // Show a message to the user indicating they are not authorized to access the resource
-          // Redirect the user to the login page or take any other appropriate action
+        } else if (error.response && error.response.status === 402) {
+          console.log("Unsubscribed");
+          toast.error(
+            "Unsubscribed user! Please buy subscription before access."
+          );
+          // Handle HTTP 402 error
+          // Show a message to the user indicating they need to subscribe to access the resource
+          // Redirect the user to the subscription page or take any other appropriate action
         } else {
           // Handle other errors
         }

@@ -265,6 +265,9 @@ function AppHeader() {
               <a href="/Products" className={classes.link}>
                 Products
               </a>
+              <a href="/pricing" className={classes.link}>
+                Pricing
+              </a>
               <a href="/" className={classes.link}>
                 Academy
               </a>
