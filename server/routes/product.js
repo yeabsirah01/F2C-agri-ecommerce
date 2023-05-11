@@ -16,6 +16,7 @@ const {
 } = require("../controllers/checkOut");
 const authorizationMiddleware = require("./../middleware/authorization");
 const checkSubscription = require("../middleware/checkSubscription");
+const userMiddleware = require("../middleware/usermiddleware");
 const router = express.Router();
 
 router.post("/checkout", CheckoutCart);
@@ -25,22 +26,32 @@ router.post("/IPNDestination", IPNDestination);
 
 router
   .route("/")
-  .post(authorizationMiddleware, checkSubscription, createProduct)
+  .post(
+    authorizationMiddleware,
+    userMiddleware,
+    checkSubscription,
+    createProduct
+  )
   .get(getAllProducts);
 
 router
   .route("/review/:id")
-  .put(authorizationMiddleware, checkSubscription, reviewProduct);
+  .put(
+    authorizationMiddleware,
+    userMiddleware,
+    checkSubscription,
+    reviewProduct
+  );
 
 router
   .route("/:id")
-  .get(
-    authorizationMiddleware,
+  .get(authorizationMiddleware, userMiddleware, checkSubscription, getProduct)
+  .put(
     authorizationMiddleware,
     checkSubscription,
-    getProduct
+    userMiddleware,
+    updateProduct
   )
-  .put(checkSubscription, updateProduct)
   .delete(deleteProduct);
 
 router.get("/user/:userId", getAllProducts);

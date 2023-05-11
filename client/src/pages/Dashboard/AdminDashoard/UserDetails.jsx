@@ -8,6 +8,8 @@ import {
   Group,
   Badge,
   Divider,
+  CheckIcon,
+  Switch,
 } from "@mantine/core";
 import axiosConfig from "../../../axiosConfig";
 
@@ -30,9 +32,23 @@ const UserDetails = () => {
   const handleBackClick = () => {
     window.history.back();
   };
+  const handleDisableClick = async () => {
+    try {
+      const res = await axiosConfig.put(`/users/disable/${id}`, {
+        isActive: !user.isActive, // toggle the isActive value
+      });
+      setUser(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const renderUserInfo = () => {
     if (!user) return null;
+    const isDisabled = user.role === "Admin";
+    const labelText = isDisabled
+      ? "You must be an admin to enable and disable user"
+      : "enable and disable user account";
 
     return (
       <>
@@ -51,7 +67,7 @@ const UserDetails = () => {
         <Text>{`Address: ${user.address}`}</Text>
         <Text>{`Phone: ${user.phone}`}</Text>
 
-        {user.role === "farmer" && (
+        {user.role === "Farmer" && (
           <>
             <Divider />
 
@@ -59,10 +75,19 @@ const UserDetails = () => {
             {/* display farmer's sale history here */}
           </>
         )}
+
+        <Divider />
+
+        <Switch
+          description={labelText}
+          disabled={isDisabled}
+          checked={user.isActive}
+          onChange={handleDisableClick}
+          label={user.isActive ? "Enabled" : "Disabled"}
+        />
       </>
     );
   };
-
   return (
     <div style={{ maxWidth: "600px", margin: "auto" }}>
       <Paper padding="lg">{renderUserInfo()}</Paper>

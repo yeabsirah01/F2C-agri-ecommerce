@@ -57,6 +57,7 @@ const errorHandlerMiddleware = require("./middleware/error-handler");
 const authorizationMiddleware = require("./middleware/authorization");
 const notFoundMiddleware = require("./middleware/not-found");
 const checkSubscription = require("./middleware/checkSubscription");
+const userMiddleware = require("./middleware/usermiddleware");
 
 app.use(xss());
 app.use(helmet());
@@ -78,8 +79,8 @@ app.use("/api/v1/waitlist", waitlistRouter);
 app.use("/api/v1/users", authorizationMiddleware, userRouter);
 app.use(
   "/api/v1/orders",
-  checkSubscription,
   authorizationMiddleware,
+  checkSubscription,
   orderRouter
 );
 app.use("/api/v1/subscribe", authorizationMiddleware, subscriptionRouter);
