@@ -3,8 +3,11 @@
   grid-template-rows: 300px auto;
   box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.123);
   width: 100%;
+  height: 100%;
   border-radius: 0.5rem;
   overflow: hidden;
+  border-color: #cb8c3f;
+  border-width: 1px;
 }
 
 .product__image img {
@@ -53,18 +56,37 @@
 }
 
 .productCards {
+  background-color: #f7f7f7;
   display: flex;
   flex-direction: row;
 }
 
 .products {
+  position: relative;
+  padding-bottom: 60px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  width: 80%;
+  width: 90%;
   padding-right: 15px;
   margin-left: 30px;
 }
 
 .input {
-  width: 15%;
+  background-color: #f5f5dc;
+  width: 10%;
+}
+
+.pagination-wrapper {
+  position: absolute; /* set position to absolute */
+  bottom: 0; /* set to the bottom of the parent container */
+  left: 0; /* align to the left edge of the parent container */
+  right: 0; /* align to the right edge of the parent container */
+  height: 60px; /* set the height of the pagination wrapper */
+  display: flex; /* add display flex to align children */
+  justify-content: center; /* center the children horizontally */
+  align-items: center; /* center the children vertically */
+  background-color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 16px;
 }

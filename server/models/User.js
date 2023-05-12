@@ -64,6 +64,22 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    paymentInfo: {
+      type: {
+        number: {
+          type: String,
+          default: "XXXXXX",
+        },
+        pdt: {
+          type: String,
+        },
+      },
+      default: {
+        number: "XXXXXX",
+        pdt: "XXXXXXX",
+      },
+    },
+
     subscription: {
       type: {
         status: {

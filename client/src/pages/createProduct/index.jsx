@@ -21,7 +21,10 @@ const initialValues = {
 const validationSchema = Yup.object().shape({
   category: Yup.string()
     .required("category is required")
-    .oneOf(["Fruits", "Vegetables", "Vines"], "category is required"),
+    .oneOf(
+      ["ፍራፍሬዎች", "አትክልቶች", "ጥራጥሬ", "እህል", "ቅመም", "ቡና", "የእንስሳት ተዋዕፆ", "እንስሳት"],
+      "category is required"
+    ),
   name: Yup.string().min(2).max(20).required("Product name is required"),
   price: Yup.number().max(10000, "Invalid price").required("price is required"),
   stock: Yup.number().required("stock is required"),
@@ -63,7 +66,16 @@ const CreateProduct = () => {
             <Form className="form">
               <SelectInput
                 label="Select category *"
-                options={["Fruits", "Vegetables", "Vines"]}
+                options={[
+                  "ፍራፍሬዎች",
+                  "አትክልቶች",
+                  "ጥራጥሬ",
+                  "እህል",
+                  "ቅመም",
+                  "ቡና",
+                  "የእንስሳት ተዋዕፆ",
+                  "እንስሳት",
+                ]}
                 placeholder="Category"
                 name="category"
               />

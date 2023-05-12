@@ -51,35 +51,27 @@ const disableUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { isActive, ...data } = req.body;
+  const { products } = req.body;
   const { id } = req.params;
-
-  try {
-    const user = await User.findByIdAndUpdate(id, data, {
-      new: true,
-      runValidators: true,
+  if (products) {
+    products.map(async (p) => {
+      await User.findByIdAndUpdate(p._id);
     });
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    if (isActive !== undefined) {
-      user.isActive = isActive;
-      await user.save();
-    }
-
-    if (req.file && req.file.filename) {
-      user.profilePicture = req.file.filename;
-      await user.save();
-    }
-
-    res.status(StatusCodes.OK).json(user);
-  } catch (error) {
-    console.error(error);
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Server error" });
+    res.status(StatusCodes.OK).json({ msg: "success" });
+  } else {
+    upload(req, res, async (err) => {
+      if (err) {
+        res.sendStatus(500);
+      } else {
+        const data = { ...req.body, profilePicture: "" };
+        if (req?.file?.filename) data.profilePicture = req.file.filename;
+        const product = await User.findByIdAndUpdate(id, data, {
+          new: true,
+          runValidators: true,
+        });
+        res.status(StatusCodes.OK).json(product);
+      }
+    });
   }
 };
 

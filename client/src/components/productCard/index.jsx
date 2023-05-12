@@ -48,7 +48,7 @@
 // export default React.memo(ProductCards);
 import React, { useCallback, useEffect, useState } from "react";
 import ProductCard from "./productCard";
-import { Slider, Select, RangeSlider } from "@mantine/core";
+import { Slider, Select, RangeSlider, Pagination } from "@mantine/core";
 
 const ProductCards = ({ products, setProducts }) => {
   const [filteredProducts, setFilteredProducts] = useState(products);
@@ -56,9 +56,11 @@ const ProductCards = ({ products, setProducts }) => {
   const [filterPriceRange, setFilterPriceRange] = useState([0, 100]);
   const [filterDate, setFilterDate] = useState("newest");
   const [priceFilterActive, setPriceFilterActive] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [page, setPage] = useState(1);
 
   const filter = useCallback(
-    (category, priceRange, date, products) => {
+    (category, priceRange, date, products, searchQuery) => {
       let data = [...products];
 
       // Filter by category
@@ -73,6 +75,13 @@ const ProductCards = ({ products, setProducts }) => {
         );
       }
 
+      // Filter by search query
+      if (searchQuery.trim() !== "") {
+        data = data.filter((p) =>
+          p.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+      }
+
       // Sort by date
       if (date === "newest") {
         data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -80,18 +89,39 @@ const ProductCards = ({ products, setProducts }) => {
         data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
       }
 
-      setFilteredProducts(data);
+      // Slice the data based on the current page number and the number of items to be displayed per page
+      const startIndex = (page - 1) * 8;
+      const endIndex = startIndex + 8;
+      const slicedData = data.slice(startIndex, endIndex);
+
+      setFilteredProducts(slicedData);
     },
-    [priceFilterActive]
+    [priceFilterActive, page]
   );
 
   useEffect(() => {
-    filter(filterCategory, filterPriceRange, filterDate, products);
-  }, [filterCategory, filterPriceRange, filterDate, products, filter]);
+    filter(filterCategory, filterPriceRange, filterDate, products, searchQuery);
+  }, [
+    filterCategory,
+    filterPriceRange,
+    filterDate,
+    products,
+    filter,
+    searchQuery,
+  ]);
 
   return (
     <div className="productCards">
       <div className="input" style={{ gridColumn: "1/-1" }}>
+        <div>
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+
         <p>Sort by</p>
         <Select
           label="Product Category"
@@ -132,17 +162,40 @@ const ProductCards = ({ products, setProducts }) => {
           ]}
         />
       </div>
-      <div className="products">
+      <div
+        className="products"
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          // justifyContent: "space-between",
+          // margin: "16px -8px",
+        }}
+      >
         {filteredProducts.map((product) => (
-          <ProductCard
-            product={product}
+          <div
             key={product._id}
-            deleteProduct={(id) => {
-              const newProducts = products.filter((p) => p._id !== id);
-              setProducts(newProducts);
-            }}
-          />
+            style={{ width: "25%", marginBottom: "16px", padding: "0 8px" }}
+          >
+            <ProductCard
+              product={product}
+              deleteProduct={(id) => {
+                const newProducts = products.filter((p) => p._id !== id);
+                setProducts(newProducts);
+              }}
+            />
+          </div>
         ))}
+        <div className="pagination-wrapper" style={{ marginTop: "16px" }}>
+          <Pagination
+            variant="dots"
+            color="gray"
+            fullWidth
+            total={filteredProducts.length}
+            page={page}
+            onChange={(newPage) => setPage(newPage)}
+            itemsPerPage={8}
+          />
+        </div>
       </div>
     </div>
   );
