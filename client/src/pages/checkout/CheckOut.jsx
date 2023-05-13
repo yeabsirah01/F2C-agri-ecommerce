@@ -71,8 +71,20 @@ function ShippingDetailsStep({ onNext }) {
     if (query.clear_cart === "true") {
       const orderData = {
         ...savedOrder,
-        sellerInfo: prods[0].createdBy,
+        products:
+          prods?.map((prod) => ({
+            name: prod?.name,
+            quantity: prod?.quantity || 0,
+          })) || [],
+        productsTotalPrice:
+          prods?.reduce(
+            (sum, prod) =>
+              sum + (Number(prod?.price) || 0) * (prod?.quantity || 0),
+            0
+          ) || 0,
+        sellerInfo: prods?.[0]?.createdBy || null,
       };
+
       console.log(orderData);
       const clearCartAndNotify = async () => {
         // insert the upload post method here

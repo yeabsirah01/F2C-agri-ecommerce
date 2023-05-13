@@ -80,6 +80,7 @@ import AllUsers from "./AdminDashoard/AllUsers";
 import UserDetails from "./AdminDashoard/UserDetails";
 import MyOrders from "./UserDashboard/MyOrders";
 import Orders from "./FarmerDashboard/Orders";
+import FarmerDashboards from "./FarmerDashboard/FarmerDashboard";
 // import { useSelector } from "react-redux";
 
 function Breadcrumbs() {
@@ -102,6 +103,13 @@ function Dashboard({ children }) {
   const { role, firstName } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [opened, setOpened] = React.useState(false);
+
+  const salesData = [
+    { date: new Date("2022-01-01"), amount: 1000 },
+    { date: new Date("2022-02-01"), amount: 1500 },
+    { date: new Date("2022-03-01"), amount: 2000 },
+    // ... etc.
+  ];
 
   return (
     <AppShell
@@ -126,6 +134,11 @@ function Dashboard({ children }) {
                 <>
                   <li>
                     <Link to="/dashboard/create">Create product</Link>
+                  </li>
+                  <li>
+                    <Link to="/dashboard/farmerdashboard">
+                      Farmer Dashboard
+                    </Link>
                   </li>
                   <li>
                     <Link to="/dashboard/profile">profile</Link>
@@ -164,6 +177,11 @@ function Dashboard({ children }) {
           <Route exact path="/create" element={<CreateProduct />} />
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/myorders" element={<MyOrders />} />
+          <Route
+            exact
+            path="/farmerdashboard"
+            element={<FarmerDashboards />}
+          />
           <Route exact path="/orders" element={<Orders />} />
           <Route exact path="/waitlist" element={<WaitlistTable />} />
           <Route exact path="/users" element={<AllUsers />} />

@@ -111,7 +111,7 @@ const useStyles = createStyles((theme) => ({
 const mockdata = [
   {
     icon: IconCode,
-    title: "Open source",
+    title: "lore lorem",
     description: "This Pokémon’s cry is very loud and distracting",
   },
   {
@@ -126,7 +126,7 @@ const mockdata = [
   },
   {
     icon: IconFingerprint,
-    title: "Security",
+    title: "lorem lor",
     description: "The shell’s rounded shape and the grooves on its.",
   },
   {

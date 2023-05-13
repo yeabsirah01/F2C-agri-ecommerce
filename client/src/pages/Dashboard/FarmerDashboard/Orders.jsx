@@ -11,7 +11,7 @@ const Orders = ({ userId }) => {
       setOrders(res.data);
     });
   }, []);
-
+  console.log(orders);
   return (
     <div style={{ maxWidth: 800, margin: "auto" }}>
       <p>hey</p>

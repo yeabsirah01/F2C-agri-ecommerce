@@ -86,7 +86,6 @@ const Product = () => {
       dispatch(
         addProduct({ ...product, quantity: formData.quantity.split(" ")[0] })
       );
-      toast.success("Product added to cart");
     }
   };
   const isOwnProduct = product.createdBy === userId;
