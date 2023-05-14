@@ -48,6 +48,23 @@ const orderSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  products: [
+    {
+      name: {
+        type: String,
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+    },
+  ],
+  productsTotalPrice: {
+    type: Number,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Order", orderSchema);

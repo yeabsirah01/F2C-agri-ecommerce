@@ -22,54 +22,64 @@ import UpdateUserInfo from "../pages/Dashboard/UserDashboard/UpdateUserInfo";
 import Checkout from "../pages/checkout/CheckOut";
 import TawkToWidget from "./widget/TawkToWidget";
 import SubscriptionPage from "../pages/subscription/SubscriptionPage";
+import AdminPanel from "./layout/AdminPanel";
 
 function MainComponent({ user }) {
   const dispatch = useDispatch();
-  const { _id } = useSelector((state) => state.user);
+  const { role } = useSelector((state) => state.user);
+
   useEffect(() => {
-    const user = Cookies.get("user");
-    const cart = Cookies.get("cart");
-    user && dispatch(login(JSON.parse(user)));
-    cart && dispatch(setCart(JSON.parse(cart)));
+    const userCookie = Cookies.get("user");
+    const cartCookie = Cookies.get("cart");
+
+    if (userCookie) {
+      const user = JSON.parse(userCookie);
+      dispatch(login(user));
+    }
+
+    if (cartCookie) {
+      const cart = JSON.parse(cartCookie);
+      dispatch(setCart(cart));
+    }
   }, [dispatch]);
 
-  // if (!_id) return <>;
   return (
     <>
-      <Header />
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/pricing" element={<SubscriptionPage />} />
-          <Route path="/dashboard/*" element={<Dashboard />}>
-            <Route path="create" element={<CreateProduct />} />
-            <Route path="updateuserinfo" element={<UpdateUserInfo />} />
-            <Route path="wait" element={<WaitlistTable />} />
-            <Route path="profile" element={<Profile />} />
-          </Route>
-
-          {/* <Route path="/dashboard/create" element={<CreateProduct />} /> */}
-          <Route
-            path="/applyfarmer"
-            element={<FarmerApplicationForm user={user} />}
-          />
-          <Route path="/Products" element={<ProductPage />} />
-          <Route path="/products/chekkout" element={<Checkout />} />
-          {/* <Route path="/dashboard/create" element={<CreateProduct />} />
-          <Route path="/dashboard/wait" element={<WaitlistTable />} />
-          <Route path="/dashboard/profile" element={<Profile />} /> */}
-          <Route path="/edit/:id" element={<EditProduct />} />
-          <Route path="/:id" element={<Product />} />
-          <Route path="/cart" element={<Cart />} />
-          {/* <Route
-            path="/success"
-            element={
-              <OrderSuccess ticketNumber="123456" paymentHandler="YenePay" />
-            }
-          /> */}
-        </Routes>
-      </Layout>
-      {/* <TawkToWidget /> */}
+      {role === "Admin" ? (
+        <AdminPanel />
+      ) : (
+        <>
+          <Header />
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/pricing" element={<SubscriptionPage />} />
+              <Route path="/dashboard/*" element={<Dashboard />}>
+                <Route path="create" element={<CreateProduct />} />
+                <Route path="updateuserinfo" element={<UpdateUserInfo />} />
+                <Route path="wait" element={<WaitlistTable />} />
+                <Route path="profile" element={<Profile />} />
+              </Route>
+              <Route
+                path="/applyfarmer"
+                element={<FarmerApplicationForm user={user} />}
+              />
+              <Route path="/products" element={<ProductPage />} />
+              <Route path="/products/checkout" element={<Checkout />} />
+              <Route path="/edit/:id" element={<EditProduct />} />
+              <Route path="/:id" element={<Product />} />
+              <Route path="/cart" element={<Cart />} />
+              {/* <Route
+                path="/success"
+                element={
+                  <OrderSuccess ticketNumber="123456" paymentHandler="YenePay" />
+                }
+              /> */}
+            </Routes>
+          </Layout>
+          {/* <TawkToWidget /> */}
+        </>
+      )}
     </>
   );
 }

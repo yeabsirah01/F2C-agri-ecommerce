@@ -12,6 +12,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"concurrently": "^7.3.0",
+		"react-google-charts": "^4.0.0",
 		"yenepaysdk": "^1.2.0"
 	}
 }

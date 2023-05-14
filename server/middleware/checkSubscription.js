@@ -1,4 +1,5 @@
 const User = require("../models/User");
+
 const checkSubscription = async (req, res, next) => {
   const { id } = req.user;
 
@@ -7,6 +8,10 @@ const checkSubscription = async (req, res, next) => {
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
+    }
+
+    if (user.role === "Admin") {
+      return next(); // pass middleware for admin users
     }
 
     if (user.subscription.status === "expired") {
