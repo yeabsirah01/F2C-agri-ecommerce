@@ -54,6 +54,17 @@ import FarmerDashboards from "../../pages/Dashboard/FarmerDashboard/FarmerDashbo
 import React from "react";
 import { logout } from "../../features/userSlice";
 import { useDispatch } from "react-redux";
+import AdminDashboard from "../../pages/Dashboard/AdminDashoard/AdminDashboard";
+
+import {
+  IconBuildingStore,
+  IconUserCircle,
+  IconDashboard,
+  IconClockPause,
+  IconUsers,
+  IconBasket,
+  IconPower,
+} from "@tabler/icons-react";
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -133,51 +144,53 @@ function AdminPanel() {
       navbar={
         <Navbar width={{ base: 200 }} hiddenBreakpoint="sm" hidden={!opened}>
           {/* Navbar content */}
+
           <div className="sidebar">
             <ul className="navItems">
               <li>
-                <Burger opened={opened} onClick={() => setOpened(!opened)} />
+                <Link to="/dashboard/updateuserinfo">
+                  <IconUserCircle size={24} />
+                  <Text style={{ marginLeft: 8 }}>My Profile</Text>
+                </Link>
               </li>
               <li>
-                <Link to="/">Home</Link>
+                <Link to="/dashboard/profile">
+                  <IconBuildingStore size={24} />
+                  <Text style={{ marginLeft: 8 }}>All Proudcts</Text>
+                </Link>
               </li>
               <li>
-                <Link to="/dashboard/updateuserinfo">My Profile</Link>
-              </li>
-
-              {role === "Farmer" && (
-                <>
-                  <li>
-                    <Link to="/dashboard/create">Create product</Link>
-                  </li>
-                  <li>
-                    <Link to="/dashboard/farmerdashboard">
-                      Farmer Dashboard
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/dashboard/profile">profile</Link>
-                  </li>
-                </>
-              )}
-              {role === "Admin" && (
-                <>
-                  <li>
-                    <Link to="/dashboard/waitlist">Waitlist</Link>
-                  </li>
-                  <li>
-                    <Link to="/dashboard/users">All Users</Link>
-                  </li>
-                  <li>
-                    <Link to="/dashboard/allorders">All Orders</Link>
-                  </li>
-                </>
-              )}
-              <li>
-                <Link to="/dashboard/cart">Cart</Link>
+                <Link to="/dashboard/admindashboard">
+                  <IconDashboard size={24} />
+                  <Text style={{ marginLeft: 8 }}>Dashboard</Text>
+                </Link>
               </li>
               <li>
-                <button onClick={() => dispatch(logout())}>Logout</button>
+                <Link to="/dashboard/waitlist">
+                  <IconClockPause size={24} />
+                  <Text style={{ marginLeft: 8 }}>Waitlist</Text>
+                </Link>
+              </li>
+              <li>
+                <Link to="/dashboard/users">
+                  <IconUsers size={24} />
+                  <Text style={{ marginLeft: 8 }}>All Users</Text>
+                </Link>
+              </li>
+              <li>
+                <Link to="/dashboard/allorders">
+                  <IconBasket size={24} />
+                  <Text style={{ marginLeft: 8 }}>All Orders</Text>
+                </Link>
+              </li>
+              <li>
+                <Button
+                  onClick={() => dispatch(logout())}
+                  leftIcon={<IconPower size={24} />}
+                  variant="link"
+                >
+                  Logout
+                </Button>
               </li>
             </ul>
           </div>
@@ -238,6 +251,11 @@ function AdminPanel() {
       {/* Your application here */}
       <div>
         <Routes>
+          <Route
+            exact
+            path="dashboard/admindashboard"
+            element={<AdminDashboard />}
+          />
           <Route exact path="dashboard/allorders" element={<AllOrders />} />
           <Route exact path="dashboard/waitlist" element={<WaitlistTable />} />
           <Route exact path="dashboard/users" element={<AllUsers />} />
