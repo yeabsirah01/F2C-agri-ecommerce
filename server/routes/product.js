@@ -19,7 +19,7 @@ const checkSubscription = require("../middleware/checkSubscription");
 const userMiddleware = require("../middleware/usermiddleware");
 const router = express.Router();
 
-router.post("/checkout", CheckoutCart);
+router.post("/checkout/:id", CheckoutCart);
 router.get("/PaymentSuccess", PaymentSuccessReturnUrl);
 router.get("/PaymentCancel", PaymentCancelReturnUrl);
 router.post("/IPNDestination", IPNDestination);

@@ -34,6 +34,7 @@ const initialValues = {
   profilePicture: "",
   phone: "",
   paymentInfo: "",
+  subscription: "",
 };
 
 const Profilee = () => {
@@ -93,6 +94,7 @@ const Profilee = () => {
             <Text>
               Payment Info Number: {_initialValues.paymentInfo.number}
             </Text>
+            <Text>Subscription: {_initialValues.subscription.status}</Text>
             <Text>Payment Info PDT: {_initialValues.paymentInfo.pdt}</Text>
           </>
         ) : null}

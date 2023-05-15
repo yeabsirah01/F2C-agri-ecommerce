@@ -65,7 +65,7 @@ function MainComponent({ user }) {
                 element={<FarmerApplicationForm user={user} />}
               />
               <Route path="/products" element={<ProductPage />} />
-              <Route path="/products/checkout" element={<Checkout />} />
+              <Route path="/products/checkout/:id" element={<Checkout />} />
               <Route path="/edit/:id" element={<EditProduct />} />
               <Route path="/:id" element={<Product />} />
               <Route path="/cart" element={<Cart />} />

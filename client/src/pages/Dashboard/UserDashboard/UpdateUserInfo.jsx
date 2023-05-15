@@ -33,6 +33,8 @@ const initialValues = {
   email: "",
   profilePicture: "",
   phone: "",
+  paymentNumber: "",
+  paymentPdt: "",
 };
 
 const UpdateUserInfo = ({ user }) => {
@@ -70,6 +72,8 @@ const UpdateUserInfo = ({ user }) => {
     _formData.append("gender", formData.gender);
     _formData.append("email", formData.email);
     _formData.append("profilePicture", profilePicture);
+    _formData.append("paymentNumber", formData.paymentNumber);
+    _formData.append("paymentPdt", formData.paymentPdt);
 
     _formData.append("phone", formData.phone);
     const headers = { "Content-Type": "multipart/form-data" };
@@ -117,8 +121,13 @@ const UpdateUserInfo = ({ user }) => {
                 placeholder="Enter your address"
               />
               <TextInput
-                name="pinCode"
-                label="Pin Code *"
+                name="paymentNumber"
+                label="PaymentNUmber *"
+                placeholder="Enter your pin code"
+              />
+              <TextInput
+                name="paymentPdt"
+                label="Payment odt *"
                 placeholder="Enter your pin code"
               />
               <SelectInput

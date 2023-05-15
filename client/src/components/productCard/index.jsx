@@ -55,7 +55,7 @@ const ProductCards = ({ products, setProducts }) => {
   const [filterCategory, setFilterCategory] = useState("select");
   const [filterPriceRange, setFilterPriceRange] = useState([0, 100]);
   const [filterDate, setFilterDate] = useState("newest");
-  const [priceFilterActive, setPriceFilterActive] = useState(false);
+  const [priceFilterActive, setPriceFilterActive] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
 
@@ -110,6 +110,16 @@ const ProductCards = ({ products, setProducts }) => {
     searchQuery,
   ]);
 
+  const handleMinPriceChange = (event) => {
+    const minValue = parseFloat(event.target.value);
+    setFilterPriceRange([minValue, filterPriceRange[1]]);
+  };
+
+  const handleMaxPriceChange = (event) => {
+    const maxValue = parseFloat(event.target.value);
+    setFilterPriceRange([filterPriceRange[0], maxValue]);
+  };
+
   return (
     <div className="productCards">
       <div className="input" style={{ gridColumn: "1/-1" }}>
@@ -135,20 +145,29 @@ const ProductCards = ({ products, setProducts }) => {
           }))}
         />
         <div>
-          <div style={{ marginRight: "16px" }}>
-            Price range: {filterPriceRange[0]} Birr - {filterPriceRange[1]} Birr
+          <div>
+            <div>
+              <div style={{ marginRight: "16px" }}>
+                Price range: {filterPriceRange[0]} Birr - {filterPriceRange[1]}{" "}
+                Birr
+              </div>
+              <div>
+                <input
+                  type="number"
+                  placeholder="Min"
+                  value={filterPriceRange[0]}
+                  onChange={handleMinPriceChange}
+                />
+                <span> - </span>
+                <input
+                  type="number"
+                  placeholder="Max"
+                  value={filterPriceRange[1]}
+                  onChange={handleMaxPriceChange}
+                />
+              </div>
+            </div>
           </div>
-          <RangeSlider
-            style={{ flexGrow: 1 }}
-            min={0}
-            max={100}
-            step={1}
-            defaultValue={filterPriceRange}
-            onChange={(value) => {
-              setPriceFilterActive(true);
-              setFilterPriceRange(value);
-            }}
-          />
         </div>
         <Select
           label="Date"

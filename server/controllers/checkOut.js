@@ -1,15 +1,12 @@
 "use strict";
-
 var ypco = require("yenepaysdk");
+const User = require("../models/User");
 
-var sellerCode = "SB2294 ",
-  successUrlReturn = "http://localhost:3000/products/chekkout?clear_cart=true", //"YOUR_SUCCESS_URL",//// handle the paymentsucess
-  ipnUrlReturn = "http://localhost:5000/api/v1/products/IPNDestination", //"YOUR_IPN_URL",
-  cancelUrlReturn = "", //"YOUR_CANCEL_URL",
-  failureUrlReturn = "", //"YOUR_FAILURE_URL",
-  pdtToken = "qnRsW9VBtr9hnq",
-  useSandbox = true,
-  currency = "ETB";
+var ipnUrlReturn = "http://localhost:5000/api/v1/products/IPNDestination";
+var cancelUrlReturn = "";
+var failureUrlReturn = "";
+var useSandbox = true;
+var currency = "ETB";
 
 const CheckoutExpress = function (req, res) {
   var merchantOrderId = "12-34"; //"YOUR_UNIQUE_ID_FOR_THIS_ORDER";  //can also be set null
@@ -34,51 +31,76 @@ const CheckoutExpress = function (req, res) {
   res.redirect(url);
 };
 
-const CheckoutCart = function (req, res) {
-  var merchantOrderId = "ab-cd"; //"YOUR_UNIQUE_ID_FOR_THIS_ORDER";  //can also be set null
-  var expiresAfter = 2880; //"NUMBER_OF_MINUTES_BEFORE_THE_ORDER_EXPIRES"; //setting null means it never expires
-  var checkoutOptions = ypco.checkoutOptions(
-    sellerCode,
-    merchantOrderId,
-    ypco.checkoutType.Cart,
-    useSandbox,
-    expiresAfter,
-    successUrlReturn,
-    cancelUrlReturn,
-    ipnUrlReturn,
-    failureUrlReturn
-  );
-  var data = req.body.newItemsArray;
+const CheckoutCart = async function (req, res) {
+  try {
+    const { id } = req.params;
+    var successUrlReturn = `http://localhost:3000/products/checkout/${id}?clear_cart=true`;
+    // Find the user by ID and exclude the password field
+    const user = await User.findById(id);
+    //   //   // Access the user data
+    const sellerCode = user.paymentInfo.number;
+    const pdtToken = user.paymentInfo.pdt;
+    console.log(sellerCode);
+    console.log(pdtToken);
 
-  var checkoutItems = data;
-  // console.log(checkoutItems);
-  //set order level fees like discount, handling fee, tax and delivery fee here
-  var totalItemsDeliveryFee = 100;
-  var totalItemsDiscount = 50;
-  var totalItemsHandlingFee = 30;
-  var totalPrice = 0;
-  checkoutItems.forEach(function (element) {
-    totalPrice += element.UnitPrice * element.Quantity;
+    console.log(id);
 
-    // console.log(element);
-  });
-  var totalItemsTax1 = 0.15 * totalPrice;
-  var totalItemsTax2 = 0; //0.02*totalPrice;
-  ///////////////////////////////////////////////////////////////
+    var merchantOrderId = "ab-cd";
+    var expiresAfter = 2880;
+    var checkoutOptions = ypco.checkoutOptions(
+      sellerCode,
+      merchantOrderId,
+      ypco.checkoutType.Cart,
+      useSandbox,
+      expiresAfter,
+      successUrlReturn,
+      cancelUrlReturn,
+      ipnUrlReturn,
+      failureUrlReturn
+    );
 
-  checkoutOptions.SetOrderFees(
-    totalItemsDeliveryFee,
-    totalItemsDiscount,
-    totalItemsHandlingFee,
-    totalItemsTax1,
-    totalItemsTax2
-  );
-  var url = ypco.checkout.GetCheckoutUrlForCart(checkoutOptions, checkoutItems);
-  res.json({ redirectUrl: url });
-  // console.log(url);
+    var data = req.body.newItemsArray;
+
+    var checkoutItems = data;
+    var totalItemsDeliveryFee = 100;
+    var totalItemsDiscount = 50;
+    var totalItemsHandlingFee = 30;
+    var totalPrice = 0;
+
+    checkoutItems.forEach(function (element) {
+      totalPrice += element.UnitPrice * element.Quantity;
+    });
+
+    var totalItemsTax1 = 0.15 * totalPrice;
+    var totalItemsTax2 = 0;
+
+    checkoutOptions.SetOrderFees(
+      totalItemsDeliveryFee,
+      totalItemsDiscount,
+      totalItemsHandlingFee,
+      totalItemsTax1,
+      totalItemsTax2
+    );
+
+    var url = ypco.checkout.GetCheckoutUrlForCart(
+      checkoutOptions,
+      checkoutItems
+    );
+
+    res.json({ redirectUrl: url });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred" });
+  }
 };
 
 const IPNDestination = function (req, res) {
+  const { id } = req.params;
+  var successUrlReturn = `http://localhost:3000/products/checkout/${id}?clear_cart=true`;
+  const user = User.findById(id).select({ password: 0 });
+  var sellerCode = user.paymentInfo.number;
+  var pdtToken = user.paymentInfo.pdt;
+
   var ipnModel = req.body;
   ypco.checkout
     .IsIPNAuthentic(ipnModel, useSandbox)
@@ -93,6 +115,11 @@ const IPNDestination = function (req, res) {
 };
 
 const PaymentSuccessReturnUrl = function (req, res) {
+  const { id } = req.params;
+  const user = User.findById(id).select({ password: 0 });
+  var sellerCode = user.paymentInfo.number;
+  var pdtToken = user.paymentInfo.pdt;
+
   var params = req.query;
   var pdtRequestModel = new ypco.pdtRequestModel(
     pdtToken,
@@ -127,6 +154,11 @@ const PaymentSuccessReturnUrl = function (req, res) {
 };
 
 const PaymentCancelReturnUrl = function (req, res) {
+  const { id } = req.params;
+  const user = User.findById(id).select({ password: 0 });
+  var sellerCode = user.paymentInfo.number;
+  var pdtToken = user.paymentInfo.pdt;
+
   var params = req.query;
   var pdtRequestModel = new ypco.pdtRequestModel(
     pdtToken,

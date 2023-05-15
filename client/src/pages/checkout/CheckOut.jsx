@@ -66,7 +66,7 @@ function ShippingDetailsStep({ onNext }) {
         query[v.split("=")[0]] = v.split("=")[1];
       });
 
-    console.log(prods);
+    console.log(query);
 
     if (query.clear_cart === "true") {
       const orderData = {
@@ -104,7 +104,7 @@ function ShippingDetailsStep({ onNext }) {
       clearCartAndNotify();
       localStorage.removeItem("order");
     }
-  }, [location.search, dispatch, products]);
+  }, [location.search, dispatch, products, prods, token]);
 
   const Ticket = {
     TotalAmount: query.TotalAmount,
@@ -344,6 +344,7 @@ function PaymentStep({ onPrev, onNext }) {
 }
 
 function OrderSummaryStep({ onPrev }) {
+  const { _id } = useSelector((state) => state.user);
   const { products, totalCartAmount } = useSelector((state) => state.cart);
   const [product, setProduct] = useState({});
   const [seller, setSeller] = useState({});
@@ -400,7 +401,7 @@ function OrderSummaryStep({ onPrev }) {
 
     try {
       const { data } = await axiosConfig
-        .post("/products/checkout", {
+        .post(`/products/checkout/${prods[0].createdBy}`, {
           newItemsArray,
         })
         .then(function (response) {

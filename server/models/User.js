@@ -22,10 +22,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    "pin code": {
-      type: String,
-      required: false,
-    },
+
     // catagory
     role: {
       type: String,

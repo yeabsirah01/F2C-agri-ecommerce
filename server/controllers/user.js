@@ -63,7 +63,15 @@ const updateUser = async (req, res) => {
       if (err) {
         res.sendStatus(500);
       } else {
-        const data = { ...req.body, profilePicture: "" };
+        const data = {
+          ...req.body,
+          profilePicture: "",
+          paymentInfo: {
+            number: req.body.paymentNumber,
+            pdt: req.body.paymentPdt,
+          },
+        };
+
         if (req?.file?.filename) data.profilePicture = req.file.filename;
         const product = await User.findByIdAndUpdate(id, data, {
           new: true,
