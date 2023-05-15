@@ -44,6 +44,7 @@ import CreateProduct from "../../pages/createProduct/index";
 import Profile from "../../pages/profile";
 
 import UpdateUserInfo from "../../pages/Dashboard/UserDashboard/UpdateUserInfo";
+import Profilee from "../../pages/Dashboard/UserDashboard/Profilee";
 
 import AllUsers from "../../pages/Dashboard/AdminDashoard/AllUsers";
 import UserDetails from "../../pages/Dashboard/AdminDashoard/UserDetails";
@@ -138,49 +139,101 @@ function AdminPanel() {
   const dispatch = useDispatch();
   const [opened, setOpened] = React.useState(false);
 
+  const [activeElement, setActiveElement] = useState(null);
+
+  const handleElementClick = (element) => {
+    setActiveElement(element);
+  };
+
   return (
     <AppShell
       padding="md"
       navbar={
-        <Navbar width={{ base: 200 }} hiddenBreakpoint="sm" hidden={!opened}>
+        <Navbar
+          width={{ base: 200 }}
+          hiddenBreakpoint="sm"
+          hidden={!opened}
+          bg="#353439"
+        >
           {/* Navbar content */}
-
           <div className="sidebar">
             <ul className="navItems">
               <li>
-                <Link to="/dashboard/updateuserinfo">
-                  <IconUserCircle size={24} />
-                  <Text style={{ marginLeft: 8 }}>My Profile</Text>
+                <Link to="/dashboard/profile">
+                  <div
+                    className={`navBox ${
+                      activeElement === "profile" ? "active" : ""
+                    }`}
+                    onClick={() => handleElementClick("profile")}
+                  >
+                    <IconUserCircle size={24} />
+                    <Text style={{ marginLeft: 8 }}>My Profile</Text>
+                  </div>
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard/profile">
-                  <IconBuildingStore size={24} />
-                  <Text style={{ marginLeft: 8 }}>All Proudcts</Text>
+                <Link to="/dashboard/profil">
+                  <div
+                    className={`navBox ${
+                      activeElement === "products" ? "active" : ""
+                    }`}
+                    onClick={() => handleElementClick("products")}
+                  >
+                    <IconBuildingStore size={24} />
+                    <Text style={{ marginLeft: 8 }}>All Products</Text>
+                  </div>
                 </Link>
               </li>
               <li>
                 <Link to="/dashboard/admindashboard">
-                  <IconDashboard size={24} />
-                  <Text style={{ marginLeft: 8 }}>Dashboard</Text>
+                  <div
+                    className={`navBox ${
+                      activeElement === "dashboard" ? "active" : ""
+                    }`}
+                    onClick={() => handleElementClick("dashboard")}
+                  >
+                    <IconDashboard size={24} />
+                    <Text style={{ marginLeft: 8 }}>Dashboard</Text>
+                  </div>
                 </Link>
               </li>
               <li>
                 <Link to="/dashboard/waitlist">
-                  <IconClockPause size={24} />
-                  <Text style={{ marginLeft: 8 }}>Waitlist</Text>
+                  <div
+                    className={`navBox ${
+                      activeElement === "waitlist" ? "active" : ""
+                    }`}
+                    onClick={() => handleElementClick("waitlist")}
+                  >
+                    <IconClockPause size={24} />
+                    <Text style={{ marginLeft: 8 }}>Waitlist</Text>
+                  </div>
                 </Link>
               </li>
               <li>
                 <Link to="/dashboard/users">
-                  <IconUsers size={24} />
-                  <Text style={{ marginLeft: 8 }}>All Users</Text>
+                  <div
+                    className={`navBox ${
+                      activeElement === "users" ? "active" : ""
+                    }`}
+                    onClick={() => handleElementClick("users")}
+                  >
+                    <IconUsers size={24} />
+                    <Text style={{ marginLeft: 8 }}>All Users</Text>
+                  </div>
                 </Link>
               </li>
               <li>
                 <Link to="/dashboard/allorders">
-                  <IconBasket size={24} />
-                  <Text style={{ marginLeft: 8 }}>All Orders</Text>
+                  <div
+                    className={`navBox ${
+                      activeElement === "orders" ? "active" : ""
+                    }`}
+                    onClick={() => handleElementClick("orders")}
+                  >
+                    <IconBasket size={24} />
+                    <Text style={{ marginLeft: 8 }}>All Orders</Text>
+                  </div>
                 </Link>
               </li>
               <li>
@@ -248,6 +301,28 @@ function AdminPanel() {
         </Header>
       }
     >
+      <style>
+        {`
+          .navBox {
+            color:#F2F2F2;
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+          }
+
+          .navBox:hover {
+            background-color: #8B8A8D;
+            color: #111111;
+          }
+
+          .navBox.active {
+            background-color: #77AB59;
+            color:#111111
+          }
+        `}
+      </style>
       {/* Your application here */}
       <div>
         <Routes>
@@ -257,6 +332,7 @@ function AdminPanel() {
             element={<AdminDashboard />}
           />
           <Route exact path="dashboard/allorders" element={<AllOrders />} />
+          <Route exact path="dashboard/profile" element={<Profilee />} />
           <Route exact path="dashboard/waitlist" element={<WaitlistTable />} />
           <Route exact path="dashboard/users" element={<AllUsers />} />
           <Route

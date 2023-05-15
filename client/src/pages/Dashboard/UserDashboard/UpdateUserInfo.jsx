@@ -21,107 +21,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Table, LoadingOverlay, Modal, Image } from "@mantine/core";
 import { useSelector } from "react-redux";
-// import axiosConfig from "./axiosConfig";
-// const WaitlistTable = () => {
-//   const [waitlist, setWaitlist] = useState([]);
-//   const [isLoading, setIsLoading] = useState(false);
 
-//   useEffect(() => {
-//     const getWaitlist = async () => {
-//       try {
-//         const response = await axiosConfig.get("/waitlist");
-
-//         if (response.status === 200) {
-//           setWaitlist(response.data);
-//           setIsLoading(false);
-//         }
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     };
-
-//     getWaitlist();
-//   }, []);
-
-//   const handleApprove = async (waitlistId) => {
-//     try {
-//       const response = await axiosConfig.put(`/waitlist/${waitlistId}`, {
-//         status: "approved",
-//       });
-
-//       if (response.status === 200) {
-//         // Update the waitlist with the new status
-//         const updatedWaitlist = waitlist.map((item) =>
-//           item._id === response.data._id
-//             ? { ...item, status: response.data.status }
-//             : item
-//         );
-//         setWaitlist(updatedWaitlist);
-//       }
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-
-//   const handleReject = async (waitlistId) => {
-//     try {
-//       const response = await axiosConfig.put(`/waitlist/${waitlistId}`, {
-//         status: "rejected",
-//       });
-
-//       if (response.status === 200) {
-//         // Remove the waitlist item from the list
-//         const updatedWaitlist = waitlist.filter(
-//           (item) => item._id !== waitlistId
-//         );
-//         setWaitlist(updatedWaitlist);
-//       }
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <h2>Waitlist</h2>
-//       {isLoading ? (
-//         <p>Loading...</p>
-//       ) : (
-//         <table>
-//           <thead>
-//             <tr>
-//               <th>User</th>
-//               <th>Status</th>
-//               <th>Action</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {waitlist.map((item) => (
-//               <tr key={item._id}>
-//                 <td>{item.user.firstame}</td>
-//                 <td>{item.status}</td>
-//                 <td>
-//                   {item.status === "pending" && (
-//                     <>
-//                       <button onClick={() => handleApprove(item._id)}>
-//                         Approve
-//                       </button>
-//                       <button onClick={() => handleReject(item._id)}>
-//                         Reject
-//                       </button>
-//                     </>
-//                   )}
-//                 </td>
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default WaitlistTable;
 const initialValues = {
   firstName: "",
   lastName: "",
@@ -138,16 +38,7 @@ const initialValues = {
 const UpdateUserInfo = ({ user }) => {
   const [waitlist, setWaitlist] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  //   const [firstName, setFirstName] = useState(user.firstName);
-  //   const [lastName, setLastName] = useState(user.lastName);
-  //   const [address, setAddress] = useState(user.address);
-  //   const [pinCode, setPinCode] = useState(user.pinCode);
-  //   const [role, setRole] = useState(user.role);
-  //   const [region, setRegion] = useState(user.region);
-  //   const [gender, setGender] = useState(user.gender);
-  //   const [email, setEmail] = useState(user.email);
-  //   const [password, setPassword] = useState(user.password);
-  //   const [phone, setPhone] = useState(user.phone);
+  //
   const [_initialValues, setInitialValues] = useState(initialValues);
   const { id } = useParams();
   const { _id } = useSelector((state) => state.user);
@@ -197,8 +88,6 @@ const UpdateUserInfo = ({ user }) => {
   };
 
   //   ???????????
-
-  //   <LoadingOverlay visible={isLoading} />;
 
   return (
     <div className="createProduct">
