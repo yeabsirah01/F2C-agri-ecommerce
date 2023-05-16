@@ -15,8 +15,10 @@ import { TextInput, PasswordInput, Box, Radio } from "@mantine/core";
 import axiosConfig from "../../axiosConfig";
 import { toast } from "react-toastify";
 import axios from "axios";
-
+import { login } from "../../features/userSlice";
 import { Form, Input, LoadingOverlay } from "@mantine/core";
+import Login from "./Loginn";
+import { useDispatch } from "react-redux";
 
 const region = [
   { value: "Amhara", label: "Amhara" },
@@ -41,11 +43,17 @@ const role = [
 ];
 
 function SignUp({ onClose }) {
+  const dispatch = useDispatch();
   const handleSubmit = async (formData) => {
     try {
       await axiosConfig.post("/auth/register", formData);
-      // setAction("login");
-      toast.success("User registered successfully", {
+      const { data } = await axiosConfig.post("/auth/login", {
+        email: formData.email,
+        password: formData.password,
+      });
+      dispatch(login(data));
+      onClose(); // Close the sign up modal
+      toast.success("User registered successfully and logged in", {
         toastId: "register-success",
       });
     } catch (error) {
@@ -103,6 +111,11 @@ function SignUp({ onClose }) {
     setSelectedRole(value);
   }
 
+  const [showLogIn, setShowLogIn] = useState(false);
+  const handleLogInClick = () => {
+    close(); // Close the entire modal
+    setShowLogIn(true); // Open the sign-up modal
+  };
   // console.log(form.values);
   return (
     <>
@@ -232,8 +245,15 @@ function SignUp({ onClose }) {
             </Group>
           </form>
         </Box>
-      </Modal>
 
+        <p className="loginForm__footer" style={{ gridColumn: "span 12" }}>
+          Don't have an account?{" "}
+          <button onClick={handleLogInClick} type="button">
+            Sign up
+          </button>
+        </p>
+      </Modal>
+      {showLogIn && <Login onClose={() => setShowLogIn(false)} />}{" "}
       {/* use navigate -1 */}
     </>
   );

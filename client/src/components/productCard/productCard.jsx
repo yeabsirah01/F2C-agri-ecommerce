@@ -38,11 +38,11 @@ const ProductCard = ({ product, cartItem, deleteProduct }) => {
   const addToCart = (formData) => {
     console.log(formData);
     const productInCart = products.find((p) => p._id === product._id);
-    if (+formData.quantity > +product.stock) {
+    if (+formData.quantity > +product.stock.value) {
       toast.error("Don't have enough stock");
     } else if (
       productInCart &&
-      +productInCart.quantity + +formData.quantity > +product.stock
+      +productInCart.quantity + +formData.quantity > +product.stock.value
     ) {
       toast.error("Don't have enough stock");
     } else {
@@ -51,7 +51,8 @@ const ProductCard = ({ product, cartItem, deleteProduct }) => {
     }
   };
 
-  let stock = parseInt(product.stock);
+  let stock = parseInt(product.stock.value);
+
   return (
     <div className="productCard">
       <div className="product__image">
@@ -68,12 +69,18 @@ const ProductCard = ({ product, cartItem, deleteProduct }) => {
       <div className="product__details">
         <div className="data">
           <h3 className="title">{product.name}</h3>
-          <p className="stock">{product.stock} KG left</p>
+          <p className="stock">
+            {product.stock.value} {product.stock.unit} left
+          </p>
         </div>
         <p className="price"> {product.price} ETB</p>
         {cartItem ? (
           <>
-            <Button label={product.quantity + " KG"} size={1} disabled />
+            <Button
+              label={product.quantity + product.stock.unit}
+              size={1}
+              disabled
+            />
             <Button
               label="Delete"
               size={1}
@@ -122,11 +129,11 @@ const ProductCard = ({ product, cartItem, deleteProduct }) => {
                       error={touched.quantity && errors.quantity}
                       formatter={(value) =>
                         !Number.isNaN(parseFloat(value))
-                          ? `${value} KG`.replace(
+                          ? `${value} ${product.stock.unit}`.replace(
                               /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
                               ","
                             )
-                          : "KG "
+                          : product.stock.unit
                       }
                     />
                   )}

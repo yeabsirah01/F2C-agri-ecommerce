@@ -33,6 +33,10 @@ const createProduct = async (req, res) => {
       const product = await Product.create({
         ...data,
         createdBy: req.user.id,
+        stock: {
+          unit: req.body.unit,
+          value: req.body.value,
+        },
       });
       res.status(StatusCodes.CREATED).json(product);
     }

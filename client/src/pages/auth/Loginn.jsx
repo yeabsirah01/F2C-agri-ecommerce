@@ -1,8 +1,6 @@
 import { useDisclosure } from "@mantine/hooks";
-import { useState } from "react";
 import { Modal, Group, Button } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
-// import { z } from "zod";
 import { useForm } from "@mantine/form";
 import { TextInput, PasswordInput, Box } from "@mantine/core";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,8 +10,10 @@ import { login } from "../../features/userSlice";
 import { toast } from "react-toastify";
 import { setLoading } from "../../features/loadingSlice";
 import Loading from "../../components/layout/Loading";
+import SignUp from "./SignUp";
+import { useState } from "react";
 
-function Login({ onClose }, { setAction }) {
+function Login({ onClose }) {
   const navigate = useNavigate();
   const [opened, { open, close }] = useDisclosure(true, {
     onOpen: () => {
@@ -23,13 +23,6 @@ function Login({ onClose }, { setAction }) {
       console.log("Closed");
     },
   });
-
-  // const schema = z.object({
-  //   password: z
-  //     .string()
-  //     .min(2, { message: "Password should have at least 2 letters" }),
-  //   email: z.string().email({ message: "Invalid email" }),
-  // });
 
   const form = useForm({
     initialValues: {
@@ -41,8 +34,6 @@ function Login({ onClose }, { setAction }) {
   const dispatch = useDispatch();
 
   const handleSubmit = async (formData) => {
-    // some code that fetches data or does some heavy lifting
-    // ...
     dispatch(setLoading(true));
     try {
       const { data } = await axiosConfig.post("/auth/login", formData);
@@ -56,6 +47,12 @@ function Login({ onClose }, { setAction }) {
       });
     }
     dispatch(setLoading(false));
+  };
+
+  const [showSignup, setShowSignup] = useState(false);
+  const handleSignupClick = () => {
+    close(); // Close the entire modal
+    setShowSignup(true); // Open the sign-up modal
   };
 
   return (
@@ -81,13 +78,13 @@ function Login({ onClose }, { setAction }) {
             }}
           >
             LOG IN
-          </h2>{" "}
+          </h2>
         </div>
 
         <Box size={32} maw={340} mx="auto" position="absolute" left="90">
           <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
             <TextInput
-              data-autpfocus
+              data-autofocus
               variant="filled"
               withAsterisk
               label="Email"
@@ -104,25 +101,26 @@ function Login({ onClose }, { setAction }) {
             />
 
             <Group position="right" mt="xl">
-              <Button
-                variant="outline"
-                // onClick={logInHandler}
-                color="Green"
-                type="submit"
-                size="md"
-              >
+              <Button variant="outline" color="Green" type="submit" size="md">
                 Log in
               </Button>
+              <p
+                className="loginForm__footer"
+                style={{ gridColumn: "span 12" }}
+              >
+                Don't have an account?{" "}
+                <button onClick={handleSignupClick} type="button">
+                  Sign up
+                </button>
+              </p>
             </Group>
           </form>
         </Box>
       </Modal>
-
-      {/* use navigate -1 */}
+      {showSignup && <SignUp onClose={() => setShowSignup(false)} />}{" "}
+      {/* Render the Signup component when showSignup is true */}
     </>
   );
 }
-
-// ----------------------------------
 
 export default Login;

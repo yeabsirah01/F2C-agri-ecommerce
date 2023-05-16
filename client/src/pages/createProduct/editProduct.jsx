@@ -14,19 +14,25 @@ const initialValues = {
   category: "select",
   name: "",
   price: "",
-  stock: "",
+  unit: "",
+  value: "",
   description: "",
 };
 
 const validationSchema = Yup.object().shape({
   category: Yup.string()
-    .required("category is required")
-    .oneOf(["Fruits", "Vegetables", "Vines"], "category is required"),
+    .required("Category is required")
+    .oneOf(
+      ["ፍራፍሬዎች", "አትክልቶች", "ጥራጥሬ", "እህል", "ቅመም", "ቡና", "የእንስሳት ተዋዕፆ", "እንስሳት"],
+      "Category is required"
+    ),
   name: Yup.string().min(2).max(20).required("Product name is required"),
-  price: Yup.number().max(10000, "Invalid price").required("price is required"),
-  stock: Yup.number().required("stock is required"),
-  description: Yup.string().required("description is required"),
+  price: Yup.number().max(10000, "Invalid price").required("Price is required"),
+  stock: Yup.number().required("Stock is required"),
+  stockUnit: Yup.string().required("Stock unit is required"), // Add validation for stockUnit
+  description: Yup.string().required("Description is required"),
 });
+
 const EditProduct = () => {
   const [_initialValues, setInitialValues] = useState(initialValues);
   const { id } = useParams();
@@ -44,7 +50,8 @@ const EditProduct = () => {
     _formData.append("category", formData.category);
     _formData.append("name", formData.name);
     _formData.append("price", formData.price);
-    _formData.append("stock", formData.stock);
+    _formData.append("value", formData.stock);
+    _formData.append("unit", formData.stockUnit);
     _formData.append("description", formData.description);
     _formData.append("image", image);
     const headers = { "Content-Type": "multipart/form-data" };
@@ -75,7 +82,16 @@ const EditProduct = () => {
             <Form className="form">
               <SelectInput
                 label="Select category *"
-                options={["Fruits", "Vegetables", "Vines"]}
+                options={[
+                  "ፍራፍሬዎች",
+                  "አትክልቶች",
+                  "ጥራጥሬ",
+                  "እህል",
+                  "ቅመም",
+                  "ቡና",
+                  "የእንስሳት ተዋዕፆ",
+                  "እንስሳት",
+                ]}
                 placeholder="Category"
                 name="category"
               />
@@ -96,6 +112,13 @@ const EditProduct = () => {
                 label="Product stock *"
                 placeholder="Stock in KG"
               />
+              <SelectInput
+                label="Select stock unit *"
+                options={["KG", "Lt", "Piece"]} // Add the options for stock units
+                placeholder="Stock unit"
+                name="stockUnit"
+              />
+
               <TextAreaInput
                 name="description"
                 placeholder="Enter description"

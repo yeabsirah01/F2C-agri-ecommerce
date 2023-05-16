@@ -14,22 +14,25 @@ const initialValues = {
   category: "select",
   name: "",
   price: "",
-  stock: "",
+  unit: "",
+  value: "",
   description: "",
 };
 
 const validationSchema = Yup.object().shape({
   category: Yup.string()
-    .required("category is required")
+    .required("Category is required")
     .oneOf(
       ["ፍራፍሬዎች", "አትክልቶች", "ጥራጥሬ", "እህል", "ቅመም", "ቡና", "የእንስሳት ተዋዕፆ", "እንስሳት"],
-      "category is required"
+      "Category is required"
     ),
   name: Yup.string().min(2).max(20).required("Product name is required"),
-  price: Yup.number().max(10000, "Invalid price").required("price is required"),
-  stock: Yup.number().required("stock is required"),
-  description: Yup.string().required("description is required"),
+  price: Yup.number().max(10000, "Invalid price").required("Price is required"),
+  stock: Yup.number().required("Stock is required"),
+  stockUnit: Yup.string().required("Stock unit is required"), // Add validation for stockUnit
+  description: Yup.string().required("Description is required"),
 });
+
 const CreateProduct = () => {
   const [image, setImage] = useState("");
   const navigate = useNavigate();
@@ -38,7 +41,8 @@ const CreateProduct = () => {
     _formData.append("category", formData.category);
     _formData.append("name", formData.name);
     _formData.append("price", formData.price);
-    _formData.append("stock", formData.stock);
+    _formData.append("value", formData.stock);
+    _formData.append("unit", formData.stockUnit);
     _formData.append("description", formData.description);
     _formData.append("image", image);
     const headers = { "Content-Type": "multipart/form-data" };
@@ -53,6 +57,7 @@ const CreateProduct = () => {
       );
     }
   };
+
   return (
     <div className="createProduct">
       <h1 className="title">Create New Product</h1>
@@ -96,6 +101,13 @@ const CreateProduct = () => {
                 label="Product stock *"
                 placeholder="Stock in KG"
               />
+              <SelectInput
+                label="Select stock unit *"
+                options={["KG", "Lt", "Piece"]} // Add the options for stock units
+                placeholder="Stock unit"
+                name="stockUnit"
+              />
+
               <TextAreaInput
                 name="description"
                 placeholder="Enter description"

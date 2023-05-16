@@ -74,12 +74,12 @@ const Product = () => {
 
   const addToCart = (formData) => {
     const productInCart = products.find((p) => p._id === product._id);
-    if (+formData.quantity.split(" ")[0] > +product.stock) {
+    if (+formData.quantity.split(" ")[0] > +product.stock.value) {
       toast.error("Don't have enough stock");
     } else if (
       productInCart &&
       +productInCart.quantity + +formData.quantity.split(" ")[0] >
-        +product.stock
+        +product.stock.value
     ) {
       toast.error("Don't have enough stock");
     } else {
@@ -146,9 +146,14 @@ const Product = () => {
         <h1 className="product__name">
           {product.name} <br /> <span>{product.category}</span>
         </h1>
-        <h2 className="product__price">
-          {product.price} ETB <span>({product.stock} KG Left)</span>
-        </h2>
+        {product.stock && (
+          <h2 className="product__price">
+            {product.price} ETB{" "}
+            <span>
+              ({product.stock.value} {product.stock.unit} Left)
+            </span>
+          </h2>
+        )}
         <h2 className="product__date">
           {product.createdAt} <span>created day</span>
         </h2>
