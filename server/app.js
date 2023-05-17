@@ -103,7 +103,7 @@ app.use(function (req, res, next) {
 
 const start = async () => {
   try {
-    await connectDB(process.env.DATABASE_LOCAL).then(() =>
+    await connectDB(process.env.DATABASE_ATLAS).then(() =>
       console.log("DB connection successful!")
     );
     app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));
