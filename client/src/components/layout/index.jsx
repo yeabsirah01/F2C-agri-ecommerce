@@ -147,12 +147,7 @@ function Layout({ children }) {
   return (
     <AppShell
       padding="md"
-      // navbar={
-      //   <Navbar width={{ base: 300 }} height={500} p="xs">
-      //     {/* Navbar content ///////////////////////////////////////////////////////////// */}
-      //     abebe
-      //   </Navbar>
-      // }
+      // navbar={<Navbar width={{ base: 150 }} height={500} p="xs"></Navbar>}
     >
       {children}
     </AppShell>

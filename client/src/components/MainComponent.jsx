@@ -50,7 +50,7 @@ function MainComponent({ user }) {
       ) : (
         <>
           <Header />
-          <Layout>
+          <>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/pricing" element={<SubscriptionPage />} />
@@ -76,7 +76,8 @@ function MainComponent({ user }) {
                 }
               /> */}
             </Routes>
-          </Layout>
+          </>
+
           {/* <TawkToWidget /> */}
         </>
       )}

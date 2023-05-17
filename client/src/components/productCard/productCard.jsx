@@ -31,7 +31,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const ProductCard = ({ product, cartItem, deleteProduct }) => {
-  const { _id } = useSelector((state) => state.user);
+  const { _id, role } = useSelector((state) => state.user);
   const { products } = useSelector((state) => state.cart);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -89,15 +89,17 @@ const ProductCard = ({ product, cartItem, deleteProduct }) => {
               }}
             />
           </>
-        ) : product.createdBy === _id ? (
+        ) : product.createdBy === _id || role === "Admin" ? (
           <>
-            <Button
-              label="Edit Product"
-              size={1}
-              onClick={() => {
-                navigate(`/edit/${product._id}`);
-              }}
-            />
+            {role !== "Admin" ? (
+              <Button
+                label="Edit Product"
+                size={1}
+                onClick={() => {
+                  navigate(`/edit/${product._id}`);
+                }}
+              />
+            ) : null}
             <Button
               label="Delete Product"
               size={1}

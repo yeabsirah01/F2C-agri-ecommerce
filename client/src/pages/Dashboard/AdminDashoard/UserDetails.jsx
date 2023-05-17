@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   Paper,
   Title,
@@ -77,6 +77,13 @@ const UserDetails = () => {
         )}
 
         <Divider />
+
+        <Link
+          to={`/dashboard/farmerproduct/${user._id}`}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          Prods
+        </Link>
 
         <Switch
           description={labelText}

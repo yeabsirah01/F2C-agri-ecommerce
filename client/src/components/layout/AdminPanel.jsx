@@ -1,4 +1,4 @@
-import { Header } from "@mantine/core";
+import { Breadcrumbs, Header } from "@mantine/core";
 
 import AvatarIcon from "./AvatarIcon";
 import CartIcon from "../../pages/cart/cartIcon";
@@ -66,6 +66,8 @@ import {
   IconBasket,
   IconPower,
 } from "@tabler/icons-react";
+import ViewFarmerProduct from "../../pages/Dashboard/AdminDashoard/ViewFarmerProducts";
+import AllProducts from "../../pages/Dashboard/AdminDashoard/AllProducts";
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -135,6 +137,25 @@ function AdminPanel() {
     setShowSignUpModal(true);
   }
 
+  function Breadcrumbs() {
+    const { pathname } = useLocation();
+    const parts = pathname.split("/").filter((part) => part !== "");
+    return (
+      <div>
+        {parts.map((part, index) => (
+          <span key={index} style={{ color: "white" }}>
+            {index > 0 && " > "}
+            <a
+              href={`/${parts.slice(0, index + 1).join("/")}`}
+              style={{ color: "white" }}
+            >
+              {part}
+            </a>
+          </span>
+        ))}
+      </div>
+    );
+  }
   const { role, firstName } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [opened, setOpened] = React.useState(false);
@@ -147,13 +168,14 @@ function AdminPanel() {
 
   return (
     <AppShell
+      bg="#353439"
       padding="md"
       navbar={
         <Navbar
           width={{ base: 200 }}
           hiddenBreakpoint="sm"
           hidden={!opened}
-          bg="#353439"
+          bg="#393534"
         >
           {/* Navbar content */}
           <div className="sidebar">
@@ -172,7 +194,7 @@ function AdminPanel() {
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard/profil">
+                <Link to="/dashboard/allproducts">
                   <div
                     className={`navBox ${
                       activeElement === "products" ? "active" : ""
@@ -321,10 +343,24 @@ function AdminPanel() {
             background-color: #77AB59;
             color:#111111
           }
+
+          .appcomponent{
+            
+            background-color: #353439;
+            color:#F2F2F2;
+          }
+
+          .abe{
+            margin-left: 100px;
+            color:#F2F2F2
+          }
         `}
       </style>
-      {/* Your application here */}
       <div>
+        <Breadcrumbs color="blue.3" className="abe" />
+      </div>
+      {/* Your application here */}
+      <div className="appcomponent">
         <Routes>
           <Route
             exact
@@ -335,10 +371,16 @@ function AdminPanel() {
           <Route exact path="dashboard/profile" element={<Profilee />} />
           <Route exact path="dashboard/waitlist" element={<WaitlistTable />} />
           <Route exact path="dashboard/users" element={<AllUsers />} />
+          <Route exact path="dashboard/allproducts" element={<AllProducts />} />
           <Route
             exact
             path="dashboard/updateuserinfo"
             element={<UpdateUserInfo />}
+          />
+          <Route
+            exact
+            path="dashboard/farmerproduct/:id"
+            element={<ViewFarmerProduct />}
           />
           <Route path="dashboard/user/:id" element={<UserDetails />} />
         </Routes>
