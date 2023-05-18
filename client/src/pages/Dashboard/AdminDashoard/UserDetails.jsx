@@ -12,8 +12,10 @@ import {
   Switch,
 } from "@mantine/core";
 import axiosConfig from "../../../axiosConfig";
+import { useSelector } from "react-redux";
 
 const UserDetails = () => {
+  const { role } = useSelector((state) => state.user);
   const [user, setUser] = useState(null);
   const { id } = useParams();
 
@@ -45,7 +47,8 @@ const UserDetails = () => {
 
   const renderUserInfo = () => {
     if (!user) return null;
-    const isDisabled = user.role === "Admin";
+    console.log(user);
+    const isDisabled = role !== "Admin";
     const labelText = isDisabled
       ? "You must be an admin to enable and disable user"
       : "enable and disable user account";

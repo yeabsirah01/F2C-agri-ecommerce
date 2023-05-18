@@ -96,6 +96,8 @@ import {
   IconSwitchHorizontal,
   IconLogout,
 } from "@tabler/icons-react";
+import AllOrders from "./AdminDashoard/AllOrders";
+import AllProducts from "./AdminDashoard/AllProducts";
 // import { MantineLogo } from "@mantine/ds";
 
 const useStyles = createStyles((theme) => ({
@@ -186,10 +188,16 @@ function Breadcrumbs() {
 function Dashboard({ children }) {
   const { role, firstName } = useSelector((state) => state.user);
   const data = [
-    { link: "/dashboard/myorders", label: "My Orders", icon: IconBellRinging },
     { link: "/dashboard/profilee", label: "My profile", icon: IconReceipt2 },
   ];
 
+  if (role === "Farmer" || role === "Consumer") {
+    data.push({
+      link: "/dashboard/myorders",
+      label: "My Orders",
+      icon: IconBellRinging,
+    });
+  }
   if (role === "Farmer") {
     data.push(
       {
@@ -208,6 +216,26 @@ function Dashboard({ children }) {
         icon: IconDatabaseImport,
       },
       { link: "/dashboard/orders", label: "Orders", icon: Icon2fa }
+    );
+  }
+
+  if (role === "CustomerSupport") {
+    data.push(
+      {
+        link: "/dashboard/allproduct",
+        label: "All Product",
+        icon: IconFingerprint,
+      },
+      {
+        link: "/dashboard/alluser",
+        label: "All Users ",
+        icon: IconKey,
+      },
+      {
+        link: "/dashboard/allorders",
+        label: "All Orders",
+        icon: IconDatabaseImport,
+      }
     );
   }
   // if (role === "Admin") {
@@ -286,6 +314,9 @@ function Dashboard({ children }) {
           <Route exact path="/myorders" element={<MyOrders />} />
           <Route exact path="/farmerdashboard" element={<FarmerDashboards />} />
           <Route exact path="/orders" element={<Orders />} />
+          <Route exact path="/allorders" element={<AllOrders />} />
+          <Route exact path="/alluser" element={<AllUsers />} />
+          <Route exact path="/allproduct" element={<AllProducts />} />
 
           <Route exact path="/users" element={<AllUsers />} />
           <Route exact path="/profilee" element={<Profilee />} />

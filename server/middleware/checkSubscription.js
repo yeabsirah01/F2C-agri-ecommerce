@@ -10,7 +10,7 @@ const checkSubscription = async (req, res, next) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    if (user.role === "Admin") {
+    if (user.role === "Admin" || user.role === "CustomerSupport") {
       return next(); // pass middleware for admin users
     }
 
