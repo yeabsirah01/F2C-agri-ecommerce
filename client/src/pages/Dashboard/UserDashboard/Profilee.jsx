@@ -1,3 +1,45 @@
+// const Profilee = () => {
+//
+//   console.log(_initialValues);
+//   return (
+//     <div className="createProduct">
+//       <h1 className="title">My Profile</h1>
+//
+//       <div style={formContainerStyle}>
+//         <Text>First Name: {_initialValues.firstName}</Text>
+//         <Text>Last Name: {_initialValues.lastName}</Text>
+//         <Text>Address: {_initialValues.address}</Text>
+//         <Text>Pin Code: {_initialValues.pinCode}</Text>
+//         <Text>Role: {_initialValues.role}</Text>
+//         <Text>Region: {_initialValues.region}</Text>
+//         <Text>Gender: {_initialValues.gender}</Text>
+//         <Text>Email: {_initialValues.email}</Text>
+//         <Text>Password: {_initialValues.password}</Text>
+//         <Text>Phone: {_initialValues.phone}</Text>
+//         {role !== "Admin" ? (
+//           <>
+//             <Text>
+//               Payment Info Number: {_initialValues.paymentInfo.number}
+//             </Text>
+//             <Text>Subscription: {_initialValues.subscription.status}</Text>
+//             <Text>Payment Info PDT: {_initialValues.paymentInfo.pdt}</Text>
+//           </>
+//         ) : null}
+//       </div>
+
+//       <div className="avatar">
+//         <img
+//           src={`http://localhost:5000/${_initialValues.profilePicture}`}
+//           alt={"altText"}
+//           crossOrigin="cross-origin"
+//         />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Profilee;
+
 // import { useEffect, useState } from "react";
 // import axios from "axios";
 import axiosConfig from "../../../axiosConfig";
@@ -6,7 +48,7 @@ import { Formik, Form } from "formik";
 // import { useState } from "react";
 import * as Yup from "yup";
 
-import Button from "../../../components/button/";
+// import Button from "../../../components/button/";
 import ImageUploader from "../../../components/imageUploader";
 import {
   TextInput,
@@ -19,25 +61,51 @@ import { toast } from "react-toastify";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Table, LoadingOverlay, Modal, Image, Text } from "@mantine/core";
+import {
+  Table,
+  LoadingOverlay,
+  Modal,
+  Image,
+  Button,
+  Text,
+  Paper,
+  Badge,
+  ActionIcon,
+  useMantineColorScheme,
+} from "@mantine/core";
 import { useSelector } from "react-redux";
 
-const initialValues = {
-  firstName: "",
-  lastName: "",
-  address: "",
-  pinCode: "",
-  role: "",
-  region: "",
-  gender: "",
-  email: "",
-  profilePicture: "",
-  phone: "",
-  paymentInfo: "",
-  subscription: "",
-};
+import {
+  Container,
+  Grid,
+  SimpleGrid,
+  Skeleton,
+  useMantineTheme,
+  rem,
+} from "@mantine/core";
+import { IconMoonStars, IconSun } from "@tabler/icons-react";
 
-const Profilee = () => {
+const PRIMARY_COL_HEIGHT = rem(500);
+
+export function Profilee() {
+  const theme = useMantineTheme();
+  const SECONDARY_COL_HEIGHT = `calc(${PRIMARY_COL_HEIGHT} / 2 - ${theme.spacing.md} / 2)`;
+
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    address: "",
+    pinCode: "",
+    role: "",
+    region: "",
+    gender: "",
+    email: "",
+    profilePicture: "",
+    phone: "",
+    paymentInfo: "",
+    subscription: "",
+  };
+
   const [isLoading, setIsLoading] = useState(false);
   //
   const [_initialValues, setInitialValues] = useState(initialValues);
@@ -65,50 +133,191 @@ const Profilee = () => {
     display: "flex",
     flexDirection: "column",
   };
-  const formImageStyle = {
+  const avatar = {
     borderRadius: "50%",
     width: "10%",
   };
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const dark = colorScheme === "dark";
 
-  console.log(_initialValues);
   return (
-    <div className="createProduct">
-      <h1 className="title">My Profile</h1>
-      <h1>
-        <Link to={`/dashboard/updateuserinfo`}>update</Link>
-      </h1>
+    <Container my="md">
+      <ActionIcon
+        variant="outline"
+        color={dark ? "yellow" : "blue"}
+        onClick={() => toggleColorScheme()}
+        title="Toggle color scheme"
+      >
+        {dark ? <IconSun size="1.1rem" /> : <IconMoonStars size="1.1rem" />}
+      </ActionIcon>
 
-      <div style={formContainerStyle}>
-        <Text>First Name: {_initialValues.firstName}</Text>
-        <Text>Last Name: {_initialValues.lastName}</Text>
-        <Text>Address: {_initialValues.address}</Text>
-        <Text>Pin Code: {_initialValues.pinCode}</Text>
-        <Text>Role: {_initialValues.role}</Text>
-        <Text>Region: {_initialValues.region}</Text>
-        <Text>Gender: {_initialValues.gender}</Text>
-        <Text>Email: {_initialValues.email}</Text>
-        <Text>Password: {_initialValues.password}</Text>
-        <Text>Phone: {_initialValues.phone}</Text>
-        {role !== "Admin" ? (
-          <>
-            <Text>
-              Payment Info Number: {_initialValues.paymentInfo.number}
+      <Text fz="20px" c={"#8B5A2B"} className="title">
+        My Profile
+      </Text>
+      <SimpleGrid
+        cols={2}
+        spacing="md"
+        breakpoints={[{ maxWidth: "sm", cols: 1 }]}
+        style={{ width: "68vw", borderRadius: "50%" }}
+      >
+        <div style={{ borderColor: "#FFFFFF", borderRadius: "4px" }}>
+          <div
+            style={{
+              position: "relative",
+              width: "250px",
+              height: "250px",
+              borderRadius: "50%",
+              overflow: "hidden",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                top: "45px",
+
+                left: 0,
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+              }}
+            >
+              <img
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                  transform: "scale(1.4)",
+                  // borderRadius: "50%",
+                  objectFit: "center",
+                }}
+                src={`http://localhost:5000/${_initialValues.profilePicture}`}
+                alt={"Profile imag"}
+                crossOrigin="cross-origin"
+              />
+            </div>
+          </div>
+
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <Text
+              variant="gradient"
+              gradient={{ from: "green", to: "brown", deg: 45 }}
+              sx={{ fontFamily: "Greycliff CF, sans-serif" }}
+              fz="30px"
+              fw={700}
+            >
+              {_initialValues.firstName.charAt(0).toUpperCase() +
+                _initialValues.firstName.slice(1)}
+              <span style={{ marginRight: "4px" }}></span>
+              {_initialValues.lastName.charAt(0).toUpperCase() +
+                _initialValues.lastName.slice(1)}
             </Text>
-            <Text>Subscription: {_initialValues.subscription.status}</Text>
-            <Text>Payment Info PDT: {_initialValues.paymentInfo.pdt}</Text>
-          </>
-        ) : null}
-      </div>
+            <Badge fz="15px" color="teal">
+              Role: {_initialValues.role}
+            </Badge>
+          </div>
+          <p>
+            Bio: {_initialValues.firstName} is a hardworking and dedicated
+            farmer with a deep-rooted passion for the land. Born and raised in a
+            farming family, he has been tilling the soil since he was old enough
+            to hold a shovel. With years of experience under his belt, John has
+            developed an intimate understanding of the cycles of nature and the
+            art of nurturing crops.
+          </p>
+        </div>
+        <Grid gutter="md">
+          <Grid.Col>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center ",
+                paddingLeft: "120px",
+              }}
+            >
+              <Button variant="outline" color="dark" size="md">
+                <Link
+                  to={`/dashboard/updateuserinfo`}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  Edit Profile
+                </Link>
+              </Button>
+            </div>
 
-      <div className="avatar">
-        <img
-          src={`http://localhost:5000/${_initialValues.profilePicture}`}
-          alt={"altText"}
-          crossOrigin="cross-origin"
-        />
-      </div>
-    </div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "10px",
+              }}
+            >
+              <Paper padding="md" shadow="xs" radius="sm">
+                <Text style={{ color: "#333333" }}>
+                  First Name:{" "}
+                  <span style={{ fontWeight: "bold", color: "#556B2F" }}>
+                    {_initialValues.firstName.charAt(0).toUpperCase() +
+                      _initialValues.firstName.slice(1)}
+                  </span>
+                </Text>
+                <Text style={{ color: "#333333" }}>
+                  Last Name:{" "}
+                  <span style={{ fontWeight: "bold", color: "#556B2F" }}>
+                    {_initialValues.lastName.charAt(0).toUpperCase() +
+                      _initialValues.lastName.slice(1)}
+                  </span>
+                </Text>
+                <Text style={{ color: "#333333" }}>
+                  Address:{" "}
+                  <span style={{ fontWeight: "bold", color: "#556B2F" }}>
+                    {_initialValues.address}
+                  </span>
+                </Text>
+                <Text style={{ color: "#333333" }}>
+                  Region:{" "}
+                  <span style={{ fontWeight: "bold", color: "#556B2F" }}>
+                    {_initialValues.region}
+                  </span>
+                </Text>
+              </Paper>
+              <Paper padding="md" shadow="xs" radius="sm">
+                <Text style={{ color: "#333333" }}>
+                  Gender:{" "}
+                  <span style={{ fontWeight: "bold", color: "#556B2F" }}>
+                    {_initialValues.gender}
+                  </span>
+                </Text>
+                <Text style={{ color: "#333333" }}>
+                  Email:{" "}
+                  <span style={{ fontWeight: "bold", color: "#556B2F" }}>
+                    {_initialValues.email}
+                  </span>
+                </Text>
+                <Text style={{ color: "#333333" }}>
+                  Phone:{" "}
+                  <span style={{ fontWeight: "bold", color: "#556B2F" }}>
+                    {_initialValues.phone}
+                  </span>
+                </Text>
+              </Paper>
+            </div>
+          </Grid.Col>
+          <Grid.Col span={6}>
+            {role !== "Admin" ? (
+              <>
+                <Text>
+                  Payment Info Number: {_initialValues.paymentInfo.number}
+                </Text>
+                <Text>Subscription: {_initialValues.subscription.status}</Text>
+                <Text>Payment Info PDT: {_initialValues.paymentInfo.pdt}</Text>
+              </>
+            ) : null}
+          </Grid.Col>
+          <Grid.Col span={6}> sale info</Grid.Col>
+        </Grid>
+      </SimpleGrid>
+    </Container>
   );
-};
+}
 
 export default Profilee;

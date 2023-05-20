@@ -95,7 +95,7 @@ const UpdateUserInfo = ({ user }) => {
 
   return (
     <div className="createProduct">
-      <h1 className="title">Edit Product</h1>
+      <h1 className="title">Edit Profile</h1>
       <Formik
         initialValues={_initialValues}
         enableReinitialize

@@ -50,7 +50,7 @@ function MainComponent({ user }) {
       ) : (
         <>
           <Header />
-          <>
+          <div style={{ marginTop: "80px" }}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/pricing" element={<SubscriptionPage />} />
@@ -64,7 +64,7 @@ function MainComponent({ user }) {
                 path="/applyfarmer"
                 element={<FarmerApplicationForm user={user} />}
               />
-              <Route path="/products" element={<ProductPage />} />
+              <Route path="/products" element={<ProductPage />} />|
               <Route path="/products/checkout/:id" element={<Checkout />} />
               <Route path="/edit/:id" element={<EditProduct />} />
               <Route path="/:id" element={<Product />} />
@@ -76,7 +76,7 @@ function MainComponent({ user }) {
                 }
               /> */}
             </Routes>
-          </>
+          </div>
 
           {/* <TawkToWidget /> */}
         </>
