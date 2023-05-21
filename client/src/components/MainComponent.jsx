@@ -23,6 +23,7 @@ import Checkout from "../pages/checkout/CheckOut";
 import TawkToWidget from "./widget/TawkToWidget";
 import SubscriptionPage from "../pages/subscription/SubscriptionPage";
 import AdminPanel from "./layout/AdminPanel";
+import TransporterPanel from "./layout/TransporterPanel";
 
 function MainComponent({ user }) {
   const dispatch = useDispatch();
@@ -42,11 +43,12 @@ function MainComponent({ user }) {
       dispatch(setCart(cart));
     }
   }, [dispatch]);
-
   return (
     <>
       {role === "Admin" ? (
         <AdminPanel />
+      ) : role === "Transporter" ? (
+        <TransporterPanel />
       ) : (
         <>
           <Header />
@@ -64,20 +66,19 @@ function MainComponent({ user }) {
                 path="/applyfarmer"
                 element={<FarmerApplicationForm user={user} />}
               />
-              <Route path="/products" element={<ProductPage />} />|
+              <Route path="/products" element={<ProductPage />} />
               <Route path="/products/checkout/:id" element={<Checkout />} />
               <Route path="/edit/:id" element={<EditProduct />} />
               <Route path="/:id" element={<Product />} />
               <Route path="/cart" element={<Cart />} />
               {/* <Route
-                path="/success"
-                element={
-                  <OrderSuccess ticketNumber="123456" paymentHandler="YenePay" />
-                }
-              /> */}
+            path="/success"
+            element={
+              <OrderSuccess ticketNumber="123456" paymentHandler="YenePay" />
+            }
+          /> */}
             </Routes>
           </div>
-
           {/* <TawkToWidget /> */}
         </>
       )}

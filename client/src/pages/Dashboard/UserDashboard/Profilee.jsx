@@ -141,7 +141,7 @@ export function Profilee() {
   const dark = colorScheme === "dark";
 
   return (
-    <Container my="md">
+    <div style={{ paddingLeft: "100px" }}>
       <ActionIcon
         variant="outline"
         color={dark ? "yellow" : "blue"}
@@ -160,7 +160,13 @@ export function Profilee() {
         breakpoints={[{ maxWidth: "sm", cols: 1 }]}
         style={{ width: "68vw", borderRadius: "50%" }}
       >
-        <div style={{ borderColor: "#FFFFFF", borderRadius: "4px" }}>
+        <div
+          style={{
+            borderColor: "#FFFFFF",
+            borderRadius: "4px",
+            paddingRight: "80px",
+          }}
+        >
           <div
             style={{
               position: "relative",
@@ -250,6 +256,10 @@ export function Profilee() {
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",
                 gap: "10px",
+
+                borderColor: "#FFFFFF",
+                borderRadius: "4px",
+                paddingLeft: "80px",
               }}
             >
               <Paper padding="md" shadow="xs" radius="sm">
@@ -303,20 +313,26 @@ export function Profilee() {
             </div>
           </Grid.Col>
           <Grid.Col span={6}>
-            {role !== "Admin" ? (
-              <>
+            {role === "Consumer" || role === "Farmer" ? (
+              <div
+                style={{
+                  borderColor: "#FFFFFF",
+                  borderRadius: "4px",
+                  paddingLeft: "80px",
+                }}
+              >
                 <Text>
                   Payment Info Number: {_initialValues.paymentInfo.number}
                 </Text>
                 <Text>Subscription: {_initialValues.subscription.status}</Text>
                 <Text>Payment Info PDT: {_initialValues.paymentInfo.pdt}</Text>
-              </>
+              </div>
             ) : null}
           </Grid.Col>
           <Grid.Col span={6}> sale info</Grid.Col>
         </Grid>
       </SimpleGrid>
-    </Container>
+    </div>
   );
 }
 

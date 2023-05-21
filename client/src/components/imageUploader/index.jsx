@@ -13,7 +13,7 @@ const ImageUploader = ({ onChange, image }) => {
       <div className="imageContainer">
         <img src={preview} alt="" crossOrigin="cross-origin" />
       </div>
-      <label htmlFor="imageInput">Upload Product Image</label>
+      <label htmlFor="imageInput">Upload Image</label>
       <input
         type="file"
         name=""

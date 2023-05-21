@@ -6,14 +6,17 @@ import {
   IconMessageCircle,
   IconTrash,
   IconArrowsLeftRight,
+  IconUserCircle,
+  IconShoppingBag,
 } from "@tabler/icons-react";
 import { logout } from "../../features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosConfig from "../../axiosConfig";
+import defaultImage from "../../assets/Default_ava.png";
 
 function AvatarIcon() {
   const navigate = useNavigate();
@@ -47,7 +50,11 @@ function AvatarIcon() {
         <div>
           <div style={styles}>
             <img
-              src={`http://localhost:5000/${profilePicture}`}
+              src={
+                profilePicture
+                  ? `http://localhost:5000/${profilePicture}`
+                  : defaultImage
+              }
               alt="Avatar"
               style={imageStyles}
               crossOrigin="cross-origin"
@@ -59,14 +66,31 @@ function AvatarIcon() {
       <Menu.Dropdown>
         <Menu.Item>Hello {firstName}</Menu.Item>
 
-        <Menu.Item
-          icon={<IconDashboard size={14} />}
-          onClick={() => navigate("/dashboard")}
-        >
-          Dashboard
+        {role !== "Consumer" && (
+          <Menu.Item
+            icon={<IconDashboard size={14} />}
+            onClick={() => navigate("/dashboard")}
+          >
+            Dashboard
+          </Menu.Item>
+        )}
+        <Menu.Item icon={<IconUserCircle size={14} />}>
+          <Link
+            to="/dashboard/profilee"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            My Profile
+          </Link>
         </Menu.Item>
-        <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
-        <Menu.Item icon={<IconMessageCircle size={14} />}>Messages</Menu.Item>
+        <Menu.Item icon={<IconShoppingBag size={14} />}>
+          {" "}
+          <Link
+            to="/dashboard/myorders"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            My Orders
+          </Link>
+        </Menu.Item>
         <Menu.Item
           icon={<IconSearch size={14} />}
           rightSection={
@@ -91,6 +115,7 @@ function AvatarIcon() {
           onClick={() => {
             dispatch(logout());
             toast.success("Loggedout succesfully");
+            navigate("/");
           }}
           color="red"
           icon={<IconTrash size={14} />}

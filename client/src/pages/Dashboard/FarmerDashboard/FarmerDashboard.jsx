@@ -130,7 +130,11 @@ const FarmerDashboards = () => {
           </button>
         ))}
       </div>
-      <Line data={data} options={options} />
+      <div style={{ width: "1000px" }}>
+        {" "}
+        {/* Added a fixed width of 600 pixels */}
+        <Line data={data} options={options} />
+      </div>
     </div>
   );
 };

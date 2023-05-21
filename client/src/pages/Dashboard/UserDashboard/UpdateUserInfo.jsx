@@ -33,8 +33,7 @@ const initialValues = {
   email: "",
   profilePicture: "",
   phone: "",
-  paymentNumber: "",
-  paymentPdt: "",
+  payment: { paymentNumber: "", paymentPdt: "" },
 };
 
 const UpdateUserInfo = ({ user }) => {
