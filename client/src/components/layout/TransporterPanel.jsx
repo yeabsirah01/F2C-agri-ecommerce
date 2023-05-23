@@ -68,6 +68,7 @@ import {
 } from "@tabler/icons-react";
 import ViewFarmerProduct from "../../pages/Dashboard/AdminDashoard/ViewFarmerProducts";
 import AllProducts from "../../pages/Dashboard/AdminDashoard/AllProducts";
+import AllOrderss from "../../pages/Dashboard/TransporterDashboard/AllOrderss";
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -331,7 +332,7 @@ function TransporterPanel() {
             element={<AdminDashboard />}
           />
           <Route exact path="dashboard/profile" element={<Profilee />} />
-          <Route exact path="dashboard/allorders" element={<AllOrders />} />
+          <Route exact path="dashboard/allorders" element={<AllOrderss />} />
 
           <Route exact path="dashboard/users" element={<AllUsers />} />
           <Route exact path="dashboard/allproducts" element={<AllProducts />} />

@@ -57,13 +57,19 @@
 }
 
 .productCards {
-  background-color: #fcfcfc;
+  background-color: #d1e2b8;
   display: flex;
   flex-direction: row;
 }
 
+.burger {
+  position: relative;
+  left: -25px;
+}
+
 .products {
   position: relative;
+
   padding-bottom: 60px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -73,9 +79,14 @@
 }
 
 .input {
-  background-color: #c0c0c0;
+  background-color: #a5c989;
   width: min-content;
   padding: 0;
+  position: relative;
+  left: -40px;
+}
+.input * {
+  background-color: #a5c989;
 }
 
 .pagination-wrapper {

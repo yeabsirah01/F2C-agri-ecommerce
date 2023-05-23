@@ -48,7 +48,35 @@
 // export default React.memo(ProductCards);
 import React, { useCallback, useEffect, useState } from "react";
 import ProductCard from "./productCard";
-import { Slider, Select, RangeSlider, Pagination } from "@mantine/core";
+import {
+  Slider,
+  Select,
+  RangeSlider,
+  Pagination,
+  Burger,
+  CloseButton,
+} from "@mantine/core";
+import {
+  createStyles,
+  Header,
+  HoverCard,
+  Group,
+  Button,
+  UnstyledButton,
+  Text,
+  SimpleGrid,
+  ThemeIcon,
+  Anchor,
+  Divider,
+  Center,
+  Box,
+  Drawer,
+  Collapse,
+  ScrollArea,
+  rem,
+} from "@mantine/core";
+// import { MantineLogo } from "@mantine/ds";
+import { useDisclosure } from "@mantine/hooks";
 
 const ProductCards = ({ products, setProducts }) => {
   const [filteredProducts, setFilteredProducts] = useState(products);
@@ -58,6 +86,12 @@ const ProductCards = ({ products, setProducts }) => {
   const [priceFilterActive, setPriceFilterActive] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
+  const [leftValue, setLeftValue] = useState("30px");
+  const changeLeft = () => {
+    setLeftValue((prevLeftValue) =>
+      prevLeftValue === "-20px" ? "30px" : "-20px"
+    );
+  };
 
   const filter = useCallback(
     (category, priceRange, date, products, searchQuery) => {
@@ -120,72 +154,82 @@ const ProductCards = ({ products, setProducts }) => {
     setFilterPriceRange([filterPriceRange[0], maxValue]);
   };
 
+  const [opened, { toggle }] = useDisclosure(false);
+  const handleClick = () => {
+    toggle();
+    changeLeft();
+  };
   return (
     <div className="productCards">
-      <div className="input" style={{ gridColumn: "1/-1" }}>
-        <div>
-          <input
-            type="text"
-            placeholder="Search products..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
+      <Burger className="burger" opened={opened} onClick={handleClick} />
+      {opened && (
+        <div className="input">
+          <div>
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
 
-        <p>Sort by</p>
-        <Select
-          label="Product Category"
-          style={{ marginLeft: "auto", width: "auto" }}
-          placeholder="Filter by category"
-          value={filterCategory}
-          onChange={(value) => setFilterCategory(value)}
-          data={["select", "Fruits", "Vegetables", "Vines"].map((option) => ({
-            value: option,
-            label: option,
-          }))}
-        />
-        <div>
+          <p>Sort by</p>
+          <Select
+            label="Product Category"
+            style={{ marginLeft: "auto", width: "auto" }}
+            placeholder="Filter by category"
+            value={filterCategory}
+            onChange={(value) => setFilterCategory(value)}
+            data={["select", "Fruits", "Vegetables", "Vines"].map((option) => ({
+              value: option,
+              label: option,
+            }))}
+          />
           <div>
             <div>
-              <div style={{ marginRight: "16px" }}>
-                Price range: {filterPriceRange[0]} Birr - {filterPriceRange[1]}{" "}
-                Birr
-              </div>
               <div>
-                <input
-                  type="number"
-                  placeholder="Min"
-                  value={filterPriceRange[0]}
-                  onChange={handleMinPriceChange}
-                />
-                <span> - </span>
-                <input
-                  type="number"
-                  placeholder="Max"
-                  value={filterPriceRange[1]}
-                  onChange={handleMaxPriceChange}
-                />
+                <div style={{ marginRight: "16px" }}>
+                  Price range: {filterPriceRange[0]} Birr -{" "}
+                  {filterPriceRange[1]} Birr
+                </div>
+                <div>
+                  <input
+                    type="number"
+                    placeholder="Min"
+                    value={filterPriceRange[0]}
+                    onChange={handleMinPriceChange}
+                  />
+                  <span> - </span>
+                  <input
+                    type="number"
+                    placeholder="Max"
+                    value={filterPriceRange[1]}
+                    onChange={handleMaxPriceChange}
+                  />
+                </div>
               </div>
             </div>
           </div>
+          <Select
+            label="Date"
+            style={{ marginLeft: "auto", width: "auto" }}
+            placeholder="Sort by date"
+            value={filterDate}
+            onChange={(value) => setFilterDate(value)}
+            data={[
+              { value: "newest", label: "Newest first" },
+              { value: "oldest", label: "Oldest first" },
+            ]}
+          />
         </div>
-        <Select
-          label="Date"
-          style={{ marginLeft: "auto", width: "auto" }}
-          placeholder="Sort by date"
-          value={filterDate}
-          onChange={(value) => setFilterDate(value)}
-          data={[
-            { value: "newest", label: "Newest first" },
-            { value: "oldest", label: "Oldest first" },
-          ]}
-        />
-      </div>
+      )}
+
       <div
         className="products"
         style={{
-          display: "flex",
-          flexWrap: "wrap",
+          // display: "flex",
+          // flexWrap: "wrap",
+          left: leftValue,
           // justifyContent: "space-between",
           // margin: "16px -8px",
         }}
@@ -193,7 +237,12 @@ const ProductCards = ({ products, setProducts }) => {
         {filteredProducts.map((product) => (
           <div
             key={product._id}
-            style={{ width: "25%", marginBottom: "16px", padding: "0 8px" }}
+            style={{
+              width: "100%",
+              marginBottom: "29px",
+
+              padding: "0 15px",
+            }}
           >
             <ProductCard
               product={product}

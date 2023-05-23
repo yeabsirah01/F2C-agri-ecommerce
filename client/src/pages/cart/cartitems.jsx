@@ -31,6 +31,7 @@ export const CartItem = ({ product, cartItem, deleteProduct }) => {
           >
             -
           </Button>
+          <Text>{product.quantity}</Text>
           {/* <Text>{cartItems[product.id]}</Text> */}
           <Button
             // onClick={() => addToCart(product.id)}

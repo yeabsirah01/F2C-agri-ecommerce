@@ -81,24 +81,25 @@ const getOrders = async (req, res) => {
 };
 
 const updateOrder = async (req, res) => {
-  const updates = Object.keys(req.body);
-  const allowedUpdates = ["shippingDetails", "paymentInfo"];
-  const isValidUpdate = updates.every((update) =>
-    allowedUpdates.includes(update)
-  );
+  const allowedUpdates = ["shippingDetails", "status"];
+  const updates = {};
 
-  if (!isValidUpdate) {
-    return res.status(400).send({ error: "Invalid updates!" });
+  for (const key in req.body) {
+    if (allowedUpdates.includes(key)) {
+      updates[key] = req.body[key];
+    }
   }
 
   try {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findByIdAndUpdate(req.params.id, updates, {
+      new: true,
+      runValidators: true,
+    });
+
     if (!order) {
       return res.status(404).send();
     }
 
-    updates.forEach((update) => (order[update] = req.body[update]));
-    await order.save();
     res.send(order);
   } catch (error) {
     res.status(400).send(error);
