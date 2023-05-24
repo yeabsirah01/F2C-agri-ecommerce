@@ -24,10 +24,11 @@ import TawkToWidget from "./widget/TawkToWidget";
 import SubscriptionPage from "../pages/subscription/SubscriptionPage";
 import AdminPanel from "./layout/AdminPanel";
 import TransporterPanel from "./layout/TransporterPanel";
+import ChatBox from "../pages/Dashboard/CustomerSupportDashboard/ChatBox";
 
 function MainComponent({ user }) {
   const dispatch = useDispatch();
-  const { role } = useSelector((state) => state.user);
+  const userInfo = useSelector((state) => state.user);
 
   useEffect(() => {
     const userCookie = Cookies.get("user");
@@ -45,9 +46,9 @@ function MainComponent({ user }) {
   }, [dispatch]);
   return (
     <>
-      {role === "Admin" ? (
+      {userInfo.role === "Admin" ? (
         <AdminPanel />
-      ) : role === "Transporter" ? (
+      ) : userInfo.role === "Transporter" ? (
         <TransporterPanel />
       ) : (
         <>
@@ -78,6 +79,7 @@ function MainComponent({ user }) {
             }
           /> */}
             </Routes>
+            <ChatBox userInfo={userInfo} />
           </div>
           {/* <TawkToWidget /> */}
         </>

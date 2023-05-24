@@ -68,6 +68,7 @@ import {
 } from "@tabler/icons-react";
 import ViewFarmerProduct from "../../pages/Dashboard/AdminDashoard/ViewFarmerProducts";
 import AllProducts from "../../pages/Dashboard/AdminDashoard/AllProducts";
+import SupportScreen from "../../pages/Dashboard/AdminDashoard/SupportScreen";
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -246,6 +247,19 @@ function AdminPanel() {
                 </Link>
               </li>
               <li>
+                <Link to="/dashboard/support">
+                  <div
+                    className={`navBox ${
+                      activeElement === "support" ? "active" : ""
+                    }`}
+                    onClick={() => handleElementClick("support")}
+                  >
+                    <IconUsers size={24} />
+                    <Text style={{ marginLeft: 8 }}>support</Text>
+                  </div>
+                </Link>
+              </li>
+              <li>
                 <Link to="/dashboard/allorders">
                   <div
                     className={`navBox ${
@@ -372,6 +386,7 @@ function AdminPanel() {
           <Route exact path="dashboard/waitlist" element={<WaitlistTable />} />
           <Route exact path="dashboard/users" element={<AllUsers />} />
           <Route exact path="dashboard/allproducts" element={<AllProducts />} />
+          <Route exact path="dashboard/support" element={<SupportScreen />} />
           <Route
             exact
             path="dashboard/updateuserinfo"

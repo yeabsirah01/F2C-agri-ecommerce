@@ -98,6 +98,7 @@ import {
 } from "@tabler/icons-react";
 import AllOrders from "./AdminDashoard/AllOrders";
 import AllProducts from "./AdminDashoard/AllProducts";
+import ChatBox from "./CustomerSupportDashboard/ChatBox";
 // import { MantineLogo } from "@mantine/ds";
 
 const useStyles = createStyles((theme) => ({
@@ -231,6 +232,7 @@ function Dashboard({ children }) {
         label: "All Users ",
         icon: IconKey,
       },
+
       {
         link: "/dashboard/allorders",
         label: "All Orders",
@@ -324,6 +326,7 @@ function Dashboard({ children }) {
           <Route path="/user/:id" element={<UserDetails />} />
         </Routes>
       </div>
+      <ChatBox />
     </AppShell>
   );
 }
