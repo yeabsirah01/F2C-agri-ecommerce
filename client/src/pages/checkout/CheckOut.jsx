@@ -1,10 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Stepper, Button, Group, Text, Modal } from "@mantine/core";
+import {
+  Stepper,
+  Button,
+  Group,
+  Text,
+  Modal,
+  Card,
+  Table,
+} from "@mantine/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import axiosConfig from "../../axiosConfig";
 import { clearCart } from "../../features/cartSlice";
 import { toast } from "react-toastify";
+import "./form.css";
+import yenepaylogo from "../../assets/yenepay logo.png";
+import chappalogo from "../../assets/chappa logo.png";
 
 function ShippingDetailsStep({ onNext }) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -25,7 +36,7 @@ function ShippingDetailsStep({ onNext }) {
       query[v.split("=")[0]] = v.split("=")[1];
     });
 
-  const [order, setOrder] = useState({
+  var [order, setOrder] = useState({
     shippingDetails: {
       address: "",
       city: "",
@@ -48,7 +59,7 @@ function ShippingDetailsStep({ onNext }) {
   // if (!order.city) errors.city = "City is required";
   // if (!order.country) errors.country = "Country is required";
 
-  // // If there are no errors, move to next step
+  // // // If there are no errors, move to next step
   // if (Object.keys(errors).length === 0) onNext();
   // else setErrors(errors);
 
@@ -102,7 +113,7 @@ function ShippingDetailsStep({ onNext }) {
         toast.success("Product ordered successfully", { toastId: "ordered" });
       };
       clearCartAndNotify();
-      localStorage.removeItem("order");
+      // localStorage.removeItem("order");
     }
   }, [location.search, dispatch, products, prods, token]);
 
@@ -179,107 +190,120 @@ function ShippingDetailsStep({ onNext }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Order Number:
-        <input
-          type="text"
-          name="orderNumber"
-          value={order.orderNumber}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        Seller Info:
-        <input
-          type="text"
-          name="sellerInfo"
-          value={order.sellerInfo}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        Buyer Info:
-        <input
-          type="text"
-          name="buyerInfo"
-          value={order.buyerInfo}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        Address:
-        <input
-          type="text"
-          name="address"
-          value={order.shippingDetails.address}
-          onChange={handleShippingChange}
-        />
-      </label>
-      <label>
-        City:
-        <input
-          type="text"
-          name="city"
-          value={order.shippingDetails.city}
-          onChange={handleShippingChange}
-        />
-      </label>
-      <label>
-        State:
-        <input
-          type="text"
-          name="state"
-          value={order.shippingDetails.state}
-          onChange={handleShippingChange}
-        />
-      </label>
-      <label>
-        Zip Code:
-        <input
-          type="text"
-          name="zipCode"
-          value={order.shippingDetails.zipCode}
-          onChange={handleShippingChange}
-        />
-      </label>
-      <label>
-        Ticket Number:
-        <input
-          type="text"
-          name="ticketNumber"
-          value={order.paymentInfo.ticketNumber}
-          onChange={handlePaymentChange}
-        />
-      </label>
-      <Group position="center" mt="xl">
-        <Button variant="default">Back</Button>
-        <Button type="submit">Next step</Button>
-      </Group>
-
+    <>
+      <form className="order-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="orderNumber">Order Number:</label>
+          <input
+            type="text"
+            id="orderNumber"
+            name="orderNumber"
+            value={order.orderNumber}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="sellerInfo">Seller Info:</label>
+          <input
+            type="text"
+            id="sellerInfo"
+            name="sellerInfo"
+            value={order.sellerInfo}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="buyerInfo">Buyer Info:</label>
+          <input
+            type="text"
+            id="buyerInfo"
+            name="buyerInfo"
+            value={order.buyerInfo}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="address">Address:</label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            value={order.shippingDetails.address}
+            onChange={handleShippingChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="city">City:</label>
+          <input
+            type="text"
+            id="city"
+            name="city"
+            value={order.shippingDetails.city}
+            onChange={handleShippingChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="state">State:</label>
+          <input
+            type="text"
+            id="state"
+            name="state"
+            value={order.shippingDetails.state}
+            onChange={handleShippingChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="zipCode">Zip Code:</label>
+          <input
+            type="text"
+            id="zipCode"
+            name="zipCode"
+            value={order.shippingDetails.zipCode}
+            onChange={handleShippingChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="ticketNumber">Ticket Number:</label>
+          <input
+            type="text"
+            id="ticketNumber"
+            name="ticketNumber"
+            value={order.paymentInfo.ticketNumber}
+            onChange={handlePaymentChange}
+          />
+        </div>
+        <div className="form-group button-group">
+          <button className="btn-back" type="button">
+            Back
+          </button>
+          <button className="btn-submit" type="submit">
+            Next step
+          </button>
+        </div>
+      </form>
       <Modal
         opened={modalOpen}
         onClose={handleCloseModal}
         title="Order Status"
-        size="xs"
+        size="20"
       >
-        <p>successssss</p>
-        {Object.entries(Ticket).map(([key, value]) => (
-          <>
-            <Text weight={500}>{key}</Text>
-            <Text>{value}</Text>
-          </>
-        ))}
+        <div className="receipt-container">
+          <h2>✅ Paid Successfully</h2>
+          {Object.entries(Ticket).map(([key, value]) => (
+            <div key={key} className="receipt-item">
+              <div className="key">{key}</div>
+              <div className="value">{value}</div>
+            </div>
+          ))}
+        </div>
       </Modal>
-    </form>
+    </>
   );
 }
 
 function PaymentStep({ onPrev, onNext }) {
   const [formData, setFormData] = useState({
-    cardNumber: "34",
-    expiryDate: "321",
-    cvv: "2134",
+    cardType: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -288,57 +312,84 @@ function PaymentStep({ onPrev, onNext }) {
 
     // Perform validation
     const errors = {};
-    if (!formData.cardNumber) errors.cardNumber = "Card number is required";
-    if (!formData.expiryDate) errors.expiryDate = "Expiry date is required";
-    if (!formData.cvv) errors.cvv = "CVV is required";
+    if (!formData.cardType) errors.cardType = "Card type is required";
 
-    // If there are no errors, move to next step
+    // If there are no errors, move to the next step
     if (Object.keys(errors).length === 0) onNext();
     else setErrors(errors);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <Text size="xl" weight={500} mb="sm">
-        Payment
-      </Text>
-      <label>
-        Card number
-        <input
-          type="text"
-          value={formData.cardNumber}
-          onChange={(e) =>
-            setFormData({ ...formData, cardNumber: e.target.value })
-          }
-        />
-        {errors.cardNumber && <div>{errors.cardNumber}</div>}
-      </label>
-      <label>
-        Expiry date
-        <input
-          type="text"
-          value={formData.expiryDate}
-          onChange={(e) =>
-            setFormData({ ...formData, expiryDate: e.target.value })
-          }
-        />
-        {errors.expiryDate && <div>{errors.expiryDate}</div>}
-      </label>
-      <label>
-        CVV
-        <input
-          type="text"
-          value={formData.cvv}
-          onChange={(e) => setFormData({ ...formData, cvv: e.target.value })}
-        />
-        {errors.cvv && <div>{errors.cvv}</div>}
-      </label>
-      <Group position="center" mt="xl">
-        <Button variant="default" onClick={onPrev}>
-          Back
-        </Button>
-        <Button type="submit">Next step</Button>
-      </Group>
+      {" "}
+      {/* Added form element with onSubmit handler */}
+      <div className="order-form">
+        <div className="form-group">
+          <h2 className="form-heading">Payment</h2>
+        </div>
+        <div className="form-group radio-group">
+          <div
+            className={`radio-card ${
+              formData.cardType === "yenepay" ? "selected" : ""
+            }`}
+          >
+            <Card shadow="xs" className="card-wrapper">
+              <label htmlFor="yenepay" className="card-label">
+                <input
+                  type="radio"
+                  id="yenepay"
+                  name="cardType"
+                  value="yenepay"
+                  checked={formData.cardType === "yenepay"}
+                  onChange={(e) =>
+                    setFormData({ ...formData, cardType: e.target.value })
+                  }
+                />
+                <div className="card-image">
+                  <img src={yenepaylogo} alt="yenepay" />
+                </div>
+                <div className="card-text">Yene Pay</div>
+              </label>
+            </Card>
+          </div>
+          <div
+            className={`radio-card ${
+              formData.cardType === "mastercard"
+                ? "selected disabled"
+                : "disabled"
+            }`}
+          >
+            <Card shadow="xs" className="card-wrapper">
+              <label htmlFor="mastercard" className="card-label">
+                <input
+                  type="radio"
+                  id="mastercard"
+                  name="cardType"
+                  value="mastercard"
+                  checked={formData.cardType === "mastercard"}
+                  onChange={(e) =>
+                    setFormData({ ...formData, cardType: e.target.value })
+                  }
+                  disabled
+                />
+                <div className="card-image">
+                  <img src={chappalogo} alt="Mastercard" />
+                </div>
+                <div className="card-text">Mastercard</div>
+                <div className="unavailable-text">Currently Not Available</div>
+              </label>
+            </Card>
+          </div>
+        </div>
+        <div className="form-group button-group">
+          <button className="btn-back" type="button" onClick={onPrev}>
+            Back
+          </button>
+          <button className="btn-submit" type="submit">
+            Next step
+          </button>
+        </div>
+      </div>
     </form>
   );
 }
@@ -423,21 +474,99 @@ function OrderSummaryStep({ onPrev }) {
     console.log(product, seller);
   };
 
+  const calculateTotalPrice = () => {
+    let totalPrice = 0;
+    products.forEach((product) => {
+      totalPrice += product.price * product.quantity;
+    });
+    return totalPrice;
+  };
+
+  const calculateTotalPriceWithTax = () => {
+    const totalPrice = calculateTotalPrice();
+    const tax = totalPrice * 0.15;
+    return totalPrice + tax;
+  };
+
+  const orderss = JSON.parse(localStorage.getItem("order"));
+
   // console.log(product);
   // console.log(product, response);
   return (
-    <div>
-      <Text size="xl" weight={500} mb="sm">
-        Order Summary n
-      </Text>
-      <Text>abebe {product.createdBy}</Text>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>{product.name}</li>
-        ))}
-      </ul>
-      {/* {product}
-      {seller} */}
+    <div className="container">
+      <div className="order-summary">
+        <Card shadow="xs" className="summary-table">
+          <h3> Order Summary</h3>
+          <Table striped>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.map((product) => (
+                <tr key={product.id}>
+                  <td>
+                    <strong>{product.name}</strong>
+                  </td>
+                  <td>
+                    {product.quantity}
+                    {product.stock.unit}
+                  </td>
+                  <td>
+                    <>{product.price} Birr</>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colSpan="2">Total Price</td>
+                <td>
+                  <strong>{calculateTotalPrice().toFixed(2)} Birr</strong>
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="2">Total Price + tax</td>
+                <td>
+                  <strong>
+                    {calculateTotalPriceWithTax().toFixed(2)} Birr
+                  </strong>
+                </td>
+              </tr>
+            </tfoot>
+          </Table>
+        </Card>
+      </div>
+      <div className="buyer-details">
+        <Card shadow="xs" className="details-card">
+          <h3>Shipping details</h3>
+          <Text>Region: {orderss.shippingDetails.state}</Text>
+          <Text>Address: {orderss.shippingDetails.address}</Text>
+          <Text>City: {orderss.shippingDetails.city}</Text>
+          <Text>Description: {orderss.shippingDetails.zipCode}</Text>
+        </Card>
+      </div>
+      <div className="seller-details">
+        <Card shadow="xs" className="details-card">
+          <h3>Farmer Detail</h3>
+          <Text>
+            Name: {seller.firstName} {seller.lastName}
+          </Text>
+          <Text>Region: {seller.region}</Text>
+          <Text>Address: {seller.address}</Text>
+          <Text>Phone: {seller.phone}</Text>
+          {seller.paymentInfo && (
+            <>
+              <Text>Yenepay Account: {seller.paymentInfo.number}</Text>
+              <Text> Pdt: {seller.paymentInfo.pdt}</Text>
+            </>
+          )}
+        </Card>
+      </div>
+
       <Group position="center" mt="xl">
         <Button variant="default" onClick={onPrev}>
           Back

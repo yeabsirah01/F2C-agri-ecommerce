@@ -1,0 +1,27 @@
+.cartItems {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.cartItemContainer {
+  width: 300px; /* Set the desired fixed width */
+}
+
+.total {
+  font-size: large;
+  position: relative;
+  left: 50%;
+
+  /* bottom: 0;
+  right: 0; */
+  padding: 10px;
+}
+.price {
+  font-size: large;
+  color: red;
+}
+.btnn {
+  font-size: large;
+}

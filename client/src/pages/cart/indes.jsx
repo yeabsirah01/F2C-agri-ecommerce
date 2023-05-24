@@ -102,7 +102,10 @@ const Cart = ({ onClose }) => {
           })}
         </div>
 
-        <div> Total Price: {totalPrice} ETB</div>
+        <div className="total">
+          {" "}
+          Total Price: <span className="price">{totalPrice} </span> ETB
+        </div>
 
         <div
           className="checkout"

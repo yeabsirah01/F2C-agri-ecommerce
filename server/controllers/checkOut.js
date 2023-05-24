@@ -62,9 +62,9 @@ const CheckoutCart = async function (req, res) {
     var data = req.body.newItemsArray;
 
     var checkoutItems = data;
-    var totalItemsDeliveryFee = 100;
-    var totalItemsDiscount = 50;
-    var totalItemsHandlingFee = 30;
+    // var totalItemsDeliveryFee = 100;
+    // var totalItemsDiscount = 50;
+    // var totalItemsHandlingFee = 30;
     var totalPrice = 0;
 
     checkoutItems.forEach(function (element) {
@@ -75,9 +75,9 @@ const CheckoutCart = async function (req, res) {
     var totalItemsTax2 = 0;
 
     checkoutOptions.SetOrderFees(
-      totalItemsDeliveryFee,
-      totalItemsDiscount,
-      totalItemsHandlingFee,
+      // totalItemsDeliveryFee,
+      // totalItemsDiscount,
+      // totalItemsHandlingFee,
       totalItemsTax1,
       totalItemsTax2
     );

@@ -66,6 +66,28 @@ const cartSlice = createSlice({
     setCart: (state, action) => {
       return action.payload;
     },
+    incrementQuantity: (state, action) => {
+      const productId = action.payload;
+      const product = state.products.find((p) => p._id === productId);
+
+      if (product) {
+        product.quantity++;
+        state.totalPrice += product.price;
+
+        Cookies.set("cart", JSON.stringify(state), { expires: 30 });
+      }
+    },
+    decrementQuantity: (state, action) => {
+      const productId = action.payload;
+      const product = state.products.find((p) => p._id === productId);
+
+      if (product && product.quantity > 1) {
+        product.quantity--;
+        state.totalPrice -= product.price;
+
+        Cookies.set("cart", JSON.stringify(state), { expires: 30 });
+      }
+    },
   },
   extraReducers: {
     [logout]: (state, action) => {
@@ -75,7 +97,13 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addProduct, removeProduct, clearCart, setCart } =
-  cartSlice.actions;
+export const {
+  addProduct,
+  removeProduct,
+  clearCart,
+  setCart,
+  incrementQuantity,
+  decrementQuantity,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;
