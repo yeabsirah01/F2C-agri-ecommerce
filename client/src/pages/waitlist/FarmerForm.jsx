@@ -3,6 +3,7 @@ import { Button, TextInput, Textarea, FileInput, Loader } from "@mantine/core";
 import axiosConfig from "../../axiosConfig";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import "./styles.css";
 
 const FarmerApplicationForm = () => {
   const [nationalIdNumber, setNationalIdNumber] = useState("");
@@ -50,51 +51,74 @@ const FarmerApplicationForm = () => {
   };
 
   return (
-    <form enctype="multipart/form-data" onSubmit={handleSubmit}>
-      <TextInput
-        label="National ID Number"
+    <form
+      className="formContainer"
+      encType="multipart/form-data"
+      onSubmit={handleSubmit}
+    >
+      <label className="label">National ID Number</label>
+      <input
+        className="inputField"
+        type="text"
         value={nationalIdNumber}
         onChange={(event) => setNationalIdNumber(event.target.value)}
         required
       />
-      <TextInput
-        label="Farming License Number"
+
+      <label className="label">Farming License Number</label>
+      <input
+        className="inputField"
+        type="text"
         value={farmingLicenseNumber}
         onChange={(event) => setFarmingLicenseNumber(event.target.value)}
         required
       />
-      <Textarea
-        label="Letter"
+
+      <label className="label">Letter</label>
+      <textarea
+        className="inputField"
         value={letter}
         onChange={(event) => setLetter(event.target.value)}
         required
-      />
-      <FileInput
-        label="Profile Picture"
-        onChange={setProfilePicture}
-        required
-      />
-      <FileInput
-        label="Farming License"
-        onChange={setFarmingLicense}
+      ></textarea>
+
+      <label className="label">Profile Picture</label>
+      <input
+        className="fileInput"
+        type="file"
+        onChange={(event) => setProfilePicture(event.target.files[0])}
         required
       />
 
-      <FileInput
-        label="National ID Photo"
-        accept="image/*"
-        onChange={setNationalIDPhoto}
+      <label className="label">Farming License</label>
+      <input
+        className="fileInput"
+        type="file"
+        onChange={(event) => setFarmingLicense(event.target.files[0])}
         required
       />
-      <FileInput
-        label="Farm Sample Photo"
+
+      <label className="label">National ID Photo</label>
+      <input
+        className="fileInput"
+        type="file"
         accept="image/*"
-        onChange={setFarmSamplePhoto}
+        onChange={(event) => setNationalIDPhoto(event.target.files[0])}
         required
       />
-      <Button type="submit" disabled={loading}>
+
+      <label className="label">Farm Sample Photo</label>
+      <input
+        className="fileInput"
+        type="file"
+        accept="image/*"
+        onChange={(event) => setFarmSamplePhoto(event.target.files[0])}
+        required
+      />
+
+      <button className="button" type="submit" disabled={loading}>
         {loading ? <Loader size="xs" /> : "Submit"}
-      </Button>
+      </button>
     </form>
   );
 };
