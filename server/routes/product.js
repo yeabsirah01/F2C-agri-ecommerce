@@ -16,7 +16,7 @@ const {
 } = require("../controllers/checkOut");
 const authorizationMiddleware = require("./../middleware/authorization");
 const checkSubscription = require("../middleware/checkSubscription");
-const userMiddleware = require("../middleware/usermiddleware");
+const userMiddleware = require("../middleware/userMiddleware");
 const router = express.Router();
 
 router.post("/checkout/:id", CheckoutCart);
