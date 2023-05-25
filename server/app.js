@@ -178,7 +178,7 @@ io.on("connection", (socket) => {
 
 const start = async () => {
   try {
-    await connectDB(process.env.ATLAS).then(() =>
+    await connectDB(process.env.DATABASE_ATLAS).then(() =>
       console.log("DB connection successful!")
     );
     httpServer.listen(PORT, () => {
