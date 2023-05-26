@@ -69,6 +69,7 @@ import {
 import ViewFarmerProduct from "../../pages/Dashboard/AdminDashoard/ViewFarmerProducts";
 import AllProducts from "../../pages/Dashboard/AdminDashoard/AllProducts";
 import SupportScreen from "../../pages/Dashboard/AdminDashoard/SupportScreen";
+import SupportRegister from "../../pages/Dashboard/AdminDashoard/SupportRegister";
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -273,6 +274,19 @@ function AdminPanel() {
                 </Link>
               </li>
               <li>
+                <Link to="/dashboard/registersupport">
+                  <div
+                    className={`navBox ${
+                      activeElement === "registersupport" ? "active" : ""
+                    }`}
+                    onClick={() => handleElementClick("registersupport")}
+                  >
+                    <IconBasket size={24} />
+                    <Text style={{ marginLeft: 8 }}>Register CS</Text>
+                  </div>
+                </Link>
+              </li>
+              <li>
                 <Button
                   onClick={() => dispatch(logout())}
                   leftIcon={<IconPower size={24} />}
@@ -386,6 +400,11 @@ function AdminPanel() {
           <Route exact path="dashboard/waitlist" element={<WaitlistTable />} />
           <Route exact path="dashboard/users" element={<AllUsers />} />
           <Route exact path="dashboard/allproducts" element={<AllProducts />} />
+          <Route
+            exact
+            path="dashboard/registersupport"
+            element={<SupportRegister />}
+          />
           <Route exact path="dashboard/support" element={<SupportScreen />} />
           <Route
             exact

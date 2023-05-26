@@ -34,6 +34,8 @@ function AvatarIcon() {
     height: "50px",
     position: "relative",
     overflow: "hidden",
+
+    top: -7,
   };
   // console.log(subscription);
   const imageStyles = {

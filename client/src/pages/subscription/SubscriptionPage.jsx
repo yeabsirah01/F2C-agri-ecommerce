@@ -144,7 +144,7 @@ export function SubscriptionCard({ days, name, discountPercentage }) {
         <Image src="https://i.imgur.com/ZL52Q2D.png" alt="Tesla Model S" />
       </Card.Section>
 
-      <Group position="apart" mt="md">
+      <Group position="apart" mt="md" style={{ marginTop: "52px" }}>
         <div>
           <Text fw={500}>{days}-Day Subscription</Text>
           <Text fz="xs" c="dimmed">
@@ -198,7 +198,7 @@ function SubscriptionPage() {
   );
 
   return (
-    <>
+    <div style={{ marginTop: "52px" }}>
       {isActive ? (
         <p>Your subscription is currently active.</p>
       ) : (
@@ -224,7 +224,7 @@ function SubscriptionPage() {
           discountPercentage={20}
         />
       </div>
-    </>
+    </div>
   );
 }
 

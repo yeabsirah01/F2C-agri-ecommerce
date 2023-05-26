@@ -182,9 +182,12 @@ io.on("connection", (socket) => {
 
 const start = async () => {
   try {
-    await connectDB(process.env.DATABASE_ATLAS).then(() =>
+    await connectDB(process.env.DATABASE_LOCAL).then(() =>
       console.log("DB connection successful!")
     );
+    // await connectDB(process.env.DATABASE_ATLAS).then(() =>
+    //   console.log("DB connection successful!")
+    // );
     httpServer.listen(PORT, () => {
       console.log(`Serve at http://localhost:${PORT}`);
     });

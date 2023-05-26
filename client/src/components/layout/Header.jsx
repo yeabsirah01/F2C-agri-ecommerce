@@ -35,6 +35,7 @@ import Login from "./../../pages/auth/Loginn";
 import SignUp from "../../pages/auth/SignUp";
 import { AppShell, Navbar } from "@mantine/core";
 import { useSelector } from "react-redux";
+import Logo from "../../assets/final Logo1.png";
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -186,124 +187,125 @@ function AppHeader() {
   }
 
   return (
-    <Header
-      height={60}
-      p="xs"
-      style={{ position: "fixed", top: 0, left: 0, right: 0 }}
-    >
-      <Box pb={0}>
-        <Header height={70} px="md" bg="#77AB59">
-          <Group position="apart" sx={{ height: "100%" }}>
-            <img
-              src={"./Logo.png"}
-              alt={"abebe"}
-              style={{ width: 200, height: 50 }}
-            />
+    <Box pb={0}>
+      <Header
+        height={60}
+        p="xs"
+        style={{ position: "fixed", top: 0, left: 0, right: 0 }}
+        px="md"
+        bg="#77AB59"
+      >
+        <Group position="apart" sx={{ height: "100%" }}>
+          <img
+            src={Logo}
+            alt={"logo"}
+            style={{ position: "relative", top: -10, width: 80, height: 40 }}
+          />
 
-            <Group
-              sx={{ height: "100%" }}
-              spacing={0}
-              className={classes.hiddenMobile}
+          <Group
+            sx={{ height: "100%" }}
+            spacing={0}
+            className={classes.hiddenMobile}
+          >
+            <a href="/" className={classes.link}>
+              Home
+            </a>
+            <HoverCard
+              width={600}
+              position="bottom"
+              radius="md"
+              shadow="md"
+              withinPortal
             >
-              <a href="/" className={classes.link}>
-                Home
-              </a>
-              <HoverCard
-                width={600}
-                position="bottom"
-                radius="md"
-                shadow="md"
-                withinPortal
-              >
-                <HoverCard.Target>
-                  <a href="/" className={classes.link}>
-                    <Center inline>
-                      <Box component="span" mr={5}>
-                        Features
-                      </Box>
-                      <IconChevronDown
-                        size={16}
-                        color={theme.fn.primaryColor()}
-                      />
-                    </Center>
-                  </a>
-                </HoverCard.Target>
+              <HoverCard.Target>
+                <a href="/" className={classes.link}>
+                  <Center inline>
+                    <Box component="span" mr={5}>
+                      Features
+                    </Box>
+                    <IconChevronDown
+                      size={16}
+                      color={theme.fn.primaryColor()}
+                    />
+                  </Center>
+                </a>
+              </HoverCard.Target>
 
-                <HoverCard.Dropdown sx={{ overflow: "hidden" }}>
-                  <Group position="apart" px="md">
-                    <Text fw={500}>Features</Text>
-                    <Anchor href="#" fz="xs">
-                      View all
-                    </Anchor>
+              <HoverCard.Dropdown sx={{ overflow: "hidden" }}>
+                <Group position="apart" px="md">
+                  <Text fw={500}>Features</Text>
+                  <Anchor href="#" fz="xs">
+                    View all
+                  </Anchor>
+                </Group>
+
+                <Divider
+                  my="sm"
+                  mx="-md"
+                  color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
+                />
+
+                <SimpleGrid cols={2} spacing={0}>
+                  {links}
+                </SimpleGrid>
+
+                <div className={classes.dropdownFooter}>
+                  <Group position="apart">
+                    <div>
+                      <Text fw={500} fz="sm">
+                        Get started
+                      </Text>
+                      <Text size="xs" color="dimmed">
+                        Their food sources have decreased, and their numbers
+                      </Text>
+                    </div>
+                    <Button variant="default">Get started</Button>
                   </Group>
-
-                  <Divider
-                    my="sm"
-                    mx="-md"
-                    color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
-                  />
-
-                  <SimpleGrid cols={2} spacing={0}>
-                    {links}
-                  </SimpleGrid>
-
-                  <div className={classes.dropdownFooter}>
-                    <Group position="apart">
-                      <div>
-                        <Text fw={500} fz="sm">
-                          Get started
-                        </Text>
-                        <Text size="xs" color="dimmed">
-                          Their food sources have decreased, and their numbers
-                        </Text>
-                      </div>
-                      <Button variant="default">Get started</Button>
-                    </Group>
-                  </div>
-                </HoverCard.Dropdown>
-              </HoverCard>
-              <a href="/Products" className={classes.link}>
-                Products
-              </a>
-              <a href="/pricing" className={classes.link}>
-                Pricing
-              </a>
-              <a href="/" className={classes.link}>
-                Academy
-              </a>
-            </Group>
-
-            <Group className={classes.hiddenMobile}>
-              {isAuthenticated ? (
-                <>
-                  <CartIcon />
-
-                  <AvatarIcon />
-                </>
-              ) : (
-                <>
-                  <Button variant="outline" onClick={handleLoginButtonClick}>
-                    Log in
-                  </Button>
-                  <Button variant="filled" onClick={handleSignUpButtonClick}>
-                    Sign up
-                  </Button>
-                </>
-              )}
-            </Group>
-
-            <Burger
-              opened={drawerOpened}
-              onClick={toggleDrawer}
-              className={classes.hiddenDesktop}
-            />
+                </div>
+              </HoverCard.Dropdown>
+            </HoverCard>
+            <a href="/Products" className={classes.link}>
+              Products
+            </a>
+            <a href="/pricing" className={classes.link}>
+              Pricing
+            </a>
+            <a href="/" className={classes.link}>
+              Academy
+            </a>
           </Group>
-        </Header>
-        {showLoginModal && <Login onClose={handleLoginModalClose} />}
-        {showSignUpModal && <SignUp onClose={handleSignUpModalClose} />}
-        {/* ----------------------------------------- */}
-      </Box>
-    </Header>
+
+          <Group className={classes.hiddenMobile}>
+            {isAuthenticated ? (
+              <>
+                <CartIcon />
+                <div styles={{ position: "relative", top: "70px" }}>
+                  <AvatarIcon />
+                </div>
+              </>
+            ) : (
+              <>
+                <Button variant="outline" onClick={handleLoginButtonClick}>
+                  Log in
+                </Button>
+                <Button variant="filled" onClick={handleSignUpButtonClick}>
+                  Sign up
+                </Button>
+              </>
+            )}
+          </Group>
+
+          <Burger
+            opened={drawerOpened}
+            onClick={toggleDrawer}
+            className={classes.hiddenDesktop}
+          />
+        </Group>
+      </Header>
+      {showLoginModal && <Login onClose={handleLoginModalClose} />}
+      {showSignUpModal && <SignUp onClose={handleSignUpModalClose} />}
+      {/* ----------------------------------------- */}
+    </Box>
   );
 }
 

@@ -30,6 +30,7 @@ export const CartItem = ({ product, cartItem, deleteProduct }) => {
           }
           alt={product.name}
           width={80}
+          height={65}
           crossOrigin="cross-origin"
         />
         <div style={{ marginLeft: 10, fontSize: "15px" }}>

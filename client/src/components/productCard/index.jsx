@@ -180,7 +180,17 @@ const ProductCards = ({ products, setProducts }) => {
             placeholder="Filter by category"
             value={filterCategory}
             onChange={(value) => setFilterCategory(value)}
-            data={["select", "Fruits", "Vegetables", "Vines"].map((option) => ({
+            data={[
+              "select",
+              "ፍራፍሬዎች",
+              "አትክልቶች",
+              "ጥራጥሬ",
+              "እህል",
+              "ቅመም",
+              "ቡና",
+              "የእንስሳት ተዋዕፆ",
+              "እንስሳት",
+            ].map((option) => ({
               value: option,
               label: option,
             }))}

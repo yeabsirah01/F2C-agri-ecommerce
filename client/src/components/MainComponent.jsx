@@ -6,7 +6,7 @@ import { login } from "./../features/userSlice";
 import AuthPage from "./../pages/auth";
 import CreateProduct from "./../pages/createProduct";
 import EditProduct from "./../pages/createProduct/editProduct";
-import Home from "./../pages/home";
+import Home from "../pages/home/Home";
 import { Routes, Route } from "react-router-dom";
 import Profile from "./../pages/profile";
 import Cart from "./../pages/cart/indes";
@@ -53,7 +53,7 @@ function MainComponent({ user }) {
       ) : (
         <>
           <Header />
-          <div style={{ marginTop: "80px" }}>
+          <div style={{ marginTop: "0px" }}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/pricing" element={<SubscriptionPage />} />
