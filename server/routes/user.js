@@ -5,7 +5,7 @@ const {
   updateUser,
   disableUser,
 } = require("../controllers/user");
-const userMiddleware = require("../middleware/usermiddleware");
+const userMiddleware = require("../middleware/userMiddleware");
 const router = express.Router();
 const authorizationMiddleware = require("./../middleware/authorization");
 

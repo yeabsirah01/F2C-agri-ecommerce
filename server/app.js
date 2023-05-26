@@ -59,7 +59,7 @@ const errorHandlerMiddleware = require("./middleware/error-handler");
 const authorizationMiddleware = require("./middleware/authorization");
 const notFoundMiddleware = require("./middleware/not-found");
 const checkSubscription = require("./middleware/checkSubscription");
-const userMiddleware = require("./middleware/usermiddleware");
+const userMiddleware = require("./middleware/userMiddleware");
 
 app.use(xss());
 app.use(helmet());
