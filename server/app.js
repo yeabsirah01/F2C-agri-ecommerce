@@ -74,6 +74,10 @@ app.get("/", (req, res) => {
 app.use(express.static("public"));
 
 //routes
+app.get("/", (req, res) => {
+  res.setHeader("Content-Type", "text/html");
+  res.send("Hello World from the root!");
+});
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/products", productRouter);
