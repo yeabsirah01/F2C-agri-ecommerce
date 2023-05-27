@@ -32,6 +32,7 @@
     "request": "^2.88.0",
     "socket.io": "^4.6.1",
     "stripe": "^9.16.0",
+    "twilio": "^4.11.1",
     "xss-clean": "^0.1.1",
     "yenepaysdk": "^1.2.0"
   }

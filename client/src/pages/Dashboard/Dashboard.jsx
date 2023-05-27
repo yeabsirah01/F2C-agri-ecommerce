@@ -306,9 +306,9 @@ function Dashboard({ children }) {
         </Navbar>
       }
     >
-      <div>
+      {/* <div>
         <Breadcrumbs />
-      </div>
+      </div> */}
       <div>
         <Routes>
           <Route exact path="/create" element={<CreateProduct />} />

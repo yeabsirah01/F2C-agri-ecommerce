@@ -1,11 +1,8 @@
-// import { useEffect, useState } from "react";
-// import axios from "axios";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import axiosConfig from "../../../axiosConfig";
 import { Formik, Form } from "formik";
-// import { useEffect } from "react";
-// import { useState } from "react";
 import * as Yup from "yup";
-
 import Button from "../../../components/button/";
 import ImageUploader from "../../../components/imageUploader";
 import {
@@ -14,12 +11,8 @@ import {
   TextAreaInput,
 } from "../../../components/inputs";
 import { useParams, useNavigate } from "react-router-dom";
-import "./../../createProduct/styles.css";
+import "./styles.css";
 import { toast } from "react-toastify";
-
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Table, LoadingOverlay, Modal, Image } from "@mantine/core";
 import { useSelector } from "react-redux";
 
 const initialValues = {
@@ -39,11 +32,11 @@ const initialValues = {
 const UpdateUserInfo = ({ user }) => {
   const [waitlist, setWaitlist] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  //
   const [_initialValues, setInitialValues] = useState(initialValues);
   const { id } = useParams();
   const { _id } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const [profilePicture, setprofilePicture] = useState("");
 
   useEffect(() => {
     const getUser = async () => {
@@ -58,7 +51,6 @@ const UpdateUserInfo = ({ user }) => {
     };
     getUser();
   }, [_id]);
-  const [profilePicture, setprofilePicture] = useState("");
 
   const handleSubmit = async (formData) => {
     const _formData = new FormData();
@@ -73,8 +65,8 @@ const UpdateUserInfo = ({ user }) => {
     _formData.append("profilePicture", profilePicture);
     _formData.append("paymentNumber", formData.paymentNumber);
     _formData.append("paymentPdt", formData.paymentPdt);
-
     _formData.append("phone", formData.phone);
+
     const headers = { "Content-Type": "multipart/form-data" };
     try {
       await axiosConfig.put(`/users/${_id}`, _formData, {
@@ -90,10 +82,8 @@ const UpdateUserInfo = ({ user }) => {
     }
   };
 
-  //   ???????????
-
   return (
-    <div className="createProduct">
+    <div className="edit-profile">
       <h1 className="title">Edit Profile</h1>
       <Formik
         initialValues={_initialValues}
@@ -104,93 +94,86 @@ const UpdateUserInfo = ({ user }) => {
         {() => {
           return (
             <Form className="form">
-              <TextInput
-                name="firstName"
-                label="First Name *"
-                placeholder="Enter your first name"
-              />
-              <TextInput
-                name="lastName"
-                label="Last Name *"
-                placeholder="Enter your last name"
-              />
-              <TextInput
-                name="address"
-                label="Address *"
-                placeholder="Enter your address"
-              />
-              <TextInput
-                name="paymentNumber"
-                label="PaymentNUmber *"
-                placeholder="Enter your pin code"
-              />
-              <TextInput
-                name="paymentPdt"
-                label="Payment odt *"
-                placeholder="Enter your pin code"
-              />
-              <SelectInput
-                label="Role *"
-                options={["Admin", "Manager", "Employee"]}
-                placeholder="Select your role"
-                name="role"
-              />
-              <TextInput
-                name="region"
-                label="Region *"
-                placeholder="Enter your region"
-              />
-              <SelectInput
-                label="Gender *"
-                options={["Male", "Female", "Other"]}
-                placeholder="Select your gender"
-                name="gender"
-              />
-              <TextInput
-                name="email"
-                label="Email *"
-                placeholder="Enter your email"
-              />
-              <TextInput
-                name="password"
-                label="Password *"
-                placeholder="Enter your password"
-                type="password"
-              />
-              <TextInput
-                name="phone"
-                label="Phone *"
-                placeholder="Enter your phone number"
-                type="tel"
-              />{" "}
-              <Button
-                label="Cancel"
-                style={{
-                  gridColumnStart: "4",
-                  gridColumnEnd: "7",
-                }}
-                type="reset"
-                onClick={() => {
-                  navigate("/");
-                }}
-              />
-              <Button
-                label="Edit"
-                style={{
-                  gridColumnStart: "7",
-                  gridColumnEnd: "10",
-                }}
-              />
+              <div className="form-column">
+                <div className="image-uploader-container">
+                  <ImageUploader
+                    image={_initialValues.profilePicture}
+                    onChange={(profilePicture) => {
+                      setprofilePicture(profilePicture);
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="form-column">
+                <TextInput
+                  name="firstName"
+                  label="First Name *"
+                  placeholder="Enter your first name"
+                />
+                <TextInput
+                  name="lastName"
+                  label="Last Name *"
+                  placeholder="Enter your last name"
+                />
+
+                <TextInput
+                  name="address"
+                  label="Address *"
+                  placeholder="Enter your address"
+                />
+                <TextInput
+                  name="region"
+                  label="Region *"
+                  placeholder="Enter your region"
+                />
+
+                <TextInput
+                  name="email"
+                  label="Email *"
+                  placeholder="Enter your email"
+                />
+                <TextInput
+                  name="phone"
+                  label="Phone *"
+                  placeholder="Enter your phone number"
+                  type="tel"
+                />
+                <TextInput
+                  name="password"
+                  label="Password *"
+                  placeholder="Enter your password"
+                  type="password"
+                />
+              </div>
+              <div className="form-column">
+                <div className="payment-form">
+                  <TextInput
+                    name="paymentNumber"
+                    label="Payment Number *"
+                    placeholder="Enter your payment number"
+                  />
+                  <TextInput
+                    name="paymentPdt"
+                    label="Payment PDT *"
+                    placeholder="Enter your payment PDT"
+                  />
+                </div>
+              </div>
+              <div className="button-container">
+                <Button
+                  label="Cancel"
+                  className="cancel-button"
+                  type="reset"
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                />
+                <Button label="Edit" className="edit-button" />
+              </div>
             </Form>
           );
         }}
       </Formik>
-      <ImageUploader
-        image={_initialValues.profilePicture}
-        onChange={(profilePicture) => {
-          setprofilePicture(profilePicture);
-        }}
-      />
     </div>
   );
 };

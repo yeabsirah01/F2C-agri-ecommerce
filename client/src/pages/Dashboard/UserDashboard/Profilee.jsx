@@ -47,6 +47,7 @@ import { Formik, Form } from "formik";
 // import { useEffect } from "react";
 // import { useState } from "react";
 import * as Yup from "yup";
+import placeholderImage from "../../../assets/Default_ava.png";
 
 // import Button from "../../../components/button/";
 import ImageUploader from "../../../components/imageUploader";
@@ -112,6 +113,32 @@ export function Profilee() {
 
   const { _id, role } = useSelector((state) => state.user);
 
+  const styleText =
+    role === "Admin" || role === "Transporter"
+      ? { color: "#FFFFFF" }
+      : { color: "#333333" };
+
+  const styleText2 =
+    role === "Admin" || role === "Transporter"
+      ? { color: "#C68642", fontWeight: "bold" }
+      : { color: "#8B5A2B", fontWeight: "bold" };
+  const styleText3 =
+    role === "Admin" || role === "Transporter"
+      ? { color: "#FFFFFF", fontWeight: "normal" }
+      : { color: "#333333", fontWeight: "normal" };
+
+  const containerStyle = {
+    background: "linear-gradient(45deg, #FFFFFF, #F2F2F2)",
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: "10px",
+
+    borderColor: "#FFFFFF",
+    borderRadius: "4px",
+    paddingLeft: "80px",
+    // Add other styles as needed
+  };
+
   useEffect(() => {
     const getUser = async () => {
       const token = `Bearer ${localStorage.getItem("cookie")}`;
@@ -142,14 +169,14 @@ export function Profilee() {
 
   return (
     <div style={{ paddingLeft: "100px" }}>
-      <ActionIcon
+      {/* <ActionIcon
         variant="outline"
         color={dark ? "yellow" : "blue"}
         onClick={() => toggleColorScheme()}
         title="Toggle color scheme"
       >
         {dark ? <IconSun size="1.1rem" /> : <IconMoonStars size="1.1rem" />}
-      </ActionIcon>
+      </ActionIcon> */}
 
       <Text fz="20px" c={"#8B5A2B"} className="title">
         My Profile
@@ -198,17 +225,26 @@ export function Profilee() {
                   // borderRadius: "50%",
                   objectFit: "center",
                 }}
-                src={`http://localhost:5000/${_initialValues.profilePicture}`}
+                src={
+                  _initialValues.profilePicture
+                    ? `http://localhost:5000/${_initialValues.profilePicture}`
+                    : placeholderImage
+                }
                 alt={"Profile imag"}
                 crossOrigin="cross-origin"
               />
             </div>
           </div>
 
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
             <Text
               variant="gradient"
-              gradient={{ from: "green", to: "brown", deg: 45 }}
+              gradient={{ from: "#00FF00 ", to: "#008000", deg: 90 }}
               sx={{ fontFamily: "Greycliff CF, sans-serif" }}
               fz="30px"
               fw={700}
@@ -223,14 +259,14 @@ export function Profilee() {
               Role: {_initialValues.role}
             </Badge>
           </div>
-          <p>
+          {/* <p style={styleText}>
             Bio: {_initialValues.firstName} is a hardworking and dedicated
             farmer with a deep-rooted passion for the land. Born and raised in a
             farming family, he has been tilling the soil since he was old enough
             to hold a shovel. With years of experience under his belt, John has
             developed an intimate understanding of the cycles of nature and the
             art of nurturing crops.
-          </p>
+          </p> */}
         </div>
         <Grid gutter="md">
           <Grid.Col>
@@ -241,7 +277,12 @@ export function Profilee() {
                 paddingLeft: "120px",
               }}
             >
-              <Button variant="outline" color="dark" size="md">
+              <Button
+                variant="outline"
+                color="green"
+                size="md"
+                style={styleText}
+              >
                 <Link
                   to={`/dashboard/updateuserinfo`}
                   style={{ textDecoration: "none", color: "inherit" }}
@@ -251,85 +292,91 @@ export function Profilee() {
               </Button>
             </div>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "10px",
-
-                borderColor: "#FFFFFF",
-                borderRadius: "4px",
-                paddingLeft: "80px",
-              }}
-            >
-              <Paper padding="md" shadow="xs" radius="sm">
-                <Text style={{ color: "#333333" }}>
+            <div style={containerStyle}>
+              <div padding="md" shadow="xs" radius="sm">
+                <Text style={styleText2}>
                   First Name:{" "}
-                  <span style={{ fontWeight: "bold", color: "#556B2F" }}>
+                  <span style={styleText3}>
                     {_initialValues.firstName.charAt(0).toUpperCase() +
                       _initialValues.firstName.slice(1)}
                   </span>
                 </Text>
-                <Text style={{ color: "#333333" }}>
+                <Text style={styleText2}>
                   Last Name:{" "}
-                  <span style={{ fontWeight: "bold", color: "#556B2F" }}>
+                  <span style={styleText3}>
                     {_initialValues.lastName.charAt(0).toUpperCase() +
                       _initialValues.lastName.slice(1)}
                   </span>
                 </Text>
-                <Text style={{ color: "#333333" }}>
+                <Text style={styleText2}>
                   Address:{" "}
-                  <span style={{ fontWeight: "bold", color: "#556B2F" }}>
-                    {_initialValues.address}
-                  </span>
+                  <span style={styleText3}>{_initialValues.address}</span>
                 </Text>
-                <Text style={{ color: "#333333" }}>
+                <Text style={styleText2}>
                   Region:{" "}
-                  <span style={{ fontWeight: "bold", color: "#556B2F" }}>
-                    {_initialValues.region}
-                  </span>
+                  <span style={styleText3}>{_initialValues.region}</span>
                 </Text>
-              </Paper>
-              <Paper padding="md" shadow="xs" radius="sm">
-                <Text style={{ color: "#333333" }}>
+              </div>
+              <div padding="md" shadow="xs" radius="sm">
+                <Text style={styleText2}>
                   Gender:{" "}
-                  <span style={{ fontWeight: "bold", color: "#556B2F" }}>
-                    {_initialValues.gender}
-                  </span>
+                  <span style={styleText3}>{_initialValues.gender}</span>
                 </Text>
-                <Text style={{ color: "#333333" }}>
-                  Email:{" "}
-                  <span style={{ fontWeight: "bold", color: "#556B2F" }}>
-                    {_initialValues.email}
-                  </span>
+                <Text style={styleText2}>
+                  Email: <span style={styleText3}>{_initialValues.email}</span>
                 </Text>
-                <Text style={{ color: "#333333" }}>
-                  Phone:{" "}
-                  <span style={{ fontWeight: "bold", color: "#556B2F" }}>
-                    {_initialValues.phone}
-                  </span>
+                <Text style={styleText2}>
+                  Phone: <span style={styleText3}>{_initialValues.phone}</span>
                 </Text>
-              </Paper>
+              </div>
             </div>
           </Grid.Col>
           <Grid.Col span={6}>
             {role === "Consumer" || role === "Farmer" ? (
               <div
                 style={{
+                  background: "linear-gradient(45deg, #FFFFFF, #F2F2F2)",
+
                   borderColor: "#FFFFFF",
                   borderRadius: "4px",
-                  paddingLeft: "80px",
                 }}
               >
-                <Text>
-                  Payment Info Number: {_initialValues.paymentInfo.number}
+                <Text style={styleText2}>
+                  Payment Info Number:{" "}
+                  <span style={styleText3}>
+                    {_initialValues.paymentInfo.number}
+                  </span>
                 </Text>
-                <Text>Subscription: {_initialValues.subscription.status}</Text>
-                <Text>Payment Info PDT: {_initialValues.paymentInfo.pdt}</Text>
+                <Text style={styleText2}>
+                  Subscription:{" "}
+                  <span style={styleText3}>
+                    {" "}
+                    {_initialValues.subscription.status}
+                  </span>
+                </Text>
+                <Text style={styleText2}>
+                  Payment Info PDT:{" "}
+                  <span style={styleText3}>
+                    {" "}
+                    {_initialValues.paymentInfo.pdt}
+                  </span>
+                </Text>
               </div>
             ) : null}
           </Grid.Col>
-          <Grid.Col span={6}> sale info</Grid.Col>
+          <Grid.Col span={6}>
+            {" "}
+            <div
+              style={{
+                background: "linear-gradient(45deg, #FFFFFF, #F2F2F2)",
+
+                borderColor: "#FFFFFF",
+                borderRadius: "4px",
+              }}
+            >
+              sale info{" "}
+            </div>
+          </Grid.Col>
         </Grid>
       </SimpleGrid>
     </div>

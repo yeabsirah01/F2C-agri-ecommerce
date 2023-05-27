@@ -1,0 +1,122 @@
+.edit-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.edit-profile .title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.edit-profile .form {
+  width: 400px; /* Adjust the width as per your preference */
+  margin-bottom: 20px;
+}
+
+.edit-profile .form input,
+.edit-profile .form select,
+.edit-profile .form textarea {
+  border: none;
+  padding: 10px;
+  background-color: #f6f6f6;
+  border-radius: 4px;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  font-size: 14px;
+}
+
+.edit-profile .form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.edit-profile .button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.edit-profile .button-container .cancel-button {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.edit-profile .button-container .edit-button {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.edit-profile .image-uploader {
+  margin-bottom: 20px;
+}
+
+.edit-profile .image-uploader .image-preview {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+.imageUploader {
+  width: 300px;
+  height: 300px;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.form-column {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.unique-field {
+  width: 100%;
+}
+
+.edit-profile .form {
+  width: 1100px; /* Adjust the width as per your preference */
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 80px;
+}
+
+.edit-profile .form-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-profile .form input,
+.edit-profile .form select,
+.edit-profile .form textarea {
+  border: none;
+  padding: 10px;
+  background-color: #f6f6f6;
+  border-radius: 4px;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.image-uploader-container {
+  width: 300px; /* Adjust the width as needed */
+  height: 300px; /* Adjust the height as needed */
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.payment-form {
+  background-color: #77ca74;
+  border: 1px solid #ff0000;
+  padding: 20px;
+  border-radius: 4px;
+}

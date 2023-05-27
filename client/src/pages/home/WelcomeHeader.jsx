@@ -87,16 +87,16 @@ export function WelcomeHeader() {
         <div className={classes.inner}>
           <div className={classes.content}>
             <Title className={classes.title}>
-              Welcome{" "}
+              እንኳን ወደ{" "}
               <Text
                 component="span"
                 inherit
                 variant="gradient"
                 gradient={{ from: "pink", to: "yellow" }}
               >
-                Mofer
+                ሞፈር
               </Text>{" "}
-              Ethiopian agri ecommerce
+              ኦንላይን የግብርና ምርቶች ገበያ በደህና መጡ።
             </Title>
 
             <Text className={classes.description} mt={30}>
