@@ -1,8 +1,12 @@
 const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
 const { AuthenticationError } = require("../errors");
+const jwt = require("jsonwebtoken");
 
 const multer = require("multer");
+const {
+  ContentAndApprovalsListInstance,
+} = require("twilio/lib/rest/content/v1/contentAndApprovals");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -24,6 +28,21 @@ const getUser = async (req, res) => {
   const { id } = req.params;
   const user = await User.findById(id).select({ password: 0 });
   res.json(user);
+};
+
+const confirmation = async (req, res) => {
+  try {
+    const { userId } = await jwt.verify(
+      req.params.token,
+      process.env.JWT_SECRET
+    );
+    // console.log(req.params.token);
+
+    await User.updateOne({ _id: userId }, { isVerified: true });
+    res.redirect("http://localhost:3000");
+  } catch (err) {
+    res.send("Error confirming email");
+  }
 };
 
 const disableUser = async (req, res) => {
@@ -83,4 +102,10 @@ const updateUser = async (req, res) => {
   }
 };
 
-module.exports = { getAllUsers, getUser, updateUser, disableUser };
+module.exports = {
+  getAllUsers,
+  getUser,
+  updateUser,
+  disableUser,
+  confirmation,
+};

@@ -17,6 +17,7 @@ const {
 const authorizationMiddleware = require("./../middleware/authorization");
 const checkSubscription = require("../middleware/checkSubscription");
 const userMiddleware = require("../middleware/userMiddleware");
+const emailVerified = require("../middleware/emailVerified");
 const router = express.Router();
 
 router.post("/checkout/:id", CheckoutCart);
@@ -28,6 +29,8 @@ router
   .route("/")
   .post(
     authorizationMiddleware,
+
+    emailVerified,
     userMiddleware,
     checkSubscription,
     createProduct
@@ -38,6 +41,7 @@ router
   .route("/review/:id")
   .put(
     authorizationMiddleware,
+    emailVerified,
     userMiddleware,
     checkSubscription,
     reviewProduct
@@ -45,9 +49,16 @@ router
 
 router
   .route("/:id")
-  .get(authorizationMiddleware, userMiddleware, checkSubscription, getProduct)
+  .get(
+    authorizationMiddleware,
+    emailVerified,
+    userMiddleware,
+    checkSubscription,
+    getProduct
+  )
   .put(
     authorizationMiddleware,
+    emailVerified,
     checkSubscription,
     userMiddleware,
     updateProduct

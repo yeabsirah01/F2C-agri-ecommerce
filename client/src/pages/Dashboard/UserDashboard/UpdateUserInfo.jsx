@@ -34,7 +34,7 @@ const UpdateUserInfo = ({ user }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [_initialValues, setInitialValues] = useState(initialValues);
   const { id } = useParams();
-  const { _id } = useSelector((state) => state.user);
+  const { _id, role } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const [profilePicture, setprofilePicture] = useState("");
 
@@ -145,20 +145,24 @@ const UpdateUserInfo = ({ user }) => {
                   type="password"
                 />
               </div>
-              <div className="form-column">
-                <div className="payment-form">
-                  <TextInput
-                    name="paymentNumber"
-                    label="Payment Number *"
-                    placeholder="Enter your payment number"
-                  />
-                  <TextInput
-                    name="paymentPdt"
-                    label="Payment PDT *"
-                    placeholder="Enter your payment PDT"
-                  />
+              {role === "Farmer" && (
+                <div className="form-column">
+                  <p>Fill this form to accept yeneoay</p>
+                  <div className="payment-form">
+                    <TextInput
+                      name="paymentNumber"
+                      label="Payment Number *"
+                      placeholder="Enter your payment number"
+                    />
+                    <TextInput
+                      name="paymentPdt"
+                      label="Payment PDT *"
+                      placeholder="Enter your payment PDT"
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
+              :<div></div>
               <div className="button-container">
                 <Button
                   label="Cancel"

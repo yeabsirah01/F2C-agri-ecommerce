@@ -51,7 +51,7 @@ function SignUp({ onClose }) {
         email: formData.email,
         password: formData.password,
       });
-      dispatch(login(data));
+      // dispatch(login(data));
       onClose(); // Close the sign up modal
       toast.success("User registered successfully and logged in", {
         toastId: "register-success",

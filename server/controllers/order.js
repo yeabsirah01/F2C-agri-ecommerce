@@ -30,7 +30,16 @@ const createOrder = async (req, res) => {
 
 const getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find();
+    const orders = await Order.find()
+      .populate("buyerInfo")
+      .populate("sellerInfo");
+    console.log(orders);
+
+    // Iterate over the orders array
+    for (const order of orders) {
+      console.log(order);
+    }
+
     res.send(orders);
   } catch (error) {
     res.status(500).send(error);

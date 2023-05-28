@@ -55,6 +55,9 @@ const Product = () => {
           toast.error(
             "Unsubscribed user! Please buy subscription before access."
           );
+        } else if (error.response && error.response.status === 428) {
+          console.log("Not verfied email");
+          toast.error("Email is not verified!! verify before access.");
           // Handle HTTP 402 error
           // Show a message to the user indicating they need to subscribe to access the resource
           // Redirect the user to the subscription page or take any other appropriate action

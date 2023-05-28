@@ -26,8 +26,8 @@ const AllOrders = ({ userId }) => {
           <Title order={2} style={{ marginBottom: 10 }}>
             Order Number: {order.orderNumber}
           </Title>
-          <Text>Seller: {order.sellerInfo}</Text>
-          <Text>Buyer: {order.buyerInfo}</Text>
+          <Text>Seller: {order.sellerInfo.firstName}</Text>
+          <Text>Buyer: {order.buyerInfo.firstName}</Text>
           <Text>Address: {order.shippingDetails.address}</Text>
           <Text>City: {order.shippingDetails.city}</Text>
           <Text>State: {order.shippingDetails.state}</Text>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Badge, Card, Text, Title } from "@mantine/core";
+import { Badge, Button, Card, Text, Title } from "@mantine/core";
 import axiosConfig from "../../../axiosConfig";
 
 const MyOrders = ({ userId }) => {
@@ -11,6 +11,22 @@ const MyOrders = ({ userId }) => {
       setOrders(res.data);
     });
   }, []);
+
+  const updateOrderStatus = async (orderId, newStatus) => {
+    try {
+      await axiosConfig.patch(`/orders/${orderId}`, { status: newStatus });
+      // Update the orders state to reflect the new status
+      const updatedOrders = orders.map((order) => {
+        if (order._id === orderId) {
+          return { ...order, status: newStatus };
+        }
+        return order;
+      });
+      setOrders(updatedOrders);
+    } catch (error) {
+      console.log("Error updating order status:", error);
+    }
+  };
 
   return (
     <div style={{ maxWidth: 800, margin: "auto" }}>
@@ -41,6 +57,31 @@ const MyOrders = ({ userId }) => {
             {order.status}
           </Badge>
           <Text style={{ marginTop: 10 }}>Created At: {order.createdAt}</Text>
+          <div>
+            <div style={{ marginTop: 10 }}>
+              <Button
+                onClick={() => updateOrderStatus(order._id, "delivered")}
+                disabled={
+                  order.status === "delivered" || order.status === "pending"
+                }
+                variant="outline"
+                color="teal"
+                radius="sm"
+                style={{ marginRight: 10 }}
+              >
+                Mark as Delivered
+              </Button>
+              <Button
+                onClick={() => updateOrderStatus(order._id, "undelivered")}
+                disabled={order.status !== "undelivered"}
+                variant="outline"
+                color="red"
+                radius="sm"
+              >
+                Mark as Undelivered
+              </Button>
+            </div>
+          </div>
         </Card>
       ))}
     </div>

@@ -60,6 +60,7 @@ const authorizationMiddleware = require("./middleware/authorization");
 const notFoundMiddleware = require("./middleware/not-found");
 const checkSubscription = require("./middleware/checkSubscription");
 const userMiddleware = require("./middleware/userMiddleware");
+const emailVerified = require("./middleware/emailVerified");
 
 app.use(xss());
 app.use(helmet());
@@ -87,6 +88,8 @@ app.use(
   "/api/v1/orders",
   authorizationMiddleware,
   checkSubscription,
+  emailVerified,
+  userMiddleware,
   orderRouter
 );
 app.use("/api/v1/subscribe", authorizationMiddleware, subscriptionRouter);

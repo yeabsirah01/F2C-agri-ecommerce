@@ -59,8 +59,11 @@ const AllOrderss = ({ userId }) => {
           <Text style={{ marginTop: 10 }}>Created At: {order.createdAt}</Text>
           <div style={{ marginTop: 10 }}>
             <Button
-              onClick={() => updateOrderStatus(order._id, "delivered")}
-              disabled={order.status === "delivered"}
+              onClick={() => updateOrderStatus(order._id, "deliveredpartially")}
+              disabled={
+                order.status === "delivered" ||
+                order.status === "deliveredpartially"
+              }
               variant="outline"
               color="teal"
               radius="sm"

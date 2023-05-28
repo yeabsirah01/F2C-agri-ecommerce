@@ -73,7 +73,7 @@ function AvatarIcon() {
             icon={<IconDashboard size={14} />}
             onClick={() => navigate("/dashboard")}
           >
-            Dashboard
+            {role} Dashboard
           </Menu.Item>
         )}
         <Menu.Item icon={<IconUserCircle size={14} />}>
