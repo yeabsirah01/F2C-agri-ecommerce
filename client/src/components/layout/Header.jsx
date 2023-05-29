@@ -193,7 +193,7 @@ function AppHeader() {
         p="xs"
         style={{ position: "fixed", top: 0, left: 0, right: 0 }}
         px="md"
-        bg="#77AB59"
+        bg="#49b340"
       >
         <Group position="apart" sx={{ height: "100%" }}>
           <img

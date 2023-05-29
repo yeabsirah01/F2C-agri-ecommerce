@@ -12,7 +12,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: "#FFFFFF",
     backgroundSize: "cover",
     backgroundPosition: "center",
-    backgroundImage: `linear-gradient(300deg, rgba(130, 201, 30, 0) 0%, #77AB59 65%), url(https://images.unsplash.com/photo-1464226184884-fa280b87c399?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80)`,
+    backgroundImage: `linear-gradient(300deg, rgba(130, 201, 30, 0) 0%, #49b340 65%), url(https://images.unsplash.com/photo-1464226184884-fa280b87c399?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80)`,
     paddingTop: `calc(${theme.spacing.xl} * 3)`,
     paddingBottom: `calc(${theme.spacing.xl} * 3)`,
   },

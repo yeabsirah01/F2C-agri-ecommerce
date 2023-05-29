@@ -31,10 +31,17 @@ const options = {
   plugins: {
     legend: {
       position: "bottom",
+      labels: {
+        color: "white", // Set the color for legend labels
+      },
     },
     title: {
       display: true,
       text: "Users Bar Chart",
+      color: "white", // Set the color for the chart title
+      font: {
+        size: 16,
+      },
     },
   },
   scales: {
@@ -43,6 +50,34 @@ const options = {
         beginAtZero: true,
         stepSize: 1,
         precision: 0,
+        color: "white", // Set the color for y-axis ticks
+        font: {
+          size: 12,
+        },
+      },
+      grid: {
+        color: "rgba(255, 255, 255, 0.2)",
+      },
+      title: {
+        display: true,
+        text: "Number of Users",
+        color: "white", // Set the color for y-axis title
+        font: {
+          size: 14,
+        },
+      },
+    },
+    x: {
+      grid: {
+        color: "rgba(255, 255, 255, 0.2)",
+      },
+      title: {
+        display: true,
+        text: "Interval",
+        color: "white", // Set the color for x-axis title
+        font: {
+          size: 14,
+        },
       },
     },
   },
@@ -121,7 +156,7 @@ const AdminDashboard = () => {
       {
         label: "Users",
         data: labels.map((date) => intervalUsers[date]),
-        backgroundColor: "rgba(54, 162, 235, 0.5)",
+        backgroundColor: "#F09C9C",
       },
     ],
   };
@@ -141,7 +176,7 @@ const AdminDashboard = () => {
 
     const roles = Object.keys(roleCounts);
     const data = roles.map((role) => roleCounts[role]);
-    const colors = roles.map((role) => getRandomColor());
+    const colors = roles.map((role) => getColorByRole(role));
 
     // console.log(dataUser);
     return {
@@ -155,15 +190,17 @@ const AdminDashboard = () => {
     };
   };
 
-  const getRandomColor = () => {
-    const letters = "0123456789ABCDEF";
-    let color = "#";
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  };
+  const getColorByRole = (role) => {
+    const colorPalette = {
+      farmer: "#44CF6C",
+      consumer: "#F25F5C",
+      admin: "#247BA0",
+      customersupport: "#FFE066",
+      transporter: "#7C7C7C",
+    };
 
+    return colorPalette[role.toLowerCase()];
+  };
   const dataUser = getUsersByRole();
 
   const options1 = {
@@ -192,11 +229,13 @@ const AdminDashboard = () => {
           </button>
         ))}
       </div>
-      <div style={{ width: "800px", height: "600px" }}>
-        <Bar data={data} options={options} />
-      </div>
-      <div style={{ width: "800px", height: "600px" }}>
-        <Doughnut data={dataUser} options={options1} />
+      <div style={{ display: "flex" }}>
+        <div style={{ width: "700px", height: "500px" }}>
+          <Bar data={data} options={options} />
+        </div>
+        <div style={{ marginLeft: "100px", width: "600px", height: "400px" }}>
+          <Doughnut data={dataUser} options={options1} />
+        </div>
       </div>
     </div>
   );

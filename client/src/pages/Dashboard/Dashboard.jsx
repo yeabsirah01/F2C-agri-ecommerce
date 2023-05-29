@@ -99,6 +99,7 @@ import {
 import AllOrders from "./AdminDashoard/AllOrders";
 import AllProducts from "./AdminDashoard/AllProducts";
 import ChatBox from "./CustomerSupportDashboard/ChatBox";
+import OrderDetails from "./AdminDashoard/OrderDetails";
 // import { MantineLogo } from "@mantine/ds";
 
 const useStyles = createStyles((theme) => ({
@@ -316,6 +317,7 @@ function Dashboard({ children }) {
           <Route exact path="/myorders" element={<MyOrders />} />
           <Route exact path="/farmerdashboard" element={<FarmerDashboards />} />
           <Route exact path="/orders" element={<Orders />} />
+          <Route exact path="/orders/:id" element={<OrderDetails />} />
           <Route exact path="/allorders" element={<AllOrders />} />
           <Route exact path="/alluser" element={<AllUsers />} />
           <Route exact path="/allproduct" element={<AllProducts />} />

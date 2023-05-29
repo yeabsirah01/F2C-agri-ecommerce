@@ -23,7 +23,7 @@ const waitlistSchema = new mongoose.Schema({
   nationalIDPhoto: {
     type: String,
   },
-  farmingLicenseNumber: {
+  farmingLicense: {
     type: String,
   },
   profilePicture: {

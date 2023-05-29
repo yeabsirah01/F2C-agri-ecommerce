@@ -39,7 +39,9 @@ const FarmerApplicationForm = () => {
     };
     try {
       await axiosConfig.post("/waitlist", formData, config);
-      toast.success("Product created");
+      toast.success(
+        "Application Submitted successfully, we'll send you email soon"
+      );
       // navigate("/");
     } catch (error) {
       toast.error(

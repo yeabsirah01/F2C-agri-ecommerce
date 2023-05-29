@@ -87,13 +87,13 @@ const updatewaitlist = async (req, res) => {
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: "moferethiopia@gmail.com",
-          pass: process.env.GMAIL_PASSWORD,
+          user: "ethiosew1@gmail.com",
+          pass: process.env.GMAIL_PASSWORDD,
         },
       });
 
       const mailOptions = {
-        from: "moferethiopia@gmail.com",
+        from: "ethiosew1@gmail.com",
         to: waitlist.user.email,
         subject: "Waitlist Approval Notification",
         html: `

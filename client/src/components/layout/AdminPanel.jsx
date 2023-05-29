@@ -37,7 +37,7 @@ import SignUp from "../../pages/auth/SignUp";
 import { AppShell, Navbar } from "@mantine/core";
 import { useSelector } from "react-redux";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MediaQuery } from "@mantine/core";
 import { Route, Routes, useLocation } from "react-router-dom";
 import CreateProduct from "../../pages/createProduct/index";
@@ -70,6 +70,7 @@ import ViewFarmerProduct from "../../pages/Dashboard/AdminDashoard/ViewFarmerPro
 import AllProducts from "../../pages/Dashboard/AdminDashoard/AllProducts";
 import SupportScreen from "../../pages/Dashboard/AdminDashoard/SupportScreen";
 import SupportRegister from "../../pages/Dashboard/AdminDashoard/SupportRegister";
+import OrderDetails from "../../pages/Dashboard/AdminDashoard/OrderDetails";
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -123,7 +124,8 @@ function AdminPanel() {
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
   const { classes, theme } = useStyles();
   const isAuthenticated = useSelector((state) => !!state.user.token);
-
+  const navigate = useNavigate();
+  navigate("/dashboard/admindashboard");
   function handleLoginModalClose() {
     setShowLoginModal(false);
   }
@@ -183,18 +185,19 @@ function AdminPanel() {
           <div className="sidebar">
             <ul className="navItems">
               <li>
-                <Link to="/dashboard/profile">
+                <Link to="/dashboard/admindashboard">
                   <div
                     className={`navBox ${
-                      activeElement === "profile" ? "active" : ""
+                      activeElement === "dashboard" ? "active" : ""
                     }`}
-                    onClick={() => handleElementClick("profile")}
+                    onClick={() => handleElementClick("dashboard")}
                   >
-                    <IconUserCircle size={24} />
-                    <Text style={{ marginLeft: 8 }}>My Profile</Text>
+                    <IconDashboard size={24} />
+                    <Text style={{ marginLeft: 8 }}>Dashboard</Text>
                   </div>
                 </Link>
               </li>
+
               <li>
                 <Link to="/dashboard/allproducts">
                   <div
@@ -208,19 +211,7 @@ function AdminPanel() {
                   </div>
                 </Link>
               </li>
-              <li>
-                <Link to="/dashboard/admindashboard">
-                  <div
-                    className={`navBox ${
-                      activeElement === "dashboard" ? "active" : ""
-                    }`}
-                    onClick={() => handleElementClick("dashboard")}
-                  >
-                    <IconDashboard size={24} />
-                    <Text style={{ marginLeft: 8 }}>Dashboard</Text>
-                  </div>
-                </Link>
-              </li>
+
               <li>
                 <Link to="/dashboard/waitlist">
                   <div
@@ -230,7 +221,7 @@ function AdminPanel() {
                     onClick={() => handleElementClick("waitlist")}
                   >
                     <IconClockPause size={24} />
-                    <Text style={{ marginLeft: 8 }}>Waitlist</Text>
+                    <Text style={{ marginLeft: 8 }}> Applicant Waitlist</Text>
                   </div>
                 </Link>
               </li>
@@ -283,6 +274,19 @@ function AdminPanel() {
                   >
                     <IconBasket size={24} />
                     <Text style={{ marginLeft: 8 }}>Register CS</Text>
+                  </div>
+                </Link>
+              </li>
+              <li>
+                <Link to="/dashboard/profile">
+                  <div
+                    className={`navBox ${
+                      activeElement === "profile" ? "active" : ""
+                    }`}
+                    onClick={() => handleElementClick("profile")}
+                  >
+                    <IconUserCircle size={24} />
+                    <Text style={{ marginLeft: 8 }}>My Profile</Text>
                   </div>
                 </Link>
               </li>
@@ -396,6 +400,7 @@ function AdminPanel() {
             element={<AdminDashboard />}
           />
           <Route exact path="dashboard/allorders" element={<AllOrders />} />
+          <Route exact path="dashboard/orders/:id" element={<OrderDetails />} />
           <Route exact path="dashboard/profile" element={<Profilee />} />
           <Route exact path="dashboard/waitlist" element={<WaitlistTable />} />
           <Route exact path="dashboard/users" element={<AllUsers />} />

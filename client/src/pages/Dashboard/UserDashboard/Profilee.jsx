@@ -112,6 +112,7 @@ export function Profilee() {
   const [_initialValues, setInitialValues] = useState(initialValues);
 
   const { _id, role } = useSelector((state) => state.user);
+  const [responseStatus, setResponseStatus] = useState(null);
 
   const styleText =
     role === "Admin" || role === "Transporter"
@@ -128,7 +129,7 @@ export function Profilee() {
       : { color: "#333333", fontWeight: "normal" };
 
   const containerStyle = {
-    background: "linear-gradient(45deg, #FFFFFF, #F2F2F2)",
+    // background: "linear-gradient(45deg, #FFFFFF, #F2F2F2)",
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
     gap: "10px",
@@ -139,19 +140,21 @@ export function Profilee() {
     // Add other styles as needed
   };
 
-  useEffect(() => {
-    const getUser = async () => {
-      const token = `Bearer ${localStorage.getItem("cookie")}`;
-      const { data } = await axiosConfig.get(`/users/${_id}`, {
-        headers: {
-          Authorization: token,
-          "content-type": "multipart/form-data",
-        },
-      });
-      setInitialValues(data);
-    };
-    getUser();
-  }, [_id]);
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     const token = `Bearer ${localStorage.getItem("cookie")}`;
+  //     const { status, data } = await axiosConfig.get(`/users/${_id}`, {
+  //       headers: {
+  //         Authorization: token,
+  //         "content-type": "multipart/form-data",
+  //       },
+  //     });
+  //     console.log(status);
+  //     setInitialValues(data);
+  //     setResponseStatus(data.status);
+  //   };
+  //   getUser();
+  // }, [_id]);
   const [profilePicture, setprofilePicture] = useState("");
 
   //   ???????????
@@ -163,7 +166,7 @@ export function Profilee() {
       const token = `Bearer ${localStorage.getItem("cookie")}`;
       setIsLoading(true);
       try {
-        const { data } = await axiosConfig.get(`/users/${_id}`, {
+        const { status, data } = await axiosConfig.get(`/users/${_id}`, {
           headers: {
             Authorization: token,
             "content-type": "multipart/form-data",
@@ -171,14 +174,20 @@ export function Profilee() {
         });
         setInitialValues(data);
         setIsEmailVerified(data.isVerified); // Set email verification status
+
+        console.log(status);
       } catch (error) {
-        // Handle error
+        console.log(error.response.status);
+        if (error.response.status === 428) {
+          setResponseStatus(428);
+        }
       } finally {
         setIsLoading(false);
       }
     };
     getUser();
   }, []);
+  console.log(responseStatus);
 
   // Overlay styles
   const overlayStyle = {
@@ -212,7 +221,7 @@ export function Profilee() {
 
       <div style={formContainerStyle}>
         {/* Render email verification overlay */}
-        {!isEmailVerified && (
+        {responseStatus === 428 && (
           <div style={overlayStyle}>
             <Text style={{ fontSize: "30px", color: "white" }}>
               Email is not verified. check your inbox
@@ -428,7 +437,7 @@ export function Profilee() {
                 {" "}
                 <div
                   style={{
-                    background: "linear-gradient(45deg, #FFFFFF, #F2F2F2)",
+                    // background: "linear-gradient(45deg, #FFFFFF, #F2F2F2)",
 
                     borderColor: "#FFFFFF",
                     borderRadius: "4px",

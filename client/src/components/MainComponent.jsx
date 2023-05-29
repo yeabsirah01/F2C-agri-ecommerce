@@ -7,7 +7,7 @@ import AuthPage from "./../pages/auth";
 import CreateProduct from "./../pages/createProduct";
 import EditProduct from "./../pages/createProduct/editProduct";
 import Home from "../pages/home/Home";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Profile from "./../pages/profile";
 import Cart from "./../pages/cart/indes";
 import { setCart } from "./../features/cartSlice";

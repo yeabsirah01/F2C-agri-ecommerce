@@ -40,7 +40,7 @@ function Login({ onClose }) {
       dispatch(login(data));
 
       onClose();
-      toast.success("Logged in successfully በተሳካ መልኩ ወዳጄ", {});
+      toast.success("Logged in successfully !", {});
     } catch (error) {
       toast.error(error?.response?.data?.msg || "Something went wrong", {
         toastId: "login-error",

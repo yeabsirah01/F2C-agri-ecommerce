@@ -33,12 +33,8 @@ const getAllOrders = async (req, res) => {
     const orders = await Order.find()
       .populate("buyerInfo")
       .populate("sellerInfo");
-    console.log(orders);
 
     // Iterate over the orders array
-    for (const order of orders) {
-      console.log(order);
-    }
 
     res.send(orders);
   } catch (error) {
@@ -48,10 +44,13 @@ const getAllOrders = async (req, res) => {
 
 const getOrder = async (req, res) => {
   try {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id)
+      .populate("buyerInfo")
+      .populate("sellerInfo");
     if (!order) {
       return res.status(404).send();
     }
+    console.log(order);
     res.send(order);
   } catch (error) {
     res.status(500).send(error);

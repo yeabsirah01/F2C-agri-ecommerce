@@ -7,6 +7,7 @@ import {
   Text,
   Select,
   ColorSchemeProvider,
+  Stepper,
 } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 
@@ -51,7 +52,7 @@ function SignUp({ onClose }) {
         email: formData.email,
         password: formData.password,
       });
-      // dispatch(login(data));
+      dispatch(login(data));
       onClose(); // Close the sign up modal
       toast.success("User registered successfully and logged in", {
         toastId: "register-success",
@@ -117,146 +118,170 @@ function SignUp({ onClose }) {
     setShowLogIn(true); // Open the sign-up modal
   };
   // console.log(form.values);
+  const [active, setActive] = useState(1);
+  const nextStep = () =>
+    setActive((current) => (current < 3 ? current + 1 : current));
+  const prevStep = () =>
+    setActive((current) => (current > 0 ? current - 1 : current));
+
   return (
-    <>
-      <Modal
-        opened={opened}
-        onClose={onClose}
-        centered
-        c="#8ce99a"
-        my="0"
-        py="0"
-      >
-        <LoadingOverlay visible={isLoading} />
-        <div c="blue.6" ta="center">
-          <h2
-            style={{
-              color: "red",
-              padding: 0,
-              margin: 0,
-              alignItems: "center",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            Create New Account
-          </h2>{" "}
-        </div>
-
-        <Box size={32} maw={340} mx="auto" position="absolute" left="90">
-          <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
-            <TextInput
-              data-autpfocus
-              variant="filled"
-              withAsterisk
-              label="First Name"
-              placeholder="Yeabsra"
-              {...form.getInputProps("firstName")}
-            />
-
-            <TextInput
-              data-autpfocus
-              variant="filled"
-              withAsterisk
-              label="Last Name"
-              placeholder="Haile"
-              {...form.getInputProps("lastName")}
-            />
-            <Radio.Group
-              name="Gender"
-              label="gender"
-              withAsterisk
-              {...form.getInputProps("gender")}
+    <Modal opened={opened} onClose={onClose} centered c="#8ce99a" my="0" py="0">
+      <LoadingOverlay visible={isLoading} />
+      <div c="blue.6" ta="center">
+        <h2
+          style={{
+            color: "red",
+            padding: 0,
+            margin: 0,
+            alignItems: "center",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          Create New Account
+        </h2>{" "}
+      </div>
+      <Box size={32} maw={340} mx="auto" position="absolute" left="90">
+        <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
+          <>
+            <Stepper
+              size="sm"
+              active={active}
+              onStepClick={setActive}
+              breakpoint="sm"
             >
-              <Group mt="xxs">
-                <Radio value="male" label="Male" />
-                <Radio value="female" label="Female" />
-              </Group>
-            </Radio.Group>
-            <TextInput
-              data-autpfocus
-              variant="filled"
-              label="Phone Number"
-              placeholder="+251967006433"
-              {...form.getInputProps("phone")}
-            />
+              <Stepper.Step label="First step" description="Create an account">
+                <TextInput
+                  data-autpfocus
+                  variant="filled"
+                  withAsterisk
+                  label="First Name"
+                  placeholder="Yeabsra"
+                  {...form.getInputProps("firstName")}
+                />
 
-            <TextInput
-              data-autpfocus
-              variant="filled"
-              withAsterisk
-              label="Email"
-              placeholder="example@mail.com"
-              {...form.getInputProps("email")}
-            />
-            <PasswordInput
-              withAsterisk
-              variant="filled"
-              label="Password"
-              placeholder="pass123"
-              mt="sm"
-              {...form.getInputProps("password")}
-            />
-            <PasswordInput
-              withAsterisk
-              variant="filled"
-              label="Confirm Password"
-              placeholder=""
-              mt="sm"
-              {...form.getInputProps("confirmPassword")}
-            />
+                <TextInput
+                  data-autpfocus
+                  variant="filled"
+                  withAsterisk
+                  label="Last Name"
+                  placeholder="Haile"
+                  {...form.getInputProps("lastName")}
+                />
+                <Radio.Group
+                  name="Gender"
+                  label="gender"
+                  withAsterisk
+                  {...form.getInputProps("gender")}
+                >
+                  <Group mt="xxs">
+                    <Radio value="male" label="Male" />
+                    <Radio value="female" label="Female" />
+                  </Group>
+                </Radio.Group>
 
-            <Select
-              data={region}
-              label="Select Region"
-              placeholder="Select region"
-              value={selectedRegion}
-              onChange={(value) => handleRegionChange(value)}
-              {...form.getInputProps("region")}
-            />
-            <TextInput
-              data-autpfocus
-              variant="filled"
-              withAsterisk
-              label="Address"
-              placeholder="gayint/debretabor"
-              {...form.getInputProps("address")}
-            />
+                <Select
+                  data={region}
+                  label="Select Region"
+                  placeholder="Select region"
+                  value={selectedRegion}
+                  onChange={(value) => handleRegionChange(value)}
+                  {...form.getInputProps("region")}
+                />
+                <TextInput
+                  data-autpfocus
+                  variant="filled"
+                  withAsterisk
+                  label="Address"
+                  placeholder="gayint/debretabor"
+                  {...form.getInputProps("address")}
+                />
+              </Stepper.Step>
+              <Stepper.Step label="Second step" description="Verify email">
+                <TextInput
+                  data-autpfocus
+                  variant="filled"
+                  label="Phone Number"
+                  placeholder="+251967006433"
+                  {...form.getInputProps("phone")}
+                />
+                <TextInput
+                  data-autpfocus
+                  variant="filled"
+                  withAsterisk
+                  label="Email"
+                  placeholder="example@mail.com"
+                  {...form.getInputProps("email")}
+                />
+                <PasswordInput
+                  withAsterisk
+                  variant="filled"
+                  label="Password"
+                  placeholder="pass123"
+                  mt="sm"
+                  {...form.getInputProps("password")}
+                />
+                <PasswordInput
+                  withAsterisk
+                  variant="filled"
+                  label="Confirm Password"
+                  placeholder=""
+                  mt="sm"
+                  {...form.getInputProps("confirmPassword")}
+                />
+                {/* <Select
+                  data={role}
+                  label="Select Role"
+                  placeholder="Select role"
+                  value={selectedRole}
+                  onChange={(value) => handleRoleChange(value)}
+                  {...form.getInputProps("role")}
+                /> */}
+              </Stepper.Step>
+            </Stepper>
 
-            <Select
-              data={role}
-              label="Select Role"
-              placeholder="Select role"
-              value={selectedRole}
-              onChange={(value) => handleRoleChange(value)}
-              {...form.getInputProps("role")}
-            />
-
-            <Group position="right" mt="xl">
-              <Button
-                variant="outline"
-                color="Green"
-                size="md"
-                type="submit"
-                // onClick={handleSubmit}
-              >
-                Sign Up
+            <Group position="center" mt="xl">
+              <Button variant="default" onClick={prevStep}>
+                Back
               </Button>
+              {active < 1 ? (
+                <Button onClick={nextStep}>Next step</Button>
+              ) : (
+                <Group position="right" mt="xl">
+                  <Button
+                    variant="outline"
+                    color="Green"
+                    size="md"
+                    type="submit"
+                    // onClick={handleSubmit}
+                  >
+                    Sign Up
+                  </Button>
+                </Group>
+              )}
             </Group>
-          </form>
-        </Box>
-
-        <p className="loginForm__footer" style={{ gridColumn: "span 12" }}>
-          Don't have an account?{" "}
-          <button onClick={handleLogInClick} type="button">
-            Sign up
-          </button>
-        </p>
-      </Modal>
+          </>
+        </form>
+      </Box>
+      <p className="loginForm__footer" style={{ gridColumn: "span 12" }}>
+        Don't have an account?{" "}
+        <button onClick={handleLogInClick} type="button">
+          Sign up
+        </button>
+      </p>
       {showLogIn && <Login onClose={() => setShowLogIn(false)} />}{" "}
-      {/* use navigate -1 */}
-    </>
+    </Modal>
   );
+
+  //   <p className="loginForm__footer" style={{ gridColumn: "span 12" }}>
+  //     Don't have an account?{" "}
+  //     <button onClick={handleLogInClick} type="button">
+  //       Sign up
+  //     </button>
+  //   </p>
+
+  // {showLogIn && <Login onClose={() => setShowLogIn(false)} />}{" "}
+  // {/* use navigate -1 */}
 }
 
 // ----------------------------------

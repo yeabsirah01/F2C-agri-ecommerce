@@ -10,6 +10,7 @@ import {
   Divider,
   CheckIcon,
   Switch,
+  Button,
 } from "@mantine/core";
 import axiosConfig from "../../../axiosConfig";
 import { useSelector } from "react-redux";
@@ -76,17 +77,17 @@ const UserDetails = () => {
 
             <Title order={3}>Sale History</Title>
             {/* display farmer's sale history here */}
+
+            <Link
+              to={`/dashboard/farmerproduct/${user._id}`}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <Button> Farmer Products</Button>
+            </Link>
           </>
         )}
 
         <Divider />
-
-        <Link
-          to={`/dashboard/farmerproduct/${user._id}`}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-          Prods
-        </Link>
 
         <Switch
           description={labelText}
