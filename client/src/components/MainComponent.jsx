@@ -44,6 +44,7 @@ function MainComponent({ user }) {
       dispatch(setCart(cart));
     }
   }, [dispatch]);
+
   return (
     <>
       {userInfo.role === "Admin" ? (

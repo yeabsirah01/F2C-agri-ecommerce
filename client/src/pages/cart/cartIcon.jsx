@@ -26,7 +26,7 @@ function CartIcon() {
         <IconShoppingCart maw={40} name="shopping-cart" alt="cart" />
         {x !== 0 && (
           <Badge
-            variant="gradient"
+            variant="filled"
             color="red"
             style={{ position: "absolute", top: -8, right: -22 }}
           >

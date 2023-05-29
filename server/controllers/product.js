@@ -62,12 +62,12 @@ const updateProduct = async (req, res) => {
   const { id } = req.params;
   if (products) {
     products.map(async (p) => {
-      await Product.findByIdAndUpdate(p._id, {
-        stock: {
-          // unit: req.body.unit,
-          value: +p.stock.value - +p.quantity,
-        },
-      });
+      const existingProduct = await Product.findById(p._id);
+      const updatedStock = {
+        unit: existingProduct.stock.unit, // Keep the existing unit
+        value: existingProduct.stock.value - +p.quantity,
+      };
+      await Product.findByIdAndUpdate(p._id, { stock: updatedStock });
     });
     res.status(StatusCodes.OK).json({ msg: "success" });
   } else {

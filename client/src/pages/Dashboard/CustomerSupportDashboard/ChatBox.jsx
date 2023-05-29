@@ -14,7 +14,10 @@ export default function ChatBox(props) {
   const [isOpen, setIsOpen] = useState(false);
   const [messageBody, setMessageBody] = useState("");
   const [messages, setMessages] = useState([
-    { name: "Admin", body: "Hello there, Please ask your question." },
+    {
+      name: "Admin",
+      body: "Hello there, I'm the system admin. What can i help you?",
+    },
   ]);
 
   useEffect(() => {
@@ -83,7 +86,8 @@ export default function ChatBox(props) {
           <ul ref={uiMessagesRef}>
             {messages.map((msg, index) => (
               <li key={index}>
-                <strong>{`${msg.name}: `}</strong> {msg.body}
+                <strong style={{ color: "green" }}>{`${msg.name}: `}</strong>{" "}
+                {msg.body}
               </li>
             ))}
           </ul>

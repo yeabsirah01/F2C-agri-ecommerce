@@ -125,38 +125,50 @@ const AllOrders = ({ userId }) => {
             </tr>
           </thead>
           <tbody>
-            {sortedOrders.map((order) => (
-              <tr key={order.orderNumber}>
-                <td>
-                  <Link
-                    to={`/dashboard/orders/${order._id}`}
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    <Text fz="md" fw={500} color="green.5">
-                      {order.orderNumber}
-                    </Text>
-                  </Link>
-                </td>
-                <td>
-                  <Badge
-                    color={order.status === "pending" ? "orange" : "teal"}
-                    variant="light"
-                  >
-                    {order.status}
-                  </Badge>
-                </td>
-                <td>
-                  {new Intl.DateTimeFormat("en-US", {
-                    year: "numeric",
-                    month: "short",
-                    day: "2-digit",
-                    hour: "numeric",
-                    minute: "numeric",
-                    hour12: true,
-                  }).format(new Date(order.createdAt))}
-                </td>
-              </tr>
-            ))}
+            {sortedOrders.map(
+              (
+                order,
+                index // Add 'index' as the second argument
+              ) => (
+                <tr
+                  key={order.orderNumber}
+                  style={{
+                    color: index % 2 !== 0 ? "white" : "black",
+                    backgroundColor: index % 2 === 0 ? "#e0f3e9" : "#00000000",
+                  }}
+                  // style={{ color: index % 2 !== 0 ? "white" : "black" }}
+                >
+                  <td>
+                    <Link
+                      to={`/dashboard/orders/${order._id}`}
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      <Text fz="md" fw={500} color="green.5">
+                        {order.orderNumber}
+                      </Text>
+                    </Link>
+                  </td>
+                  <td>
+                    <Badge
+                      color={order.status === "pending" ? "orange" : "teal"}
+                      variant="filled"
+                    >
+                      {order.status}
+                    </Badge>
+                  </td>
+                  <td>
+                    {new Intl.DateTimeFormat("en-US", {
+                      year: "numeric",
+                      month: "short",
+                      day: "2-digit",
+                      hour: "numeric",
+                      minute: "numeric",
+                      hour12: true,
+                    }).format(new Date(order.createdAt))}
+                  </td>
+                </tr>
+              )
+            )}
           </tbody>
         </Table>
       </div>

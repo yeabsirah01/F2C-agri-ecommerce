@@ -7,6 +7,9 @@ import {
   Modal,
   Card,
   Table,
+  Input,
+  Select,
+  Textarea,
 } from "@mantine/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -36,7 +39,7 @@ function ShippingDetailsStep({ onNext }) {
       query[v.split("=")[0]] = v.split("=")[1];
     });
 
-  var [order, setOrder] = useState({
+  const [order, setOrder] = useState({
     shippingDetails: {
       address: "",
       city: "",
@@ -167,8 +170,8 @@ function ShippingDetailsStep({ onNext }) {
     }));
   };
 
-  const handleShippingChange = (e) => {
-    const { name, value } = e.target;
+  const handleShippingChange = (event) => {
+    const { name, value } = event.target;
     setOrder((prevOrder) => ({
       ...prevOrder,
       shippingDetails: {
@@ -189,52 +192,44 @@ function ShippingDetailsStep({ onNext }) {
     }));
   };
 
+  const region = [
+    { value: "Amhara", label: "Amhara" },
+    { value: "Afar", label: "Afar" },
+    { value: "Benishangul-Gumuz", label: "Benishangul-Gumuz" },
+    { value: "Dire Dawa", label: "Dire Dawa" },
+    { value: "Gambela", label: "Gambela" },
+    { value: "Harari", label: "Harari" },
+    { value: "Oromia", label: "Oromia" },
+    { value: "Sidama", label: "Sidama" },
+    { value: "Somali", label: "Somali" },
+    { value: "SNNP", label: "SNNP" },
+    { value: "Tigray", label: "Tigray" },
+  ];
   return (
     <>
       <form className="order-form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="orderNumber">Order Number:</label>
-          <input
-            type="text"
-            id="orderNumber"
-            name="orderNumber"
-            value={order.orderNumber}
-            onChange={handleChange}
+          <label htmlFor="state">State:</label>
+          <Select
+            id="state"
+            name="state"
+            placeholder="Select region"
+            value={order.shippingDetails.state}
+            onChange={(value) =>
+              handleShippingChange({
+                target: {
+                  name: "state",
+                  value,
+                },
+              })
+            }
+            data={region}
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="sellerInfo">Seller Info:</label>
-          <input
-            type="text"
-            id="sellerInfo"
-            name="sellerInfo"
-            value={order.sellerInfo}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="buyerInfo">Buyer Info:</label>
-          <input
-            type="text"
-            id="buyerInfo"
-            name="buyerInfo"
-            value={order.buyerInfo}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="address">Address:</label>
-          <input
-            type="text"
-            id="address"
-            name="address"
-            value={order.shippingDetails.address}
-            onChange={handleShippingChange}
-          />
-        </div>
+
         <div className="form-group">
           <label htmlFor="city">City:</label>
-          <input
+          <Input
             type="text"
             id="city"
             name="city"
@@ -243,18 +238,18 @@ function ShippingDetailsStep({ onNext }) {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="state">State:</label>
-          <input
+          <label htmlFor="address">Address:</label>
+          <Input
             type="text"
-            id="state"
-            name="state"
-            value={order.shippingDetails.state}
+            id="address"
+            name="address"
+            value={order.shippingDetails.address}
             onChange={handleShippingChange}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="zipCode">Zip Code:</label>
-          <input
+          <label htmlFor="zipCode">Additional detail</label>
+          <Textarea
             type="text"
             id="zipCode"
             name="zipCode"
@@ -262,7 +257,7 @@ function ShippingDetailsStep({ onNext }) {
             onChange={handleShippingChange}
           />
         </div>
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="ticketNumber">Ticket Number:</label>
           <input
             type="text"
@@ -271,7 +266,7 @@ function ShippingDetailsStep({ onNext }) {
             value={order.paymentInfo.ticketNumber}
             onChange={handlePaymentChange}
           />
-        </div>
+        </div> */}
         <div className="form-group button-group">
           <button className="btn-back" type="button">
             Back
@@ -469,7 +464,7 @@ function OrderSummaryStep({ onPrev }) {
       console.log(data);
       window.location = data.payment_url;
     } catch (error) {
-      toast.error(error?.response?.data?.msg || "Something went wrong");
+      toast.error(error?.response?.data?.msg);
     }
     console.log(product, seller);
   };
@@ -561,7 +556,6 @@ function OrderSummaryStep({ onPrev }) {
           {seller.paymentInfo && (
             <>
               <Text>Yenepay Account: {seller.paymentInfo.number}</Text>
-              <Text> Pdt: {seller.paymentInfo.pdt}</Text>
             </>
           )}
         </Card>
@@ -600,8 +594,9 @@ function CheckOut() {
   };
 
   return (
-    <>
+    <div style={{ marginTop: 75 }}>
       <Stepper
+        style={{ width: 1000, marginLeft: 300, marginBottom: 40 }}
         active={activeStep + 1}
         onStepClick={(step) => setActiveStep(step - 1)}
         breakpoint="sm"
@@ -614,7 +609,7 @@ function CheckOut() {
         <Stepper.Step label="Order Summary" description="Review your order" />
       </Stepper>
       {renderStep(activeStep)}
-    </>
+    </div>
   );
 }
 

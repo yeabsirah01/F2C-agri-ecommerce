@@ -36,7 +36,6 @@ const orderSchema = new mongoose.Schema({
   paymentInfo: {
     ticketNumber: {
       type: String,
-      required: true,
     },
   },
   status: {

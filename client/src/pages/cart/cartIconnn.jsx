@@ -21,7 +21,7 @@ function CartIcon() {
       <button onClick={cartClicked} style={{ position: "relative", right: 30 }}>
         <Image maw={40} src="cartIcon.png" alt="cart" />
         <Badge
-          variant="gradient"
+          variant="filled"
           color="red"
           style={{ position: "absolute", top: -8, right: -22 }}
         >

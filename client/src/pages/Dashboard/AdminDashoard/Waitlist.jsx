@@ -77,7 +77,7 @@ const WaitlistTable = () => {
             (item) => item._id !== waitlistId
           );
           setWaitlist(updatedWaitlist);
-        }, 4000);
+        }, 2000);
       }
     } catch (error) {
       console.error(error);

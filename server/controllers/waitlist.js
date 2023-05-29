@@ -83,6 +83,8 @@ const updatewaitlist = async (req, res) => {
         { new: true }
       );
 
+      // Delete the waitlist entry after 2 seconds
+
       // Send email notification to the user
       const transporter = nodemailer.createTransport({
         service: "gmail",
@@ -245,13 +247,13 @@ const updatewaitlist = async (req, res) => {
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: "moferethiopia@gmail.com",
+          user: "ethiosew1@gmail.com",
           pass: process.env.EMAIL_PASSWORD,
         },
       });
 
       const mailOptions = {
-        from: "moferethiopia@gmail.com",
+        from: "ethiosew1@gmail.com",
         to: waitlist.user.email,
         subject: "Waitlist Rejection Notification",
         text: `Dear ${waitlist.user.name}, We regret to inform you that your waitlist request has been rejected.`,
@@ -265,6 +267,10 @@ const updatewaitlist = async (req, res) => {
         }
       });
     }
+    setTimeout(async () => {
+      await Waitlist.findByIdAndDelete(waitlist._id);
+      console.log("Waitlist entry deleted after 2 seconds.");
+    }, 2000);
 
     res.send(waitlist);
   } catch (error) {

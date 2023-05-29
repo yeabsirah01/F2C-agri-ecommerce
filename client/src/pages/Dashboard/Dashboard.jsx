@@ -287,11 +287,6 @@ function Dashboard({ children }) {
           </Navbar.Section>
 
           <Navbar.Section className={classes.footer}>
-            <Link to="/dashboard/profilee" className={classes.link}>
-              <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
-              <span>Profileee</span>
-            </Link>
-
             <a
               href="#"
               className={classes.link}

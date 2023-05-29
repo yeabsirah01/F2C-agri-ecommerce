@@ -46,7 +46,7 @@ const cartSlice = createSlice({
 
       // Save the updated cart to cookies
       Cookies.set("cart", JSON.stringify(state), { expires: 30 });
-      toast.success("Product added to cart");
+      // toast.success("Product added to cart");
     },
     // ... other reducers remain the same
 

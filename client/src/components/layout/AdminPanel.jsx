@@ -124,8 +124,7 @@ function AdminPanel() {
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
   const { classes, theme } = useStyles();
   const isAuthenticated = useSelector((state) => !!state.user.token);
-  const navigate = useNavigate();
-  navigate("/dashboard/admindashboard");
+
   function handleLoginModalClose() {
     setShowLoginModal(false);
   }
@@ -394,6 +393,7 @@ function AdminPanel() {
       {/* Your application here */}
       <div className="appcomponent">
         <Routes>
+          <Route exact path="/" element={<AdminDashboard />} />
           <Route
             exact
             path="dashboard/admindashboard"

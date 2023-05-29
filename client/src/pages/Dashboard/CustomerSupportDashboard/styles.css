@@ -8,6 +8,7 @@
 /* Chatbox */
 .chatbox {
   color: #000000;
+  background-color: #ffffff;
   position: fixed;
   right: 1rem;
   bottom: 1rem;
@@ -31,7 +32,7 @@
   background-color: #f8f8f8;
 }
 .support-users button {
-  background-color: transparent;
+  background-color: "#FFFFFF";
   border: none;
   text-align: left;
 }
@@ -46,6 +47,7 @@
 }
 .support-users li.selected {
   background-color: #c0c0c0;
+  position: relative;
 }
 .support-messages {
   padding: 1rem;
@@ -75,6 +77,10 @@
 }
 .support-users .online {
   background-color: #20a020;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  left: 74px;
 }
 .support-users .unread {
   background-color: #f02020;

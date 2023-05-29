@@ -66,10 +66,13 @@ function AvatarIcon() {
       </Menu.Target>
 
       <Menu.Dropdown>
-        <Menu.Item>Hello {firstName}</Menu.Item>
+        <Menu.Item style={{ position: "relative", left: 100 }}>
+          {firstName}
+        </Menu.Item>
 
         {role !== "Consumer" && (
           <Menu.Item
+            style={{ backgroundColor: "#49b340", color: "white" }}
             icon={<IconDashboard size={14} />}
             onClick={() => navigate("/dashboard")}
           >
@@ -93,20 +96,12 @@ function AvatarIcon() {
             My Orders
           </Link>
         </Menu.Item>
-        <Menu.Item
-          icon={<IconSearch size={14} />}
-          rightSection={
-            <Text size="xs" color="dimmed">
-              ⌘K
-            </Text>
-          }
-        >
-          Search
-        </Menu.Item>
+
         <Menu.Divider />
-        <Menu.Label>Danger zone</Menu.Label>
+
         {role === "Consumer" ? (
           <Menu.Item
+            style={{ backgroundColor: "#yellow", color: "black" }}
             icon={<IconArrowsLeftRight size={14} />}
             onClick={() => navigate("/applyfarmer")}
           >

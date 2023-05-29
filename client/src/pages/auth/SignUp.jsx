@@ -86,7 +86,7 @@ function SignUp({ onClose }) {
       passwordConfirm: "",
       region: "",
       address: "",
-      role: "",
+      role: "Consumer",
       phone: "",
     },
     validate: {
@@ -118,7 +118,7 @@ function SignUp({ onClose }) {
     setShowLogIn(true); // Open the sign-up modal
   };
   // console.log(form.values);
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState(0);
   const nextStep = () =>
     setActive((current) => (current < 3 ? current + 1 : current));
   const prevStep = () =>

@@ -47,7 +47,11 @@ const ProductCard = ({ product, cartItem, deleteProduct }) => {
       toast.error("Don't have enough stock");
     } else {
       dispatch(addProduct({ ...product, quantity: formData.quantity }));
-      // toast.success("Product added to cart");
+      if (_id) {
+        toast.success("Product added to cart");
+      } else {
+        toast.error("Log In to add product to cart");
+      }
     }
   };
 

@@ -112,33 +112,19 @@ const useStyles = createStyles((theme) => ({
 const mockdata = [
   {
     icon: IconCode,
-    title: "lore lorem",
-    description: "This Pokémon’s cry is very loud and distracting",
+    title: "Take a Tour",
+    description: "If you are new here, use the tour ",
   },
   {
     icon: IconCoin,
-    title: "Free for everyone",
-    description: "The fluid of Smeargle’s tail secretions changes",
+    title: "FAQ",
+    description: "Mostly asked question before",
   },
-  {
-    icon: IconBook,
-    title: "Documentation",
-    description: "Yanma is capable of seeing 360 degrees without",
-  },
+
   {
     icon: IconFingerprint,
-    title: "lorem lor",
+    title: "Community",
     description: "The shell’s rounded shape and the grooves on its.",
-  },
-  {
-    icon: IconChartPie3,
-    title: "Analytics",
-    description: "This Pokémon uses its flying ability to quickly chase",
-  },
-  {
-    icon: IconNotification,
-    title: "Notifications",
-    description: "Combusken battles with the intensely hot flames it spews",
   },
 ];
 
@@ -177,6 +163,7 @@ function AppHeader() {
 
   function handleLoginButtonClick() {
     setShowLoginModal(true);
+    closeDrawer();
   }
   function handleSignUpModalClose() {
     setShowSignUpModal(false);
@@ -184,11 +171,13 @@ function AppHeader() {
 
   function handleSignUpButtonClick() {
     setShowSignUpModal(true);
+    closeDrawer();
   }
 
   return (
     <Box pb={0}>
       <Header
+        withBorder={false}
         height={60}
         p="xs"
         style={{ position: "fixed", top: 0, left: 0, right: 0 }}
@@ -210,6 +199,13 @@ function AppHeader() {
             <a href="/" className={classes.link}>
               Home
             </a>
+
+            <a href="/Products" className={classes.link}>
+              Products
+            </a>
+            <a href="/pricing" className={classes.link}>
+              Pricing
+            </a>
             <HoverCard
               width={600}
               position="bottom"
@@ -221,7 +217,7 @@ function AppHeader() {
                 <a href="/" className={classes.link}>
                   <Center inline>
                     <Box component="span" mr={5}>
-                      Features
+                      Learn
                     </Box>
                     <IconChevronDown
                       size={16}
@@ -233,7 +229,7 @@ function AppHeader() {
 
               <HoverCard.Dropdown sx={{ overflow: "hidden" }}>
                 <Group position="apart" px="md">
-                  <Text fw={500}>Features</Text>
+                  <Text fw={500}>Learn</Text>
                   <Anchor href="#" fz="xs">
                     View all
                   </Anchor>
@@ -248,30 +244,10 @@ function AppHeader() {
                 <SimpleGrid cols={2} spacing={0}>
                   {links}
                 </SimpleGrid>
-
-                <div className={classes.dropdownFooter}>
-                  <Group position="apart">
-                    <div>
-                      <Text fw={500} fz="sm">
-                        Get started
-                      </Text>
-                      <Text size="xs" color="dimmed">
-                        Their food sources have decreased, and their numbers
-                      </Text>
-                    </div>
-                    <Button variant="default">Get started</Button>
-                  </Group>
-                </div>
               </HoverCard.Dropdown>
             </HoverCard>
-            <a href="/Products" className={classes.link}>
-              Products
-            </a>
-            <a href="/pricing" className={classes.link}>
-              Pricing
-            </a>
             <a href="/" className={classes.link}>
-              Academy
+              About Us
             </a>
           </Group>
 
@@ -305,6 +281,60 @@ function AppHeader() {
       {showLoginModal && <Login onClose={handleLoginModalClose} />}
       {showSignUpModal && <SignUp onClose={handleSignUpModalClose} />}
       {/* ----------------------------------------- */}
+
+      <Drawer
+        opened={drawerOpened}
+        onClose={closeDrawer}
+        size="100%"
+        padding="md"
+        title="Navigation"
+        className={classes.hiddenDesktop}
+        zIndex={1000000}
+      >
+        <ScrollArea h={`calc(100vh - ${rem(60)})`} mx="-md">
+          <Divider
+            my="sm"
+            color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
+          />
+
+          <a href="/" className={classes.link}>
+            Home
+          </a>
+          <a href="/products" className={classes.link}>
+            Products
+          </a>
+          <a href="/pricing" className={classes.link}>
+            Pricing
+          </a>
+          <UnstyledButton className={classes.link} onClick={toggleLinks}>
+            <Center inline>
+              <Box component="span" mr={5}>
+                Learn
+              </Box>
+              <IconChevronDown size={16} color={theme.fn.primaryColor()} />
+            </Center>
+          </UnstyledButton>
+          <Collapse in={linksOpened}>{links}</Collapse>
+
+          <a href="#" className={classes.link}>
+            About Us
+          </a>
+
+          <Divider
+            my="sm"
+            color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
+          />
+
+          <Group position="center" grow pb="xl" px="md">
+            <Button variant="outline" onClick={handleLoginButtonClick}>
+              Log in
+            </Button>
+            <Button variant="filled" onClick={handleSignUpButtonClick}>
+              Sign up
+            </Button>
+          </Group>
+        </ScrollArea>
+      </Drawer>
     </Box>
   );
 }
