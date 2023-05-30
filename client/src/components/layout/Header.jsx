@@ -49,7 +49,7 @@ const useStyles = createStyles((theme) => ({
     textDecoration: "none",
     color: theme.colorScheme === "dark" ? theme.white : theme.black,
     fontWeight: 500,
-    fontSize: theme.fontSizes.lt,
+    fontSize: 16,
 
     [theme.fn.smallerThan("sm")]: {
       height: rem(42),
@@ -182,13 +182,13 @@ function AppHeader() {
         p="xs"
         style={{ position: "fixed", top: 0, left: 0, right: 0 }}
         px="md"
-        bg="#49b340"
+        bg="#51cf49"
       >
         <Group position="apart" sx={{ height: "100%" }}>
           <img
             src={Logo}
             alt={"logo"}
-            style={{ position: "relative", top: -10, width: 80, height: 40 }}
+            style={{ position: "relative", top: -5, width: 80, height: 40 }}
           />
 
           <Group
@@ -203,9 +203,12 @@ function AppHeader() {
             <a href="/Products" className={classes.link}>
               Products
             </a>
-            <a href="/pricing" className={classes.link}>
-              Pricing
-            </a>
+            {isAuthenticated ? (
+              <a href="/pricing" className={classes.link}>
+                Pricing
+              </a>
+            ) : null}
+
             <HoverCard
               width={600}
               position="bottom"
@@ -261,16 +264,46 @@ function AppHeader() {
               </>
             ) : (
               <>
-                <Button variant="outline" onClick={handleLoginButtonClick}>
+                <Button
+                  variant="outline"
+                  color="red.8"
+                  onClick={handleLoginButtonClick}
+                >
                   Log in
                 </Button>
-                <Button variant="filled" onClick={handleSignUpButtonClick}>
+                <Button
+                  color="green.9"
+                  variant="filled"
+                  onClick={handleSignUpButtonClick}
+                >
                   Sign up
                 </Button>
               </>
             )}
           </Group>
 
+          <Group
+            style={{ position: "absolute", right: 50, top: 10 }}
+            className={classes.hiddenDesktop}
+          >
+            {isAuthenticated ? (
+              <>
+                <div
+                  styles={{
+                    position: "absolute",
+                    left: "400px",
+                    top: "700px",
+                  }}
+                >
+                  <CartIcon />
+                </div>
+
+                <div styles={{ position: "relative", top: "70px" }}>
+                  <AvatarIcon />
+                </div>
+              </>
+            ) : null}
+          </Group>
           <Burger
             opened={drawerOpened}
             onClick={toggleDrawer}
@@ -290,6 +323,7 @@ function AppHeader() {
         title="Navigation"
         className={classes.hiddenDesktop}
         zIndex={1000000}
+        bg="#49b340"
       >
         <ScrollArea h={`calc(100vh - ${rem(60)})`} mx="-md">
           <Divider
@@ -303,9 +337,11 @@ function AppHeader() {
           <a href="/products" className={classes.link}>
             Products
           </a>
-          <a href="/pricing" className={classes.link}>
-            Pricing
-          </a>
+          {isAuthenticated ? (
+            <a href="/pricing" className={classes.link}>
+              Pricing
+            </a>
+          ) : null}
           <UnstyledButton className={classes.link} onClick={toggleLinks}>
             <Center inline>
               <Box component="span" mr={5}>
@@ -325,14 +361,16 @@ function AppHeader() {
             color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
           />
 
-          <Group position="center" grow pb="xl" px="md">
-            <Button variant="outline" onClick={handleLoginButtonClick}>
-              Log in
-            </Button>
-            <Button variant="filled" onClick={handleSignUpButtonClick}>
-              Sign up
-            </Button>
-          </Group>
+          {!isAuthenticated ? (
+            <Group position="center" grow pb="xl" px="md">
+              <Button variant="outline" onClick={handleLoginButtonClick}>
+                Log in
+              </Button>
+              <Button variant="filled" onClick={handleSignUpButtonClick}>
+                Sign up
+              </Button>
+            </Group>
+          ) : null}
         </ScrollArea>
       </Drawer>
     </Box>

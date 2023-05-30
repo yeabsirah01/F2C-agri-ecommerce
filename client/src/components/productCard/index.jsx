@@ -89,9 +89,10 @@ const ProductCards = ({ products, setProducts }) => {
     <div className="productCards">
       <Burger className="burger" opened={opened} onClick={handleClick} />
       {opened && (
-        <div className="input">
+        <div className="inputtt">
           <div>
             <input
+              style={{ marginTop: 20 }}
               type="text"
               placeholder="Search products..."
               value={searchQuery}
@@ -99,10 +100,9 @@ const ProductCards = ({ products, setProducts }) => {
             />
           </div>
 
-          <p>Sort by</p>
           <Select
             label="Product Category"
-            style={{ marginLeft: "auto", width: "auto" }}
+            style={{ marginLeft: "auto", width: "auto", marginTop: 20 }}
             placeholder="Filter by category"
             value={filterCategory}
             onChange={(value) => setFilterCategory(value)}
@@ -124,31 +124,35 @@ const ProductCards = ({ products, setProducts }) => {
           <div>
             <div>
               <div>
-                <div style={{ marginRight: "16px" }}>
-                  Price range: {filterPriceRange[0]} Birr -{" "}
-                  {filterPriceRange[1]} Birr
+                <div style={{ width: 150, marginRight: "16px", marginTop: 20 }}>
+                  Price range:
                 </div>
                 <div>
                   <input
+                    style={{ width: 40 }}
                     type="number"
+                    min={0}
                     placeholder="Min"
                     value={filterPriceRange[0]}
                     onChange={handleMinPriceChange}
                   />
                   <span> - </span>
                   <input
+                    style={{ width: 40 }}
                     type="number"
+                    min={0}
                     placeholder="Max"
                     value={filterPriceRange[1]}
                     onChange={handleMaxPriceChange}
-                  />
+                  />{" "}
+                  Birr
                 </div>
               </div>
             </div>
           </div>
           <Select
             label="Date"
-            style={{ marginLeft: "auto", width: "auto" }}
+            style={{ marginLeft: "auto", width: "auto", marginTop: 20 }}
             placeholder="Sort by date"
             value={filterDate}
             onChange={(value) => setFilterDate(value)}

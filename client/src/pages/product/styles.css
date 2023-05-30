@@ -43,6 +43,12 @@
   font-size: 3rem;
   line-height: 1em;
 }
+.titles {
+  /* text-transform: uppercase; */
+  color: var(--primary-color);
+  font-size: 1.02rem;
+  line-height: 1em;
+}
 
 .product__name span {
   font-size: 0.9rem;
@@ -57,13 +63,13 @@
   font-size: 1rem;
   font-weight: 500;
   display: inline-block;
-  color: var(--primary-color);
+  color: rgb(190, 85, 0);
   transform: translateY(-0.2em);
 }
 
 .product__description {
   font-size: 1.1rem;
-  color: var(--primary-color);
+  color: rgb(190, 85, 0);
   font-weight: 500;
   line-height: 1.8rem;
 }
@@ -85,6 +91,12 @@
   margin-top: 2rem;
   color: var(--primary-color);
 }
+.sellerDetails > address {
+  color: rgb(190, 85, 0);
+}
+.sellerDetails > p {
+  color: rgb(190, 85, 0);
+}
 
 .reviewForm {
   margin-top: 3rem;
@@ -96,6 +108,8 @@
 
 .reviewStars {
   font-size: 2rem;
+  position: relative;
+  left: 6.5rem;
 }
 
 .reviewStars svg {

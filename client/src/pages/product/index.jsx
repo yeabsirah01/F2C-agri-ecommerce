@@ -5,13 +5,14 @@ import axiosConfig from "../../axiosConfig";
 import noImage from "../../assets/no-image.png";
 import "./styles.css";
 import Button from "../../components/button";
-import { Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import { SelectInput, TextAreaInput } from "../../components/inputs";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../features/cartSlice";
 import * as Yup from "yup";
 import Review from "./review";
+import { NumberInput } from "@mantine/core";
 
 const weights = [
   "1 KG",
@@ -77,18 +78,19 @@ const Product = () => {
 
   const addToCart = (formData) => {
     const productInCart = products.find((p) => p._id === product._id);
-    if (+formData.quantity.split(" ")[0] > +product.stock.value) {
+    const quantityValue = parseInt(formData.quantity);
+
+    if (isNaN(quantityValue)) {
+      toast.error("Invalid quantity");
+    } else if (quantityValue > +product.stock.value) {
       toast.error("Don't have enough stock");
     } else if (
       productInCart &&
-      +productInCart.quantity + +formData.quantity.split(" ")[0] >
-        +product.stock.value
+      +productInCart.quantity + quantityValue > +product.stock.value
     ) {
       toast.error("Don't have enough stock");
     } else {
-      dispatch(
-        addProduct({ ...product, quantity: formData.quantity.split(" ")[0] })
-      );
+      dispatch(addProduct({ ...product, quantity: quantityValue }));
     }
   };
   const isOwnProduct = product.createdBy === userId;
@@ -113,6 +115,10 @@ const Product = () => {
       toast.success("Review Added");
     } else toast.error("Fill the review");
   };
+
+  let stock = product.stock ? parseInt(product.stock.value) : 0;
+
+  console.log(stock);
   return (
     <div className="productDetails">
       <div className="product__left">
@@ -127,19 +133,38 @@ const Product = () => {
         </div>
         {isOwnProduct || (
           <Formik
-            initialValues={{ quantity: "select" }}
+            initialValues={{ quantity: "" }}
             validationSchema={validationSchema}
             onSubmit={addToCart}
           >
-            {() => (
-              <Form className="form">
-                <SelectInput
-                  placeholder="Select Quantity"
-                  name="quantity"
-                  options={weights}
-                  size={6}
-                />
-                <Button label="Add to cart" size={6} />
+            {({ values, errors, touched, handleSubmit, setFieldValue }) => (
+              <Form className="" onSubmit={handleSubmit}>
+                {product.stock ? (
+                  <Field name="quantity">
+                    {({ field }) => (
+                      <NumberInput
+                        {...field}
+                        stepHoldDelay={500}
+                        stepHoldInterval={100}
+                        label="Quantity"
+                        placeholder="Enter Quantity"
+                        min={1}
+                        max={stock}
+                        onChange={(value) => setFieldValue("quantity", value)}
+                        error={touched.quantity && errors.quantity}
+                        formatter={(value) =>
+                          !Number.isNaN(parseFloat(value))
+                            ? `${value} ${product.stock.unit}`.replace(
+                                /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
+                                ","
+                              )
+                            : product.stock.unit
+                        }
+                      />
+                    )}
+                  </Field>
+                ) : null}
+                <Button label="Add to cart" size={6} type="submit" />
               </Form>
             )}
           </Formik>
@@ -151,34 +176,58 @@ const Product = () => {
         </h1>
         {product.stock && (
           <h2 className="product__price">
-            {product.price} ETB{" "}
+            <span className="titles">Price : </span> {product.price} ETB{" "}
             <span>
               ({product.stock.value} {product.stock.unit} Left)
             </span>
           </h2>
         )}
-        <h2 className="product__date">
-          {product.createdAt} <span>created day</span>
-        </h2>
+
         <div className="product__rating">
           <p>{averageReview}</p>
           <AiFillStar />
         </div>
-        <p className="product__description">{product.description}</p>
+        <p className="product__description">
+          <span className="titles">Description : </span>
+          {product.description}
+        </p>
+        <p className="product__description">
+          <span className="titles">Created At : </span>
+          {product.createdAt
+            ? new Intl.DateTimeFormat("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "2-digit",
+                hour: "numeric",
+                minute: "numeric",
+                hour12: true,
+              }).format(new Date(product.createdAt))
+            : null}
+        </p>
         <div className="sellerDetails">
-          <p>Seller Details</p>
-          <p className="seller__name">{seller.firstName}</p>
+          <h4>Seller Details</h4>
+          <p className="seller__name">
+            <span className="titles">Name : </span>
+            {seller.firstName}
+          </p>
           <address>
-            {seller.phone} <br />
-            {seller.address} <br />
-            {seller.region}
-            <br />
-            {seller["pin code"]}
+            <p>
+              <span className="titles">Phone : </span>
+              {seller.phone}{" "}
+            </p>
+            <p>
+              <span className="titles">Region : </span>
+              {seller.region}{" "}
+            </p>
+            <p>
+              <span className="titles">Address : </span>
+              {seller.address}{" "}
+            </p>
           </address>
         </div>
         {shouldDisplayReview && (
           <div className="reviewForm">
-            <h2>Write a review</h2>
+            <h2 className="titles">Write a review</h2>
             <div className="reviewStars">
               {[1, 2, 3, 4, 5].map((val) => {
                 const setReviewCount = () => setReview(val);
@@ -191,9 +240,15 @@ const Product = () => {
             <Formik initialValues={{ review: "" }} onSubmit={submitReview}>
               {() => {
                 return (
-                  <Form className="form">
-                    <TextAreaInput name="review" />
-                    <Button label="Submit" style={{ gridColumn: "11/13" }} />
+                  <Form
+                    className="form"
+                    style={{ display: "grid", justifyItems: "center", gap: 10 }}
+                  >
+                    <TextAreaInput style={{ width: 600 }} name="review" />
+                    <Button
+                      label="Submit"
+                      style={{ alignSelf: "end", justifySelf: "end" }}
+                    />
                   </Form>
                 );
               }}

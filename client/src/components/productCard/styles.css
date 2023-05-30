@@ -9,10 +9,27 @@
   background-color: #f5f5dc;
   border-width: 1px;
 }
+.productCard__new {
+  display: grid;
+  grid-template-rows: 300px auto;
+  box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+  border-color: #cb8c3f;
+  background-color: #f5f5dc;
+  border-width: 1px;
+}
 
 .product__image img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
+}
+.product__image__new img {
+  width: 80px;
+  height: 69px;
+
   object-fit: cover;
 }
 
@@ -22,6 +39,11 @@
 
 .product__details {
   padding: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.product__details__new {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
@@ -62,6 +84,12 @@
   flex-direction: row;
   margin-top: 52px;
 }
+.product__card__new {
+  background-color: #8eae4f;
+  display: flex;
+  flex-direction: row;
+  margin-top: 52px;
+}
 
 .burger {
   position: relative;
@@ -78,16 +106,32 @@
   justify-content: space-between;
   gap: 16px;
 }
+.products__new {
+  position: relative;
+  padding-bottom: 60px;
+  display: flex;
+  flex-direction: column;
 
-.input {
+  width: 90%;
+  margin: 0 auto;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.inputtt {
   background-color: #a5c989;
   width: min-content;
   padding: 0;
   position: relative;
   left: -40px;
 }
-
-.input * {
+.inputtt * {
+  background-color: #a5c989;
+}
+.input > Select {
+  background-color: #a5c989;
+}
+.input > Input {
   background-color: #a5c989;
 }
 

@@ -124,7 +124,7 @@ const useStyles = createStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     textDecoration: "none",
-    fontSize: theme.fontSizes.sm,
+    fontSize: theme.fontSizes.md,
     color:
       theme.colorScheme === "dark"
         ? theme.colors.dark[1]
@@ -206,18 +206,26 @@ function Dashboard({ children }) {
         link: "/dashboard/create",
         label: "Create Product",
         icon: IconFingerprint,
+        backgroundColor: "#C2F593", // Add background color for Create Product button
       },
       {
         link: "/dashboard/farmerdashboard",
         label: "Farmer Dashboard",
         icon: IconKey,
+        backgroundColor: "#C2F593", // Add background color for Farmer Dashboard button
       },
       {
         link: "/dashboard/profile",
         label: "Profile",
         icon: IconDatabaseImport,
+        backgroundColor: "#C2F593", // Add background color for Profile button
       },
-      { link: "/dashboard/orders", label: "Orders", icon: Icon2fa }
+      {
+        link: "/dashboard/orders",
+        label: "Orders",
+        icon: Icon2fa,
+        backgroundColor: "#C2F593", // Add background color for Orders button
+      }
     );
   }
 
@@ -227,17 +235,20 @@ function Dashboard({ children }) {
         link: "/dashboard/allproduct",
         label: "All Product",
         icon: IconFingerprint,
+        backgroundColor: "#FFF973", // Add background color for Orders button
       },
       {
         link: "/dashboard/alluser",
         label: "All Users ",
         icon: IconKey,
+        backgroundColor: "#FFF973", // Add background color for Orders button
       },
 
       {
         link: "/dashboard/allorders",
         label: "All Orders",
         icon: IconDatabaseImport,
+        backgroundColor: "#FFF973", // Add background color for Orders button
       }
     );
   }
@@ -269,6 +280,7 @@ function Dashboard({ children }) {
       })}
       to={item.link}
       key={item.label}
+      style={{ backgroundColor: item.backgroundColor }}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
       <span>{item.label}</span>

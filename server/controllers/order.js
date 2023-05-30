@@ -64,7 +64,9 @@ const getMyOrders = async (req, res) => {
     const buyerId = mongoose.Types.ObjectId(userId);
     const orders = await Order.find({
       buyerInfo: buyerId,
-    });
+    })
+      .populate("buyerInfo")
+      .populate("sellerInfo");
     res.json(orders);
     // console.log(orders);
   } catch (error) {

@@ -256,7 +256,7 @@ const updatewaitlist = async (req, res) => {
         from: "ethiosew1@gmail.com",
         to: waitlist.user.email,
         subject: "Waitlist Rejection Notification",
-        text: `Dear ${waitlist.user.name}, We regret to inform you that your waitlist request has been rejected.`,
+        text: `Dear ${waitlist.user.name}, We regret to inform you that your waitlist request has been rejected. `,
       };
 
       transporter.sendMail(mailOptions, function (error, info) {

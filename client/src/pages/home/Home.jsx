@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import axiosConfig from "../../axiosConfig";
 import ProductCards from "../../components/productCard";
 import { BrowseOurMarket } from "./BrowseOurMarket";
+// import { CarouselComponent } from "./CarouselComponent";
 import { Description1 } from "./Description1";
 import { WelcomeHeader } from "./WelcomeHeader";
 // import "./style.css";
@@ -24,6 +25,7 @@ const Home = () => {
       <WelcomeHeader />
       <Description1 />
       <BrowseOurMarket />
+      {/* <CarouselComponent /> */}
     </>
   );
 };

@@ -11,7 +11,7 @@ import {
   rem,
 } from "@mantine/core";
 import { IconCheck } from "@tabler/icons-react";
-import image from "../../assets/logo on paper.png";
+import image from "../../assets/logo on paper png.png";
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -22,7 +22,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   content: {
-    maxWidth: rem(480),
+    maxWidth: rem(900),
     marginRight: `calc(${theme.spacing.xl} * 3)`,
 
     [theme.fn.smallerThan("md")]: {
@@ -72,21 +72,21 @@ export function Description1() {
   const { classes } = useStyles();
   return (
     <div>
-      <Container>
+      <Container size={1600}>
         <div className={classes.inner}>
           <div className={classes.content}>
             <Title className={classes.title}>
               A <span className={classes.highlight}>modern</span> First <br />{" "}
               agri ecommerce
             </Title>
-            <Text color="dimmed" mt="md">
+            {/* <Text color="dimmed" mt="md">
               trade your free ecoomerce
-            </Text>
+            </Text> */}
 
             <List
               mt={30}
               spacing="sm"
-              size="sm"
+              size="lg"
               icon={
                 <ThemeIcon size={20} radius="xl">
                   <IconCheck size={rem(12)} stroke={1.5} />
@@ -94,32 +94,18 @@ export function Description1() {
               }
             >
               <List.Item>
-                <b>payment based</b> – build type safe applications, all
-                components and hooks export types
+                <b>Guaranteed Delivery Options: </b> –Orders packed, delivered
+                and confirmed reliably.
               </List.Item>
               <List.Item>
-                <b>affordable proce</b> – all packages have MIT license, you can
-                use Mantine in any project
+                <b>Secure Online Payment:</b> – Safe, hassle-free online
+                payments for convenience.
               </List.Item>
               <List.Item>
-                <b>No annoying focus ring</b> – focus ring will appear only when
-                user navigates with keyboard
+                <b> Active Customer Support:</b> – Committed support team,
+                always available.
               </List.Item>
             </List>
-
-            <Group mt={30}>
-              <Button radius="xl" size="md" className={classes.control}>
-                Get started
-              </Button>
-              <Button
-                variant="default"
-                radius="xl"
-                size="md"
-                className={classes.control}
-              >
-                surf
-              </Button>
-            </Group>
           </div>
           <Image src={image} className={classes.image} />
         </div>

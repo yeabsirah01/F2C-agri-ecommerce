@@ -1,108 +1,187 @@
-import { Accordion, Badge, Text } from "@mantine/core";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axiosConfig from "../../../axiosConfig";
+import {
+  Badge,
+  Button,
+  Group,
+  Input,
+  Select,
+  Table,
+  Text,
+  TextInput,
+} from "@mantine/core";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-function Orders() {
+const Orders = ({ userId }) => {
   const [orders, setOrders] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [sortStatus, setSortStatus] = useState("");
+  const [sortDate, setSortDate] = useState("");
 
   useEffect(() => {
-    axiosConfig.get(`/orders/orders`).then((res) => {
-      setOrders(res.data);
-    });
+    fetchOrders();
   }, []);
 
+  const { _id, role } = useSelector((state) => state.user);
+  const fetchOrders = async () => {
+    try {
+      const response = await axiosConfig.get(`/orders/orders`);
+      setOrders(response.data);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
+
+  const resetSort = () => {
+    setSearchQuery("");
+    setStatusFilter("");
+    setSortStatus("");
+    setSortDate("");
+  };
+  const x = role === "Farmer" ? "black" : "black";
+  const y = role === "Farmer" ? "black" : "black";
+  const a = role === "Farmer" ? "#E2FFC6" : "#e0f3e9";
+  const b = role === "Farmer" ? "#C2FF93" : "#00000000";
+  const c = role === "Farmer" ? "green.9" : "green.5";
+
+  // Filter orders based on search query and status
+  const filteredOrders = orders.filter((order) => {
+    const includesSearchQuery = order.orderNumber
+      .toUpperCase()
+      .startsWith("MOFER-" + searchQuery.toUpperCase());
+
+    const matchesStatusFilter =
+      statusFilter === "" || order.status === statusFilter;
+    return includesSearchQuery && matchesStatusFilter;
+  });
+
+  // Sort orders based on sort status and date
+  const sortedOrders = filteredOrders.sort((a, b) => {
+    if (sortStatus !== "") {
+      return a.status.localeCompare(b.status);
+    }
+    if (sortDate !== "") {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    }
+    return 0;
+  });
+
   return (
-    <div style={{ maxWidth: 800, margin: "auto" }}>
-      <p>hey</p>
-      {orders.map((order) => (
-        <Accordion
-          multiple={false}
-          transitionDuration={500}
-          variant="separated"
-          styles={{
-            item: {
-              // styles added to all items
-              backgroundColor: "#fff",
-              border: `2px solid #ededed`,
-
-              // styles added to expanded item
-              "&[data-active]": {
-                backgroundColor: "#ccc",
-              },
-            },
-
-            chevron: {
-              // styles added to chevron when it should rotate
-              "&[data-rotate]": {
-                transform: "rotate(-90deg)",
-              },
-            },
+    <div
+      style={{
+        marginBottom: 10,
+        display: "flex",
+        justifyContent: "center",
+        width: "70vw",
+      }}
+    >
+      <div>
+        <Group
+          position="apart"
+          align="center"
+          style={{
+            gap: "4rem",
+            marginTop: "20px",
+            marginBottom: "20px",
+            backgroundColor: " #d1e2b8",
           }}
         >
-          <Accordion.Item value="customization">
-            <Accordion.Control>
-              {order.orderNumber}{" "}
-              <Text>
-                {/* <span style={{ fontWeight: "bold" }}>Seller:</span>{" "} */}
-                {order.products.map((product) => {
-                  return <span key={product.id}>{product.name}</span>;
-                })}
-              </Text>
-              <Badge
-                style={{ marginTop: 10 }}
-                color={order.status === "pending" ? "orange" : "teal"}
-                variant="light"
-              >
-                {order.status}
-              </Badge>
-            </Accordion.Control>
-
-            <Accordion.Panel>
-              <Text>
-                <span style={{ fontWeight: "bold" }}>Seller:</span>{" "}
-                {order.sellerInfo}
-              </Text>
-              <Text>
-                <span style={{ fontWeight: "bold" }}>Buyer:</span>{" "}
-                {order.buyerInfo}
-              </Text>
-              <Text>
-                <span style={{ fontWeight: "bold" }}>Address:</span>{" "}
-                {order.shippingDetails.address}
-              </Text>
-              <Text>
-                <span style={{ fontWeight: "bold" }}>City:</span>{" "}
-                {order.shippingDetails.city}
-              </Text>
-              <Text>
-                <span style={{ fontWeight: "bold" }}>State:</span>{" "}
-                {order.shippingDetails.state}
-              </Text>
-              <Text>
-                <span style={{ fontWeight: "bold" }}>Zip Code:</span>{" "}
-                {order.shippingDetails.zipCode}
-              </Text>
-              <Text>
-                <span style={{ fontWeight: "bold" }}>Ticket Number:</span>{" "}
-                {order.paymentInfo.ticketNumber}
-              </Text>
-              <Badge
-                style={{ marginTop: 10 }}
-                color={order.status === "pending" ? "orange" : "teal"}
-                variant="light"
-              >
-                {order.status}
-              </Badge>
-              <Text style={{ marginTop: 10 }}>
-                <span style={{ fontWeight: "bold" }}>Created At:</span>{" "}
-                {order.createdAt}
-              </Text>
-            </Accordion.Panel>
-          </Accordion.Item>
-        </Accordion>
-      ))}
+          <Input
+            // size="lg"
+            icon={<Text>MOFER- </Text>}
+            iconWidth={60}
+            placeholder="Search by order number"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+          />
+          <Select
+            placeholder="Filter by status"
+            value={statusFilter}
+            onChange={(value) => setStatusFilter(value)}
+            data={[
+              { label: "All", value: "" },
+              { label: "Pending", value: "pending" },
+              { label: "Delivered", value: "delivered" },
+              { label: "Partially Delivered", value: "deliveredpartially" },
+              { label: "Undelivered", value: "undelivered" },
+            ]}
+          />
+          <Button
+            variant={sortStatus === "asc" ? "filled" : "light"}
+            onClick={() => setSortStatus(sortStatus === "asc" ? "desc" : "asc")}
+          >
+            Sort by status
+          </Button>
+          <Button
+            variant={sortDate === "asc" ? "filled" : "light"}
+            onClick={() => setSortDate(sortDate === "asc" ? "desc" : "asc")}
+          >
+            Sort by date
+          </Button>
+          <Button variant="outline" onClick={resetSort}>
+            Reset Sort
+          </Button>
+        </Group>
+        <Table striped>
+          <thead>
+            <tr>
+              <th>Order Number</th>
+              <th>Status</th>
+              <th>Created At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sortedOrders.map(
+              (
+                order,
+                index // Add 'index' as the second argument
+              ) => (
+                <tr
+                  key={order.orderNumber}
+                  style={{
+                    color: index % 2 !== 0 ? x : y,
+                    backgroundColor: index % 2 === 0 ? a : b,
+                  }}
+                  // style={{ color: index % 2 !== 0 ? "white" : "black" }}
+                >
+                  <td>
+                    <Link
+                      to={`/dashboard/orders/${order._id}`}
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      <Text fz="md" fw={500} color={c}>
+                        {order.orderNumber}
+                      </Text>
+                    </Link>
+                  </td>
+                  <td>
+                    <Badge
+                      color={order.status === "pending" ? "orange" : "teal"}
+                      variant="filled"
+                    >
+                      {order.status}
+                    </Badge>
+                  </td>
+                  <td>
+                    {new Intl.DateTimeFormat("en-US", {
+                      year: "numeric",
+                      month: "short",
+                      day: "2-digit",
+                      hour: "numeric",
+                      minute: "numeric",
+                      hour12: true,
+                    }).format(new Date(order.createdAt))}
+                  </td>
+                </tr>
+              )
+            )}
+          </tbody>
+        </Table>
+      </div>
     </div>
   );
-}
+};
 
 export default Orders;

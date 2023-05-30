@@ -17,6 +17,7 @@ import {
   IconManualGearbox,
   IconUsers,
 } from "@tabler/icons-react";
+import logo from "../../assets/final logo green.png";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -68,7 +69,13 @@ const mockdata = [
   { label: "feture 4", icon: IconGasStation },
 ];
 
-export function SubscriptionCard({ days, name, discountPercentage }) {
+export function SubscriptionCard({
+  days,
+  name,
+  discountPercentage,
+  month,
+  year,
+}) {
   const unitPrice = getUnitPrice(days);
   const finalPrice = unitPrice * (days / 30) * (1 - discountPercentage / 100);
 
@@ -141,28 +148,30 @@ export function SubscriptionCard({ days, name, discountPercentage }) {
       ></div>
 
       <Card.Section className={classes.imageSection}>
-        <Image src="https://i.imgur.com/ZL52Q2D.png" alt="Tesla Model S" />
+        <Image src={logo} alt="LOGO" />
       </Card.Section>
 
       <Group position="apart" mt="md" style={{ marginTop: "52px" }}>
         <div>
-          <Text fw={500}>{days}-Day Subscription</Text>
+          {!year ? (
+            <Text fw={500}>{month}-Month Subscription</Text>
+          ) : (
+            <Text fw={500}>{year}-Year Subscription</Text>
+          )}
           <Text fz="xs" c="dimmed">
-            nice
+            Subscription Pckage
           </Text>
         </div>
-        <Badge variant="outline">Discount: {discountPercentage}% Birr</Badge>
+        {!discountPercentage ? null : (
+          <Badge variant="outline">Discount: {discountPercentage}%</Badge>
+        )}
       </Group>
 
-      <Card.Section className={classes.section} mt="md">
+      {/* <Card.Section className={classes.section} mt="md">
         <Text fz="sm" c="dimmed" className={classes.label}>
           Basic configuration
         </Text>
-
-        <Group spacing={8} mb={-8}>
-          {features}
-        </Group>
-      </Card.Section>
+      </Card.Section> */}
 
       <Card.Section className={classes.section}>
         <Group spacing={30}>
@@ -210,15 +219,18 @@ function SubscriptionPage() {
       <div style={styles.subscriptionContainer}>
         <SubscriptionCard
           days={30}
+          month={1}
           name="Monthly Subscription"
           discountPercentage={0}
         />
         <SubscriptionCard
+          month={6}
           days={180}
           name="6 Month Subscription"
           discountPercentage={10}
         />
         <SubscriptionCard
+          year={1}
           days={366}
           name="Yearly Subscription"
           discountPercentage={20}
