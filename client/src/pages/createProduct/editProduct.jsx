@@ -14,7 +14,8 @@ const initialValues = {
   category: "select",
   name: "",
   price: "",
-  unit: "",
+  stock: { unit: "", value: "" },
+
   value: "",
   description: "",
 };
@@ -41,6 +42,7 @@ const EditProduct = () => {
     const getProduct = async () => {
       const { data } = await axiosConfig.get(`/products/${id}`);
       setInitialValues(data);
+      // console.log(_initialValues);
     };
     getProduct();
   }, [id]);
@@ -54,13 +56,14 @@ const EditProduct = () => {
     _formData.append("unit", formData.stockUnit);
     _formData.append("description", formData.description);
     _formData.append("image", image);
+
     const headers = { "Content-Type": "multipart/form-data" };
     try {
       await axiosConfig.put("/products/" + _initialValues._id, _formData, {
         headers,
       });
       toast.success("Product updated");
-      navigate("/");
+      // navigate("/");
     } catch (error) {
       toast.error(
         error?.response?.data?.msg || "Something went wrong",

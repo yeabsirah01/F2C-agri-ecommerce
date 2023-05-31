@@ -1,5 +1,5 @@
 import { Breadcrumbs, Header } from "@mantine/core";
-
+import Logo from "../../assets/final Logo1.png";
 import AvatarIcon from "./AvatarIcon";
 import CartIcon from "../../pages/cart/cartIcon";
 import {
@@ -309,12 +309,17 @@ function AdminPanel() {
           style={{ position: "fixed", top: 0, left: 0, right: 0 }}
         >
           <Box pb={0}>
-            <Header height={70} px="md" bg="#77AB59">
+            <Header height={70} px="md" bg="#51cf49">
               <Group position="apart" sx={{ height: "100%" }}>
                 <img
-                  src={"./Logo.png"}
-                  alt={"abebe"}
-                  style={{ width: 200, height: 50 }}
+                  src={Logo}
+                  alt={"logo"}
+                  style={{
+                    position: "relative",
+                    top: -5,
+                    width: 80,
+                    height: 40,
+                  }}
                 />
 
                 <Group className={classes.hiddenMobile}>
@@ -371,7 +376,7 @@ function AdminPanel() {
           }
 
           .navBox.active {
-            background-color: #77AB59;
+            background-color: #51cf49;
             color:#111111
           }
 

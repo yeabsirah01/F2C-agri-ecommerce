@@ -68,21 +68,20 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function Description1() {
+export function Description2() {
   const { classes } = useStyles();
   return (
     <div>
       <Container size={1600}>
         <div className={classes.inner}>
-          <Image src={image} className={classes.image} />
           <div className={classes.content}>
             <Title className={classes.title}>
               A <span className={classes.highlight}>modern</span> First <br />{" "}
               agri ecommerce
             </Title>
             {/* <Text color="dimmed" mt="md">
-              trade your free ecoomerce
-            </Text> */}
+                trade your free ecoomerce
+              </Text> */}
 
             <List
               mt={30}
@@ -108,6 +107,7 @@ export function Description1() {
               </List.Item>
             </List>
           </div>
+          <Image src={image} className={classes.image} />
         </div>
       </Container>
     </div>

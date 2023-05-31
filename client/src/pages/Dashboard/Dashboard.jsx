@@ -216,7 +216,7 @@ function Dashboard({ children }) {
       },
       {
         link: "/dashboard/profile",
-        label: "Profile",
+        label: "My Products",
         icon: IconDatabaseImport,
         backgroundColor: "#C2F593", // Add background color for Profile button
       },

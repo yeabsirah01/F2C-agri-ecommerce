@@ -1,3 +1,4 @@
+import React from "react";
 import { Carousel } from "@mantine/carousel";
 import { useMediaQuery } from "@mantine/hooks";
 import {
@@ -86,7 +87,7 @@ const data = [
   {
     image:
       "https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
-    title: "Aurora in Norway: when to visit for best experience",
+    title: "Aurora in Norway: when to visit for the best experience",
     category: "nature",
   },
   {
@@ -103,7 +104,7 @@ const data = [
   },
 ];
 
-export function CarouselComponent() {
+function CarouselComponent() {
   const theme = useMantineTheme();
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
   const slides = data.map((item) => (
@@ -124,3 +125,5 @@ export function CarouselComponent() {
     </Carousel>
   );
 }
+
+export default CarouselComponent;

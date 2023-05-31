@@ -119,6 +119,7 @@ const mockdata = [
     icon: IconCoin,
     title: "FAQ",
     description: "Mostly asked question before",
+    href: "/faq",
   },
 
   {
@@ -146,12 +147,14 @@ function AppHeader() {
           <item.icon size={rem(22)} color={theme.fn.primaryColor()} />
         </ThemeIcon>
         <div>
-          <Text size="sm" fw={500}>
-            {item.title}
-          </Text>
-          <Text size="xs" color="dimmed">
-            {item.description}
-          </Text>
+          <a style={{ textDecoration: "none" }} href={item.href}>
+            <Text size="sm" fw={500}>
+              {item.title}
+            </Text>
+            <Text size="xs" color="dimmed">
+              {item.description}
+            </Text>
+          </a>
         </div>
       </Group>
     </UnstyledButton>

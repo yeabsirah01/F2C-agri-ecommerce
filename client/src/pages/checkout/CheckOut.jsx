@@ -370,7 +370,7 @@ function PaymentStep({ onPrev, onNext }) {
                 <div className="card-image">
                   <img src={chappalogo} alt="Mastercard" />
                 </div>
-                <div className="card-text">Mastercard</div>
+                <div className="card-text">Chapa</div>
                 <div className="unavailable-text">Currently Not Available</div>
               </label>
             </Card>

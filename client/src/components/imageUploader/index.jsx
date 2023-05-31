@@ -13,7 +13,9 @@ const ImageUploader = ({ onChange, image }) => {
       <div className="imageContainer">
         <img src={preview} alt="" crossOrigin="cross-origin" />
       </div>
-      <label htmlFor="imageInput">Upload Image</label>
+      <label style={{ zIndex: 10000 }} htmlFor="imageInput">
+        Upload Image
+      </label>
       <input
         type="file"
         name=""

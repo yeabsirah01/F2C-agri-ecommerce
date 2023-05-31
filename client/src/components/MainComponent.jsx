@@ -28,6 +28,7 @@ import ChatBox from "../pages/Dashboard/CustomerSupportDashboard/ChatBox";
 import i18n from "i18next";
 import { initReactI18next, useTranslation } from "react-i18next";
 import { Select } from "@mantine/core";
+import { Faq } from "../pages/FAQ/Faq";
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -155,6 +156,7 @@ function MainComponent({ user }) {
               <Route path="/edit/:id" element={<EditProduct />} />
               <Route path="/:id" element={<Product />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/faq" element={<Faq />} />
               {/* <Route
             path="/success"
             element={
@@ -166,7 +168,7 @@ function MainComponent({ user }) {
 
             <ChatBox userInfo={userInfo} />
           </div>
-          {/* <TawkToWidget /> */}
+          <TawkToWidget />
         </>
       )}
     </>

@@ -58,17 +58,24 @@ const getProduct = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-  const { products } = req.body;
+  const { product } = req.body;
   const { id } = req.params;
-  if (products) {
-    products.map(async (p) => {
-      const existingProduct = await Product.findById(p._id);
-      const updatedStock = {
-        unit: existingProduct.stock.unit, // Keep the existing unit
-        value: existingProduct.stock.value - +p.quantity,
-      };
-      await Product.findByIdAndUpdate(p._id, { stock: updatedStock });
-    });
+  const updatedStockArray = []; // Declare an array to store the updated stock values
+
+  console.log(req.body);
+  if (product) {
+    await Promise.all(
+      product.map(async (p) => {
+        const existingProduct = await Product.findById(p._id);
+        const updatedStock = {
+          unit: existingProduct.stock.unit, // Keep the existing unit
+          value: existingProduct.stock.value - +p.quantity,
+        };
+        updatedStockArray.push(updatedStock); // Store the updatedStock value in the array
+        await Product.findByIdAndUpdate(p._id, { stock: updatedStock });
+      })
+    );
+    // Log the array of updated stock values
     res.status(StatusCodes.OK).json({ msg: "success" });
   } else {
     upload(req, res, async (err) => {
