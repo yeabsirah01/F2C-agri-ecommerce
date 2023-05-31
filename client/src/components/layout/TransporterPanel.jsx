@@ -69,6 +69,7 @@ import {
 import ViewFarmerProduct from "../../pages/Dashboard/AdminDashoard/ViewFarmerProducts";
 import AllProducts from "../../pages/Dashboard/AdminDashoard/AllProducts";
 import AllOrderss from "../../pages/Dashboard/TransporterDashboard/AllOrderss";
+import OrderDetails from "../../pages/Dashboard/AdminDashoard/OrderDetails";
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -333,7 +334,7 @@ function TransporterPanel() {
           />
           <Route exact path="dashboard/profile" element={<Profilee />} />
           <Route exact path="dashboard/allorders" element={<AllOrderss />} />
-
+          <Route exact path="dashboard/orders/:id" element={<OrderDetails />} />
           <Route exact path="dashboard/users" element={<AllUsers />} />
           <Route exact path="dashboard/allproducts" element={<AllProducts />} />
           <Route

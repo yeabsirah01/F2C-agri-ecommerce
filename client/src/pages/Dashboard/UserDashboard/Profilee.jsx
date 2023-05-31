@@ -245,9 +245,9 @@ export function Profilee() {
         {dark ? <IconSun size="1.1rem" /> : <IconMoonStars size="1.1rem" />}
       </ActionIcon> */}
 
-          <Text fz="20px" c={"#8B5A2B"} className="title">
+          {/* <Text fz="20px" c={"#8B5A2B"} className="title">
             My Profile
-          </Text>
+          </Text> */}
           <SimpleGrid
             cols={2}
             spacing="md"

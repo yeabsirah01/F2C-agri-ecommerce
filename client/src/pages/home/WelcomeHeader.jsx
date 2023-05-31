@@ -6,6 +6,7 @@ import {
   Button,
   rem,
 } from "@mantine/core";
+import { useTranslation } from "react-i18next";
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -80,6 +81,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function WelcomeHeader() {
+  const { t } = useTranslation();
   const { classes } = useStyles();
   return (
     <div className={classes.root}>
@@ -87,16 +89,16 @@ export function WelcomeHeader() {
         <div className={classes.inner}>
           <div className={classes.content}>
             <Title className={classes.title}>
-              እንኳን ወደ{" "}
+              {t("welcome to")}{" "}
               <Text
                 component="span"
                 inherit
                 variant="gradient"
                 gradient={{ from: "pink", to: "yellow" }}
               >
-                ሞፈር
+                {t("mofer")}
               </Text>{" "}
-              ኦንላይን የግብርና ምርቶች ገበያ በደህና መጡ።
+              {t("onlineagriecommerce")}
             </Title>
 
             <Text className={classes.description} mt={30}>

@@ -25,6 +25,88 @@ import SubscriptionPage from "../pages/subscription/SubscriptionPage";
 import AdminPanel from "./layout/AdminPanel";
 import TransporterPanel from "./layout/TransporterPanel";
 import ChatBox from "../pages/Dashboard/CustomerSupportDashboard/ChatBox";
+import i18n from "i18next";
+import { initReactI18next, useTranslation } from "react-i18next";
+import { Select } from "@mantine/core";
+
+i18n.use(initReactI18next).init({
+  resources: {
+    en: {
+      translation: require("../locales/en.json"),
+    },
+    am: {
+      translation: require("../locales/am.json"),
+    },
+  },
+  lng: "en", // Set the default language
+  fallbackLng: "en", // Fallback language if the selected language file is missing
+  interpolation: {
+    escapeValue: false,
+  },
+});
+
+function LanguageSwitch() {
+  const { i18n } = useTranslation();
+
+  const handleLanguageChange = (lang) => {
+    i18n.changeLanguage(lang);
+  };
+
+  return (
+    <Select
+      style={{
+        position: "fixed",
+        bottom: "0",
+        left: "0",
+        width: "100px",
+        backgroundColor: "green",
+      }}
+      data={[
+        { label: "English", value: "en" },
+        { label: "Amharic", value: "am" },
+      ]}
+      defaultValue="en"
+      onChange={(value) => handleLanguageChange(value)}
+      styles={(theme) => ({
+        input: {
+          // applies styles to selected item
+
+          "&, &:hover": {
+            backgroundColor:
+              theme.colorScheme === "dark"
+                ? theme.colors.green[9]
+                : theme.colors.green[9],
+            color:
+              theme.colorScheme === "dark"
+                ? theme.white
+                : theme.colors.yellow[2],
+          },
+
+          // applies styles to hovered item (with mouse or keyboard)
+          "&[data-hovered]": {},
+        },
+        item: {
+          // applies styles to selected item
+          "&[data-selected]": {
+            "&, &:hover": {
+              backgroundColor:
+                theme.colorScheme === "dark"
+                  ? theme.colors.teal[9]
+                  : theme.colors.green[2],
+              color:
+                theme.colorScheme === "dark"
+                  ? theme.white
+                  : theme.colors.teal[9],
+            },
+          },
+
+          // applies styles to hovered item (with mouse or keyboard)
+          "&[data-hovered]": {},
+        },
+      })}
+    />
+  );
+}
 
 function MainComponent({ user }) {
   const dispatch = useDispatch();
@@ -80,6 +162,8 @@ function MainComponent({ user }) {
             }
           /> */}
             </Routes>
+            <LanguageSwitch />
+
             <ChatBox userInfo={userInfo} />
           </div>
           {/* <TawkToWidget /> */}

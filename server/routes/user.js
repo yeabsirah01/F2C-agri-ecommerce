@@ -5,6 +5,7 @@ const {
   updateUser,
   disableUser,
   confirmation,
+  deleteUser,
 } = require("../controllers/user");
 const emailVerified = require("../middleware/emailVerified");
 const userMiddleware = require("../middleware/userMiddleware");
@@ -17,6 +18,7 @@ router.route("/disable/:id").put(authorizationMiddleware, disableUser);
 router
   .route("/:id")
   .get(authorizationMiddleware, emailVerified, getUser)
-  .put(authorizationMiddleware, emailVerified, updateUser);
+  .put(authorizationMiddleware, emailVerified, updateUser)
+  .delete(authorizationMiddleware, emailVerified, deleteUser);
 
 module.exports = router;

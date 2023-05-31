@@ -102,10 +102,34 @@ const updateUser = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Find the user by ID
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update the isActive value and save the user
+
+    await user.deleteOne({ user });
+
+    // Return the updated user
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUser,
   updateUser,
   disableUser,
   confirmation,
+  deleteUser,
 };

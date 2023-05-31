@@ -16,22 +16,29 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { IconPencil, IconTrash } from "@tabler/icons-react";
+import { useSelector } from "react-redux";
 
 const jobColors = {
-  Consumer: "pink",
+  Consumer: "red",
   Farmer: "green",
   Admin: "blue",
+  CustomerSupport: "yellow",
+  Transporter: "gray",
 };
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const { _id, role } = useSelector((state) => state.user);
   const thStyle = {
     color: "blue",
     fontWeight: "bold",
     // Add any other desired styles
   };
+
+  const namecolor = role === "Admin" ? "gray.0" : "gray.8";
+  const emailcolor = role === "Admin" ? "gray.0" : "dark.6";
+  const phonecolor = role === "Admin" ? "gray.0" : "dark.5";
 
   useEffect(() => {
     const getUsers = async () => {
@@ -63,7 +70,11 @@ const AllUsers = () => {
         >
           <Group spacing="sm">
             <img
-              style={{ borderRadius: "50%", width: "30px", height: "30px" }}
+              style={{
+                borderRadius: "50%",
+                width: "30px",
+                height: "30px",
+              }}
               src={
                 user.profilePicture
                   ? `http://localhost:5000/${user.profilePicture}`
@@ -73,7 +84,7 @@ const AllUsers = () => {
               alt="Profile "
               radius={30}
             />
-            <Text fz="md" fw={500} color="gray.0">
+            <Text fz="md" fw={500} color={namecolor}>
               {user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1)}
             </Text>
           </Group>
@@ -89,16 +100,16 @@ const AllUsers = () => {
         </Badge>
       </td>
       <td>
-        <Anchor component="button" size="sm" color="gray.0">
+        <Anchor component="button" size="sm" color={emailcolor}>
           {user.email}
         </Anchor>
       </td>
       <td>
-        <Text fz="sm" c="dimmed" color="gray.0">
+        <Text fz="sm" c="dimmed" color={phonecolor}>
           {user.phone}
         </Text>
       </td>
-      <td>
+      {/* <td>
         <Group spacing={0} position="right">
           <ActionIcon>
             <IconPencil size="1rem" stroke={1.5} />
@@ -107,7 +118,7 @@ const AllUsers = () => {
             <IconTrash size="1rem" stroke={1.5} />
           </ActionIcon>
         </Group>
-      </td>
+      </td> */}
     </tr>
   ));
 
