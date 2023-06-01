@@ -53,8 +53,9 @@ const FarmerApplicationForm = () => {
   };
 
   return (
-    <>
-      <h1>Apply to be Farmer</h1>
+    <div style={{ marginTop: 50 }}>
+      <h1 style={{ textAlign: "center" }}>Apply to be Farmer</h1>
+
       <form
         className="formContainer"
         encType="multipart/form-data"
@@ -124,7 +125,7 @@ const FarmerApplicationForm = () => {
           {loading ? <Loader size="xs" /> : "Submit"}
         </button>
       </form>
-    </>
+    </div>
   );
 };
 

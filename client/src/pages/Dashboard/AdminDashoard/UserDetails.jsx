@@ -132,7 +132,7 @@ const UserDetails = () => {
               <>
                 <Divider />
 
-                <Link
+                {/* <Link
                   to={`/dashboard/farmerproduct/${user._id}`}
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
@@ -140,7 +140,7 @@ const UserDetails = () => {
                     {" "}
                     Farmer Products
                   </Button>
-                </Link>
+                </Link> */}
               </>
             )}
           </div>
