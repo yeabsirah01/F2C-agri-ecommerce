@@ -17,15 +17,15 @@ const cartSlice = createSlice({
       const createdBy = newProduct.createdBy;
 
       // Check if all existing products in the cart are from the same createdBy
-      const sameVendor = state.products.every((p) => p.createdBy === createdBy);
+      // const sameVendor = state.products.every((p) => p.createdBy === createdBy);
 
-      if (!sameVendor) {
-        toast.error(
-          "Sorry, you cannot add products from different vendors to the cart."
-        );
-        // If not, don't add the new product and return the current state
-        return state;
-      }
+      // if (!sameVendor) {
+      //   toast.error(
+      //     "Sorry, you cannot add products from different vendors to the cart."
+      //   );
+      //   // If not, don't add the new product and return the current state
+      //   return state;
+      // }
 
       const existingProduct = state.products.find(
         (p) => p._id === newProduct._id

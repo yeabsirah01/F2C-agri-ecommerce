@@ -58,8 +58,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   highlight: {
-    color:
-      theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 4 : 6],
+    color: "green",
   },
 
   description: {
@@ -112,28 +111,22 @@ export function BrowseOurMarket() {
         <Title className={classes.title}>
           Surf in{" "}
           <Text component="span" className={classes.highlight} inherit>
-            our marketplace
+            our Marketplace
           </Text>{" "}
           for free
         </Title>
 
         <Container p={0} size={600}>
           <Text size="lg" color="dimmed" className={classes.description}>
-            trading will be simplifeid
+            Trading will be simplifeid
           </Text>
         </Container>
 
         <div className={classes.controls}>
-          <Button
-            className={classes.control}
-            size="lg"
-            variant="default"
-            color="gray"
-          >
-            go to products
-          </Button>
-          <Button className={classes.control} size="lg">
-            Purchase a license
+          <Button color="green" className={classes.control} size="lg">
+            <a style={{ textDecoration: "none" }} href="/products">
+              Products
+            </a>
           </Button>
         </div>
       </div>

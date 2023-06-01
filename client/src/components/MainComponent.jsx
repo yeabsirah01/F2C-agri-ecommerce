@@ -14,6 +14,7 @@ import { setCart } from "./../features/cartSlice";
 import Product from "./../pages/product";
 import ProductPage from "./../pages/product/productsPage";
 import Login from "./../pages/auth/Loginn";
+import FooterSocial from "./layout/FooterSocial";
 import Header from "./layout/Header";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import FarmerApplicationForm from "../pages/waitlist/FarmerForm";
@@ -164,6 +165,7 @@ function MainComponent({ user }) {
             }
           /> */}
             </Routes>
+            <FooterSocial />
             <LanguageSwitch />
           </div>
         </>

@@ -104,16 +104,6 @@ export function WelcomeHeader() {
             <Text className={classes.description} mt={30}>
               The first Ethiopian Farmer to consume agri ecommerce websie
             </Text>
-
-            <Button
-              variant="gradient"
-              gradient={{ from: "pink", to: "yellow" }}
-              size="xl"
-              className={classes.control}
-              mt={40}
-            >
-              Get started
-            </Button>
           </div>
         </div>
       </Container>

@@ -17,7 +17,7 @@ const useStyles = createStyles((theme) => ({
     left: 0,
     backgroundColor: theme.fn.variant({
       variant: "light",
-      color: theme.primaryColor,
+      color: "green",
     }).background,
     zIndex: 1,
   },

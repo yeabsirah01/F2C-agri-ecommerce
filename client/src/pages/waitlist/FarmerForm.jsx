@@ -53,75 +53,78 @@ const FarmerApplicationForm = () => {
   };
 
   return (
-    <form
-      className="formContainer"
-      encType="multipart/form-data"
-      onSubmit={handleSubmit}
-    >
-      <label className="label">National ID Number</label>
-      <input
-        className="inputField"
-        type="text"
-        value={nationalIdNumber}
-        onChange={(event) => setNationalIdNumber(event.target.value)}
-        required
-      />
+    <>
+      <h1>Apply to be Farmer</h1>
+      <form
+        className="formContainer"
+        encType="multipart/form-data"
+        onSubmit={handleSubmit}
+      >
+        <label className="label">National ID Number</label>
+        <input
+          className="inputField"
+          type="text"
+          value={nationalIdNumber}
+          onChange={(event) => setNationalIdNumber(event.target.value)}
+          required
+        />
 
-      <label className="label">Farming License Number</label>
-      <input
-        className="inputField"
-        type="text"
-        value={farmingLicenseNumber}
-        onChange={(event) => setFarmingLicenseNumber(event.target.value)}
-        required
-      />
+        <label className="label">Farming License Number</label>
+        <input
+          className="inputField"
+          type="text"
+          value={farmingLicenseNumber}
+          onChange={(event) => setFarmingLicenseNumber(event.target.value)}
+          required
+        />
 
-      <label className="label">Letter</label>
-      <textarea
-        className="inputField"
-        value={letter}
-        onChange={(event) => setLetter(event.target.value)}
-        required
-      ></textarea>
+        <label className="label">Letter</label>
+        <textarea
+          className="inputField"
+          value={letter}
+          onChange={(event) => setLetter(event.target.value)}
+          required
+        ></textarea>
 
-      <label className="label">Profile Picture</label>
-      <input
-        className="fileInput"
-        type="file"
-        onChange={(event) => setProfilePicture(event.target.files[0])}
-        required
-      />
+        <label className="label">Profile Picture</label>
+        <input
+          className="fileInput"
+          type="file"
+          onChange={(event) => setProfilePicture(event.target.files[0])}
+          required
+        />
 
-      <label className="label">Farming License</label>
-      <input
-        className="fileInput"
-        type="file"
-        onChange={(event) => setFarmingLicense(event.target.files[0])}
-        required
-      />
+        <label className="label">Farming License</label>
+        <input
+          className="fileInput"
+          type="file"
+          onChange={(event) => setFarmingLicense(event.target.files[0])}
+          required
+        />
 
-      <label className="label">National ID Photo</label>
-      <input
-        className="fileInput"
-        type="file"
-        accept="image/*"
-        onChange={(event) => setNationalIDPhoto(event.target.files[0])}
-        required
-      />
+        <label className="label">National ID Photo</label>
+        <input
+          className="fileInput"
+          type="file"
+          accept="image/*"
+          onChange={(event) => setNationalIDPhoto(event.target.files[0])}
+          required
+        />
 
-      <label className="label">Farm Sample Photo</label>
-      <input
-        className="fileInput"
-        type="file"
-        accept="image/*"
-        onChange={(event) => setFarmSamplePhoto(event.target.files[0])}
-        required
-      />
+        <label className="label">Farm Sample Photo</label>
+        <input
+          className="fileInput"
+          type="file"
+          accept="image/*"
+          onChange={(event) => setFarmSamplePhoto(event.target.files[0])}
+          required
+        />
 
-      <button className="button" type="submit" disabled={loading}>
-        {loading ? <Loader size="xs" /> : "Submit"}
-      </button>
-    </form>
+        <button className="button" type="submit" disabled={loading}>
+          {loading ? <Loader size="xs" /> : "Submit"}
+        </button>
+      </form>
+    </>
   );
 };
 

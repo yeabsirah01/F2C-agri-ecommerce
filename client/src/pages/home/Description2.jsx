@@ -76,8 +76,8 @@ export function Description2() {
         <div className={classes.inner}>
           <div className={classes.content}>
             <Title className={classes.title}>
-              A <span className={classes.highlight}>modern</span> First <br />{" "}
-              agri ecommerce
+              A <span className={classes.highlight}>modern</span> way <br /> to
+              trade.
             </Title>
             {/* <Text color="dimmed" mt="md">
                 trade your free ecoomerce

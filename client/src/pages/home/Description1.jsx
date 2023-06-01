@@ -77,8 +77,8 @@ export function Description1() {
           <Image width={600} src={image} className={classes.image} />
           <div className={classes.content}>
             <Title className={classes.title}>
-              A <span className={classes.highlight}>modern</span> First <br />{" "}
-              agri ecommerce
+              Benefits for <span className={classes.highlight}>Farmers</span>{" "}
+              <br />{" "}
             </Title>
             {/* <Text color="dimmed" mt="md">
               trade your free ecoomerce
@@ -95,16 +95,31 @@ export function Description1() {
               }
             >
               <List.Item>
-                <b>Guaranteed Delivery Options: </b> –Orders packed, delivered
-                and confirmed reliably.
+                <b>Direct market access: </b> – Sell products without
+                intermediaries.
               </List.Item>
               <List.Item>
-                <b>Secure Online Payment:</b> – Safe, hassle-free online
-                payments for convenience.
+                <b>Increased market reach:</b> – Reach a broader customer base.
               </List.Item>
               <List.Item>
-                <b> Active Customer Support:</b> – Committed support team,
-                always available.
+                <b> Better price realization:</b> – Set fair prices based on
+                demand and costs.
+              </List.Item>
+              <List.Item>
+                <b> Improved market transparency:</b> – Showcase product details
+                and build trust.
+              </List.Item>
+              <List.Item>
+                <b> Reduced marketing costs:</b> – Cost-effective promotion and
+                advertising.
+              </List.Item>
+              <List.Item>
+                <b>Efficient logistics and order management:</b> – Streamline
+                operations.
+              </List.Item>
+              <List.Item>
+                <b>Consumer feedback and loyalty:</b> – Receive insights and
+                foster customer relationships.
               </List.Item>
             </List>
           </div>

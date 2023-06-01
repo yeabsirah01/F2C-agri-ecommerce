@@ -87,12 +87,12 @@ import { useState } from "react";
 import { createStyles, Group, Code, getStylesRef, rem } from "@mantine/core";
 import {
   IconBellRinging,
-  IconFingerprint,
-  IconKey,
+  IconPlus,
+  IconDashboard,
   IconSettings,
-  Icon2fa,
-  IconDatabaseImport,
-  IconReceipt2,
+  IconTruckDelivery,
+  IconBuildingStore,
+  IconUser,
   IconSwitchHorizontal,
   IconLogout,
 } from "@tabler/icons-react";
@@ -190,7 +190,7 @@ function Breadcrumbs() {
 function Dashboard({ children }) {
   const { role, firstName } = useSelector((state) => state.user);
   const data = [
-    { link: "/dashboard/profilee", label: "My profile", icon: IconReceipt2 },
+    { link: "/dashboard/profilee", label: "My profile", icon: IconUser },
   ];
 
   if (role === "Farmer" || role === "Consumer") {
@@ -205,25 +205,25 @@ function Dashboard({ children }) {
       {
         link: "/dashboard/create",
         label: "Create Product",
-        icon: IconFingerprint,
+        icon: IconPlus,
         backgroundColor: "#C2F593", // Add background color for Create Product button
       },
       {
         link: "/dashboard/farmerdashboard",
         label: "Farmer Dashboard",
-        icon: IconKey,
+        icon: IconDashboard,
         backgroundColor: "#C2F593", // Add background color for Farmer Dashboard button
       },
       {
         link: "/dashboard/profile",
         label: "My Products",
-        icon: IconDatabaseImport,
+        icon: IconBuildingStore,
         backgroundColor: "#C2F593", // Add background color for Profile button
       },
       {
         link: "/dashboard/orders",
         label: "Orders",
-        icon: Icon2fa,
+        icon: IconTruckDelivery,
         backgroundColor: "#C2F593", // Add background color for Orders button
       }
     );
@@ -232,22 +232,16 @@ function Dashboard({ children }) {
   if (role === "CustomerSupport") {
     data.push(
       {
-        link: "/dashboard/allproduct",
-        label: "All Product",
-        icon: IconFingerprint,
-        backgroundColor: "#FFF973", // Add background color for Orders button
-      },
-      {
         link: "/dashboard/alluser",
         label: "All Users ",
-        icon: IconKey,
+        icon: IconDashboard,
         backgroundColor: "#FFF973", // Add background color for Orders button
       },
 
       {
         link: "/dashboard/allorders",
         label: "All Orders",
-        icon: IconDatabaseImport,
+        icon: IconBuildingStore,
         backgroundColor: "#FFF973", // Add background color for Orders button
       }
     );

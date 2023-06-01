@@ -76,8 +76,8 @@ export function Description3() {
         <div className={classes.inner}>
           <div className={classes.content}>
             <Title className={classes.title}>
-              A <span className={classes.highlight}>modern</span> First <br />{" "}
-              agri ecommerce
+              Benefits for <span className={classes.highlight}>Consumer</span>{" "}
+              <br />{" "}
             </Title>
             {/* <Text color="dimmed" mt="md">
                   trade your free ecoomerce
@@ -94,16 +94,28 @@ export function Description3() {
               }
             >
               <List.Item>
-                <b>Guaranteed Delivery Options: </b> –Orders packed, delivered
+                <b>Freshness: </b> –Access to fresh, locally sourced products.
                 and confirmed reliably.
               </List.Item>
               <List.Item>
-                <b>Secure Online Payment:</b> – Safe, hassle-free online
-                payments for convenience.
+                <b>Variety:</b> – Wide range of choices and unique offerings.
               </List.Item>
               <List.Item>
-                <b> Active Customer Support:</b> – Committed support team,
-                always available.
+                <b> Competitive pricing:</b> – Fair prices and cost savings.
+              </List.Item>
+              <List.Item>
+                <b> Connection: </b> – Direct interaction with farmers.
+              </List.Item>
+              <List.Item>
+                <b> Convenience: </b> – Easy and accessible shopping experience.
+              </List.Item>
+              <List.Item>
+                <b> Transparency: </b> – Information and trust in product
+                origins.
+              </List.Item>
+              <List.Item>
+                <b> Support: </b> – Contributing to local farmers and
+                communities.
               </List.Item>
             </List>
           </div>

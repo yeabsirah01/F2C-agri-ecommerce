@@ -27,7 +27,7 @@ const validationSchema = Yup.object().shape({
       "Category is required"
     ),
   name: Yup.string()
-    .matches(/^[A-Za-z\s]+$/, "Name cannot contain numbers")
+
     .min(2)
     .max(20)
     .required("Product name is required"),

@@ -19,7 +19,18 @@ const initialValues = {
   phone: "",
 };
 
-const regionOptions = ["abebe", "kebe"]; // Updated variable name
+const regionOptions = [
+  "Amhara",
+  "Afar",
+  "Benishangul-Gumuz",
+  "Gambela",
+  "Harari",
+  "Oromia",
+  "Sidama",
+  "Somali",
+  "SNNP",
+  "Tigray",
+]; // Updated variable name
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()

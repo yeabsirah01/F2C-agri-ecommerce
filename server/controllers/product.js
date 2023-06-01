@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage }).single("image");
 
 const createProduct = async (req, res) => {
-  console.log(req.user);
+  console.log(req.body);
   const user = await User.findById(req.user.id);
   if (user.role !== "Farmer")
     throw new AuthenticationError(
