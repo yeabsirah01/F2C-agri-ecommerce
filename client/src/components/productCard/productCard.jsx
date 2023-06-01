@@ -77,7 +77,7 @@ const ProductCard = ({ product, cartItem, deleteProduct }) => {
             {product.stock.value} {product.stock.unit} left
           </p>
         </div>
-        <p className="price"> {product.price} ETB</p>
+        <p className="pricee"> {product.price} ETB</p>
         {cartItem ? (
           <>
             <Button
@@ -121,30 +121,38 @@ const ProductCard = ({ product, cartItem, deleteProduct }) => {
           >
             {({ values, errors, touched, handleSubmit, setFieldValue }) => (
               <Form className="" onSubmit={handleSubmit}>
-                <Field name="quantity">
-                  {({ field }) => (
-                    <NumberInput
-                      {...field}
-                      stepHoldDelay={500}
-                      stepHoldInterval={100}
-                      label="Quantity"
-                      placeholder="Enter Quantity"
-                      min={1}
-                      max={stock}
-                      onChange={(value) => setFieldValue("quantity", value)}
-                      error={touched.quantity && errors.quantity}
-                      formatter={(value) =>
-                        !Number.isNaN(parseFloat(value))
-                          ? `${value} ${product.stock.unit}`.replace(
-                              /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
-                              ","
-                            )
-                          : product.stock.unit
-                      }
-                    />
-                  )}
-                </Field>
-                <Button label="Add to cart" size={6} type="submit" />
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <Field name="quantity" style={{ marginRight: "10px" }}>
+                    {({ field }) => (
+                      <NumberInput
+                        style={{ width: 100 }}
+                        {...field}
+                        stepHoldDelay={500}
+                        stepHoldInterval={100}
+                        label="Quantity"
+                        placeholder="Enter Quantity"
+                        min={1}
+                        max={stock}
+                        onChange={(value) => setFieldValue("quantity", value)}
+                        error={touched.quantity && errors.quantity}
+                        formatter={(value) =>
+                          !Number.isNaN(parseFloat(value))
+                            ? `${value} ${product.stock.unit}`.replace(
+                                /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
+                                ","
+                              )
+                            : product.stock.unit
+                        }
+                      />
+                    )}
+                  </Field>
+                  <Button
+                    style={{ position: "relative", top: 8, left: 40 }}
+                    label="Add to cart"
+                    size={6}
+                    type="submit"
+                  />
+                </div>
               </Form>
             )}
           </Formik>

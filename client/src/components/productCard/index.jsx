@@ -87,7 +87,10 @@ const ProductCards = ({ products, setProducts }) => {
   };
   return (
     <div className="productCards">
-      <Burger className="burger" opened={opened} onClick={handleClick} />
+      <div>
+        {/* <p> filter</p> */}
+        <Burger className="burger" opened={opened} onClick={handleClick} />{" "}
+      </div>
       {opened && (
         <div className="inputtt">
           <div>

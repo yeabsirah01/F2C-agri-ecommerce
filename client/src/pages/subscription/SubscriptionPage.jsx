@@ -148,15 +148,19 @@ export function SubscriptionCard({
       ></div>
 
       <Card.Section className={classes.imageSection}>
-        <Image src={logo} alt="LOGO" />
+        <Image width={500} src={logo} alt="LOGO" />
       </Card.Section>
 
       <Group position="apart" mt="md" style={{ marginTop: "52px" }}>
         <div>
           {!year ? (
-            <Text fw={500}>{month}-Month Subscription</Text>
+            <Text color="#994d00" size="lg" fw={500}>
+              {month}-Month Subscription
+            </Text>
           ) : (
-            <Text fw={500}>{year}-Year Subscription</Text>
+            <Text color="#994d00" fw={500} size="lg">
+              {year}-Year Subscription
+            </Text>
           )}
           <Text fz="xs" c="dimmed">
             Subscription Pckage
@@ -182,6 +186,7 @@ export function SubscriptionCard({
           </div>
 
           <Button
+            color="green"
             variant="outline"
             onClick={handleClick}
             radius="xl"
@@ -201,10 +206,26 @@ function SubscriptionPage() {
   );
   console.log(subscription);
   const { status, endDate, startDate } = subscription ?? {};
-  const isActive = status === "active";
-  const daysLeft = Math.ceil(
-    (new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24)
+
+  const [isActive, setIsActive] = useState(status === "active");
+  const [daysLeft, setDaysLeft] = useState(
+    Math.ceil((new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24))
   );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const currentDaysLeft = Math.ceil(
+        (new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24)
+      );
+
+      setIsActive(status === "active");
+      setDaysLeft(currentDaysLeft);
+    }, []); // Update every second
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [endDate, status]);
 
   return (
     <div style={{ marginTop: "52px" }}>

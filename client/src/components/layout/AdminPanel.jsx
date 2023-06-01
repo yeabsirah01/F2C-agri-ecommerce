@@ -289,7 +289,7 @@ function AdminPanel() {
                   </div>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Button
                   onClick={() => dispatch(logout())}
                   leftIcon={<IconPower size={24} />}
@@ -297,7 +297,7 @@ function AdminPanel() {
                 >
                   Logout
                 </Button>
-              </li>
+              </li> */}
             </ul>
           </div>
         </Navbar>
@@ -392,9 +392,9 @@ function AdminPanel() {
           }
         `}
       </style>
-      <div>
+      {/* <div>
         <Breadcrumbs color="blue.3" className="abe" />
-      </div>
+      </div> */}
       {/* Your application here */}
       <div className="appcomponent">
         <Routes>

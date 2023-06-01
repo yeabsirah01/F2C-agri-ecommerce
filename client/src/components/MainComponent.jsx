@@ -112,7 +112,7 @@ function LanguageSwitch() {
 function MainComponent({ user }) {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user);
-
+  console.log(userInfo.role);
   useEffect(() => {
     const userCookie = Cookies.get("user");
     const cartCookie = Cookies.get("cart");
@@ -165,10 +165,7 @@ function MainComponent({ user }) {
           /> */}
             </Routes>
             <LanguageSwitch />
-
-            <ChatBox userInfo={userInfo} />
           </div>
-          <TawkToWidget />
         </>
       )}
     </>

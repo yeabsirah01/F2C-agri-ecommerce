@@ -11,7 +11,7 @@ import {
   rem,
 } from "@mantine/core";
 import { IconCheck } from "@tabler/icons-react";
-import image from "../../assets/logo on paper png.png";
+import image from "../../assets/farmer (3).jfif";
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -74,7 +74,7 @@ export function Description1() {
     <div>
       <Container size={1600}>
         <div className={classes.inner}>
-          <Image src={image} className={classes.image} />
+          <Image width={600} src={image} className={classes.image} />
           <div className={classes.content}>
             <Title className={classes.title}>
               A <span className={classes.highlight}>modern</span> First <br />{" "}
@@ -89,7 +89,7 @@ export function Description1() {
               spacing="sm"
               size="lg"
               icon={
-                <ThemeIcon size={20} radius="xl">
+                <ThemeIcon color="teal" size={20} radius="xl">
                   <IconCheck size={rem(12)} stroke={1.5} />
                 </ThemeIcon>
               }

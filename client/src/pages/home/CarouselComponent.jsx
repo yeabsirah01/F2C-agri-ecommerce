@@ -1,129 +1,63 @@
-import React from "react";
-import { Carousel } from "@mantine/carousel";
-import { useMediaQuery } from "@mantine/hooks";
-import {
-  createStyles,
-  Paper,
-  Text,
-  Title,
-  Button,
-  useMantineTheme,
-  rem,
-} from "@mantine/core";
+import React, { useState, useEffect } from "react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import ProductCard from "../../components/productCard/productCard";
 
-const useStyles = createStyles((theme) => ({
-  card: {
-    height: rem(440),
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-  },
+const CarouselComponent = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [products, setProducts] = useState([]);
 
-  title: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    fontWeight: 900,
-    color: theme.white,
-    lineHeight: 1.2,
-    fontSize: rem(32),
-    marginTop: theme.spacing.xs,
-  },
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        // Perform the API call or data fetching here to get the products
+        const response = await fetch("YOUR_API_ENDPOINT");
+        const data = await response.json();
+        setProducts(data.products);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
 
-  category: {
-    color: theme.white,
-    opacity: 0.7,
-    fontWeight: 700,
-    textTransform: "uppercase",
-  },
-}));
+    fetchProducts();
+  }, []);
 
-function Card({ image, title, category }) {
-  const { classes } = useStyles();
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (isAutoPlaying) {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % products.length);
+      }
+    }, 3000);
 
-  return (
-    <Paper
-      shadow="md"
-      p="xl"
-      radius="md"
-      sx={{ backgroundImage: `url(${image})` }}
-      className={classes.card}
-    >
-      <div>
-        <Text className={classes.category} size="xs">
-          {category}
-        </Text>
-        <Title order={3} className={classes.title}>
-          {title}
-        </Title>
-      </div>
-      <Button variant="white" color="dark">
-        Read article
-      </Button>
-    </Paper>
-  );
-}
+    return () => {
+      clearInterval(interval);
+    };
+  }, [isAutoPlaying, products]);
 
-const data = [
-  {
-    image:
-      "https://images.unsplash.com/photo-1508193638397-1c4234db14d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
-    title: "Best forests to visit in North America",
-    category: "nature",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1559494007-9f5847c49d94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
-    title: "Hawaii beaches review: better than you think",
-    category: "beach",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1608481337062-4093bf3ed404?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
-    title: "Mountains at night: 12 best locations to enjoy the view",
-    category: "nature",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
-    title: "Aurora in Norway: when to visit for the best experience",
-    category: "nature",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1510798831971-661eb04b3739?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
-    title: "Best places to visit this winter",
-    category: "tourism",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1582721478779-0ae163c05a60?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
-    title: "Active volcanos reviews: travel at your own risk",
-    category: "nature",
-  },
-];
+  const handleCarouselChange = (index) => {
+    setCurrentIndex(index);
+  };
 
-function CarouselComponent() {
-  const theme = useMantineTheme();
-  const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
-  const slides = data.map((item) => (
-    <Carousel.Slide key={item.title}>
-      <Card {...item} />
-    </Carousel.Slide>
-  ));
+  const toggleAutoPlay = () => {
+    setIsAutoPlaying(!isAutoPlaying);
+  };
 
   return (
     <Carousel
-      slideSize="50%"
-      breakpoints={[{ maxWidth: "sm", slideSize: "100%", slideGap: rem(2) }]}
-      slideGap="xl"
-      align="start"
-      slidesToScroll={mobile ? 1 : 2}
+      selectedItem={currentIndex}
+      onChange={handleCarouselChange}
+      autoPlay={isAutoPlaying}
+      infiniteLoop
+      showThumbs={false}
+      showStatus={false}
+      stopOnHover={false}
     >
-      {slides}
+      {products.map((product, index) => (
+        <ProductCard key={index} product={product} />
+      ))}
     </Carousel>
   );
-}
+};
 
 export default CarouselComponent;

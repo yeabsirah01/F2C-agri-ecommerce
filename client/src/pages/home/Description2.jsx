@@ -88,7 +88,7 @@ export function Description2() {
               spacing="sm"
               size="lg"
               icon={
-                <ThemeIcon size={20} radius="xl">
+                <ThemeIcon color="teal" size={20} radius="xl">
                   <IconCheck size={rem(12)} stroke={1.5} />
                 </ThemeIcon>
               }

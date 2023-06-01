@@ -89,13 +89,13 @@ const updatewaitlist = async (req, res) => {
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: "ethiosew1@gmail.com",
-          pass: process.env.GMAIL_PASSWORDD,
+          user: "moferethiopia@gmail.com",
+          pass: process.env.GMAIL_PASSWORD,
         },
       });
 
       const mailOptions = {
-        from: "ethiosew1@gmail.com",
+        from: "moferethiopia@gmail.com",
         to: waitlist.user.email,
         subject: "Waitlist Approval Notification",
         html: `
@@ -202,7 +202,7 @@ const updatewaitlist = async (req, res) => {
     <table>
       <thead>
         <tr>
-          <th colspan="2"><img class="logo" src="https://example.com/logo.png" alt="Company Logo"></th>
+          <th colspan="2"><img src="../../..client/src/assets/final logo green.png" alt="Company Logo" /></th>
         </tr>
       </thead>
       <tbody>
@@ -247,13 +247,13 @@ const updatewaitlist = async (req, res) => {
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: "ethiosew1@gmail.com",
+          user: "moferethiopia@gmail.com",
           pass: process.env.EMAIL_PASSWORD,
         },
       });
 
       const mailOptions = {
-        from: "ethiosew1@gmail.com",
+        from: "moferethiopia@gmail.com",
         to: waitlist.user.email,
         subject: "Waitlist Rejection Notification",
         text: `Dear ${waitlist.user.name}, We regret to inform you that your waitlist request has been rejected. `,

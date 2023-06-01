@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import axiosConfig from "../../axiosConfig";
 import ProductCards from "../../components/productCard";
 import { BrowseOurMarket } from "./BrowseOurMarket";
-import CarouselComponent from "./CarouselComponent";
 // import { CarouselComponent } from "./CarouselComponent";
 import { Description1 } from "./Description1";
 import { Description2 } from "./Description2";
@@ -33,7 +32,7 @@ const Home = () => {
 
       <Features />
       <BrowseOurMarket />
-      <CarouselComponent />
+      {/* <CarouselComponent /> */}
     </>
   );
 };

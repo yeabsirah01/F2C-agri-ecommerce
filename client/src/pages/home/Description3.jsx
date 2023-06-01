@@ -11,7 +11,7 @@ import {
   rem,
 } from "@mantine/core";
 import { IconCheck } from "@tabler/icons-react";
-import image from "../../assets/logo on paper png.png";
+import image from "../../assets/farmer (1).jfif";
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -107,7 +107,7 @@ export function Description3() {
               </List.Item>
             </List>
           </div>
-          <Image src={image} className={classes.image} />
+          <Image width={600} src={image} className={classes.image} />
         </div>
       </Container>
     </div>

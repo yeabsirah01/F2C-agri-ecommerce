@@ -31,11 +31,13 @@ const getUser = async (req, res) => {
 };
 
 const confirmation = async (req, res) => {
+  console.log(req.params);
   try {
     const { userId } = await jwt.verify(
       req.params.token,
       process.env.JWT_SECRET
     );
+    console.log(userId);
     // console.log(req.params.token);
 
     await User.updateOne({ _id: userId }, { isVerified: true });

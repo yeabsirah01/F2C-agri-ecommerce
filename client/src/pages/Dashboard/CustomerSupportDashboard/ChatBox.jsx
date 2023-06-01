@@ -1,3 +1,5 @@
+import { Button } from "@mantine/core";
+import { IconMessageCircle } from "@tabler/icons-react";
 import React, { useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
 import "./styles.css";
@@ -73,15 +75,15 @@ export default function ChatBox(props) {
     <div className="chatbox">
       {!isOpen ? (
         <button type="button" onClick={supportHandler}>
-          <i className="fa fa-support" />
+          <IconMessageCircle size={40} />
         </button>
       ) : (
         <div className="card card-body">
           <div className="row">
             <strong>Support </strong>
-            <button type="button" onClick={closeHandler}>
+            <Button size={20} color="red" type="button" onClick={closeHandler}>
               <i className="fa fa-close" />
-            </button>
+            </Button>
           </div>
           <ul ref={uiMessagesRef}>
             {messages.map((msg, index) => (
@@ -99,7 +101,9 @@ export default function ChatBox(props) {
                 type="text"
                 placeholder="type message"
               />
-              <button type="submit">Send</button>
+              <Button style={{ marginTop: 10 }} color="green" type="submit">
+                Send
+              </Button>
             </form>
           </div>
         </div>

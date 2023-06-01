@@ -47,7 +47,10 @@ const getAllProducts = async (req, res) => {
   let products;
   if (req.params.userId)
     products = await Product.find({ createdBy: req.params.userId });
-  else products = await Product.find().sort({ updatedAt: -1 });
+  else
+    products = await Product.find()
+      .populate("createdBy")
+      .sort({ updatedAt: -1 });
   res.status(StatusCodes.OK).json(products);
 };
 
@@ -62,7 +65,8 @@ const updateProduct = async (req, res) => {
   const { id } = req.params;
   const updatedStockArray = []; // Declare an array to store the updated stock values
 
-  console.log(req.body);
+  const existingProduct = await Product.findById(id);
+
   if (product) {
     await Promise.all(
       product.map(async (p) => {
@@ -79,10 +83,15 @@ const updateProduct = async (req, res) => {
     res.status(StatusCodes.OK).json({ msg: "success" });
   } else {
     upload(req, res, async (err) => {
+      console.log(req.body);
+      const updatedStock = {
+        unit: req.body.unit || existingProduct.stock.unit, // Keep the existing unit
+        value: req.body.value,
+      };
       if (err) {
         res.sendStatus(500);
       } else {
-        const data = { ...req.body, image: undefined };
+        const data = { ...req.body, image: undefined, stock: updatedStock };
         if (req?.file?.filename) data.image = req.file.filename;
         const product = await Product.findByIdAndUpdate(id, data, {
           new: true,

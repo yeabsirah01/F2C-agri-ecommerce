@@ -77,6 +77,12 @@
   font-weight: 500;
   color: #8b4513;
 }
+.pricee {
+  text-align: right;
+  font-size: 2rem;
+  font-weight: 500;
+  color: #8b4513;
+}
 
 .productCards {
   background-color: #d1e2b8;
