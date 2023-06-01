@@ -61,20 +61,22 @@ const getProduct = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-  const { product } = req.body;
+  const { products } = req.body;
   const { id } = req.params;
   const updatedStockArray = []; // Declare an array to store the updated stock values
 
   const existingProduct = await Product.findById(id);
-
-  if (product) {
+  console.log(req.body);
+  if (products) {
     await Promise.all(
-      product.map(async (p) => {
+      products.map(async (p) => {
         const existingProduct = await Product.findById(p._id);
+        // console.log(existingProduct);
         const updatedStock = {
           unit: existingProduct.stock.unit, // Keep the existing unit
           value: existingProduct.stock.value - +p.quantity,
         };
+
         updatedStockArray.push(updatedStock); // Store the updatedStock value in the array
         await Product.findByIdAndUpdate(p._id, { stock: updatedStock });
       })
@@ -83,9 +85,8 @@ const updateProduct = async (req, res) => {
     res.status(StatusCodes.OK).json({ msg: "success" });
   } else {
     upload(req, res, async (err) => {
-      console.log(req.body);
       const updatedStock = {
-        unit: req.body.unit || existingProduct.stock.unit, // Keep the existing unit
+        unit: existingProduct.stock.unit, // Keep the existing unit
         value: req.body.value,
       };
       if (err) {

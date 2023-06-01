@@ -22,26 +22,8 @@ function AvatarIcon() {
   const [responseStatus, setResponseStatus] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  onst[(user, setUser)] = useState({
-    role: "",
-    firstName: "",
-    profilePicture: "",
-    subscription: "",
-    isVerified: false,
-  });
-
-  useEffect(() => {
-    const { role, firstName, profilePicture, subscription, isVerified } =
-      useSelector((state) => state.user);
-    setUser({
-      role,
-      firstName,
-      profilePicture,
-      subscription,
-      isVerified,
-    });
-  }, []);
-
+  const { role, firstName, profilePicture, subscription, isVerified } =
+    useSelector((state) => state.user);
   const [avatarUrl, setAvatarUrl] = useState(
     "http://localhost:5000/1682238562698-DABU3586.JPEG"
   );

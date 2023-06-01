@@ -24,7 +24,7 @@ function App() {
       >
         <MainComponent />
         {(userInfo.role === "Transporter" ||
-          userInfo.role === "CustomerSupport") && (
+          userInfo.role === "CustomerSupport"|| userInfo.role !== "Consumer") && (
           <ChatBox userInfo={userInfo} />
         )}
         <div>

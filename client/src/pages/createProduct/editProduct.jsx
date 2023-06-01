@@ -27,10 +27,19 @@ const validationSchema = Yup.object().shape({
       ["ፍራፍሬዎች", "አትክልቶች", "ጥራጥሬ", "እህል", "ቅመም", "ቡና", "የእንስሳት ተዋዕፆ", "እንስሳት"],
       "Category is required"
     ),
-  name: Yup.string().min(2).max(20).required("Product name is required"),
-  price: Yup.number().max(10000, "Invalid price").required("Price is required"),
-  stock: Yup.number().required("Stock is required"),
-  stockUnit: Yup.string().required("Stock unit is required"), // Add validation for stockUnit
+  name: Yup.string()
+    .matches(/^[A-Za-z\s]+$/, "Name cannot contain numbers")
+    .min(2)
+    .max(20)
+    .required("Product name is required"),
+  price: Yup.number()
+    .min(0, "Price cannot be negative")
+    .max(10000, "Invalid price")
+    .required("Price is required"),
+  stock: Yup.number()
+    .min(0, "Stock cannot be negative")
+    .required("Stock is required"),
+  stockUnit: Yup.string().required("Stock unit is required"),
   description: Yup.string().required("Description is required"),
 });
 

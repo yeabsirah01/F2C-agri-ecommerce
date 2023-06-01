@@ -118,7 +118,7 @@ function ShippingDetailsStep({ onNext }) {
       clearCartAndNotify();
       // localStorage.removeItem("order");
     }
-  }, [location.search, dispatch, products, prods, token]);
+  }, []);
 
   const Ticket = {
     TotalAmount: query.TotalAmount,
@@ -447,7 +447,7 @@ function OrderSummaryStep({ onPrev }) {
 
     try {
       const { data } = await axiosConfig
-        .post(`/products/checkout/${prods[0].createdBy}`, {
+        .post(`/products/checkout/${prods[0].createdBy._id}`, {
           newItemsArray,
         })
         .then(function (response) {

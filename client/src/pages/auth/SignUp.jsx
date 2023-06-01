@@ -20,6 +20,9 @@ import { login } from "../../features/userSlice";
 import { Form, Input, LoadingOverlay } from "@mantine/core";
 import Login from "./Loginn";
 import { useDispatch } from "react-redux";
+// import { Input } from '@mantine/core';
+import { useId } from "@mantine/hooks";
+import { IMaskInput } from "react-imask";
 
 const region = [
   { value: "Amhara", label: "Amhara" },
@@ -124,6 +127,7 @@ function SignUp({ onClose }) {
   const prevStep = () =>
     setActive((current) => (current > 0 ? current - 1 : current));
 
+  const id = useId();
   return (
     <Modal opened={opened} onClose={onClose} centered c="#8ce99a" my="0" py="0">
       <LoadingOverlay visible={isLoading} />
@@ -198,13 +202,18 @@ function SignUp({ onClose }) {
                 />
               </Stepper.Step>
               <Stepper.Step label="Second step" description="Verify email">
-                <TextInput
-                  data-autpfocus
-                  variant="filled"
-                  label="Phone Number"
-                  placeholder="+251967006433"
-                  {...form.getInputProps("phone")}
-                />
+                <Input.Wrapper id={id} required maw={340} mx="auto">
+                  <TextInput
+                    component={IMaskInput}
+                    mask="+251 000000000"
+                    id={id}
+                    data-autpfocus
+                    variant="filled"
+                    label="Phone Number"
+                    {...form.getInputProps("phone")}
+                  />
+                </Input.Wrapper>
+
                 <TextInput
                   data-autpfocus
                   variant="filled"
