@@ -24,12 +24,14 @@ function App() {
       >
         <MainComponent />
         {(userInfo.role === "Transporter" ||
-          userInfo.role === "CustomerSupport"|| userInfo.role !== "Consumer") && (
+          userInfo.role === "CustomerSupport") && (
           <ChatBox userInfo={userInfo} />
         )}
         <div>
           {(userInfo.role === "Farmer" || userInfo.role === "Consumer") && (
-            <TawkToWidget />
+            <div>
+              <TawkToWidget />
+            </div>
           )}
         </div>
       </MantineProvider>

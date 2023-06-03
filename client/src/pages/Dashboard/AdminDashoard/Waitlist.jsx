@@ -272,7 +272,6 @@ const WaitlistTable = () => {
             <h2 style={{ color: "green" }}> Application Letter</h2>
             <p
               style={{
-                fontFamily: "chiret",
                 padding: "20px",
                 textAlign: "justify",
                 lineHeight: "2",

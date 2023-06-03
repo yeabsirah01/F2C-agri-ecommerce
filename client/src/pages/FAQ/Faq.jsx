@@ -7,7 +7,7 @@ import {
   Container,
   Title,
 } from "@mantine/core";
-import image from "../../assets/final Logo.png";
+import image from "./imggg.jpg";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -32,7 +32,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const placeholder =
-  "It can’t help but hear a pin drop from over half a mile away, so it lives deep in the mountains where there aren’t many people or Pokémon.";
+  "To create a MOFER account, click Sign Up, fill out the form, and verify your email.";
 
 export function Faq() {
   const { classes } = useStyles();
@@ -41,7 +41,7 @@ export function Faq() {
       <Container size="lg">
         <Grid id="faq-grid" gutter={50}>
           <Col span={12} md={6}>
-            <Image src={image.src} alt="Frequently Asked Questions" />
+            <Image src={image} alt="Frequently Asked Questions" />
           </Col>
           <Col span={12} md={6}>
             <Title order={2} ta="left" className={classes.title}>
@@ -54,38 +54,36 @@ export function Faq() {
               variant="separated"
             >
               <Accordion.Item className={classes.item} value="reset-password">
-                <Accordion.Control>
-                  How can I reset my password?
-                </Accordion.Control>
+                <Accordion.Control>How to create account?</Accordion.Control>
                 <Accordion.Panel>{placeholder}</Accordion.Panel>
               </Accordion.Item>
 
               <Accordion.Item className={classes.item} value="another-account">
-                <Accordion.Control>
-                  Can I create more that one account?
-                </Accordion.Control>
-                <Accordion.Panel>{placeholder}</Accordion.Panel>
+                <Accordion.Control>How to become a Farmer?</Accordion.Control>
+                <Accordion.Panel>
+                  "To become a farmer on MOFER, register as a consumer, click
+                  "Apply as Farmer," submit the form, and await admin approval."
+                </Accordion.Panel>
               </Accordion.Item>
 
               <Accordion.Item className={classes.item} value="newsletter">
                 <Accordion.Control>
-                  How can I subscribe to monthly newsletter?
+                  How can I subscribe to MOFER?
                 </Accordion.Control>
-                <Accordion.Panel>{placeholder}</Accordion.Panel>
+                <Accordion.Panel>
+                  visit the Pricing page on the header and choose better
+                  subscription plan and buy.
+                </Accordion.Panel>
               </Accordion.Item>
 
               <Accordion.Item className={classes.item} value="credit-card">
                 <Accordion.Control>
-                  Do you store credit card information securely?
+                  How can I do trasactions on this platform?
                 </Accordion.Control>
-                <Accordion.Panel>{placeholder}</Accordion.Panel>
-              </Accordion.Item>
-
-              <Accordion.Item className={classes.item} value="payment">
-                <Accordion.Control>
-                  What payment systems to you work with?
-                </Accordion.Control>
-                <Accordion.Panel>{placeholder}</Accordion.Panel>
+                <Accordion.Panel>
+                  Transactions on MOFER are facilitated through the YenePay
+                  gateway.
+                </Accordion.Panel>
               </Accordion.Item>
             </Accordion>
           </Col>

@@ -7,6 +7,7 @@ import {
   rem,
 } from "@mantine/core";
 import { useTranslation } from "react-i18next";
+import "../../data/font.css";
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -91,6 +92,7 @@ export function WelcomeHeader() {
             <Title className={classes.title}>
               {t("welcome to")}{" "}
               <Text
+                style={{ fontFamily: "chiret" }}
                 component="span"
                 inherit
                 variant="gradient"
@@ -102,7 +104,7 @@ export function WelcomeHeader() {
             </Title>
 
             <Text className={classes.description} mt={30}>
-              The first Ethiopian Farmer to consume agri ecommerce websie
+              Ethiopian Farmer to consumer agri ecommerce websie
             </Text>
           </div>
         </div>

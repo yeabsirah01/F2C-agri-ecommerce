@@ -42,7 +42,7 @@ import { MediaQuery } from "@mantine/core";
 import { Route, Routes, useLocation } from "react-router-dom";
 import CreateProduct from "../../pages/createProduct/index";
 import Profile from "../../pages/profile";
-
+import Logo from "../../assets/final Logo1.png";
 import UpdateUserInfo from "../../pages/Dashboard/UserDashboard/UpdateUserInfo";
 import Profilee from "../../pages/Dashboard/UserDashboard/Profilee";
 
@@ -197,20 +197,6 @@ function TransporterPanel() {
               </li>
 
               <li>
-                <Link to="/dashboard/transporterdashboard">
-                  <div
-                    className={`navBox ${
-                      activeElement === "dashboard" ? "active" : ""
-                    }`}
-                    onClick={() => handleElementClick("dashboard")}
-                  >
-                    <IconDashboard size={24} />
-                    <Text style={{ marginLeft: 8 }}>Dashboard</Text>
-                  </div>
-                </Link>
-              </li>
-
-              <li>
                 <Link to="/dashboard/allorders">
                   <div
                     className={`navBox ${
@@ -246,9 +232,14 @@ function TransporterPanel() {
             <Header height={70} px="md" bg="#77AB59">
               <Group position="apart" sx={{ height: "100%" }}>
                 <img
-                  src={"./Logo.png"}
-                  alt={"abebe"}
-                  style={{ width: 200, height: 50 }}
+                  src={Logo}
+                  alt={"logo"}
+                  style={{
+                    position: "relative",
+                    top: -5,
+                    width: 80,
+                    height: 40,
+                  }}
                 />
 
                 <Group className={classes.hiddenMobile}>

@@ -30,6 +30,7 @@ import i18n from "i18next";
 import { initReactI18next, useTranslation } from "react-i18next";
 import { Select } from "@mantine/core";
 import { Faq } from "../pages/FAQ/Faq";
+import AboutUsPage from "../pages/about us/AboutUs";
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -38,6 +39,12 @@ i18n.use(initReactI18next).init({
     },
     am: {
       translation: require("../locales/am.json"),
+    },
+    or: {
+      translation: require("../locales/or.json"),
+    },
+    tr: {
+      translation: require("../locales/tr.json"),
     },
   },
   lng: "en", // Set the default language
@@ -66,6 +73,8 @@ function LanguageSwitch() {
       data={[
         { label: "English", value: "en" },
         { label: "Amharic", value: "am" },
+        { label: "Oromiffa", value: "or" },
+        { label: "Tigrigna", value: "tr" },
       ]}
       defaultValue="en"
       onChange={(value) => handleLanguageChange(value)}
@@ -158,6 +167,7 @@ function MainComponent({ user }) {
               <Route path="/:id" element={<Product />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/faq" element={<Faq />} />
+              <Route path="/aboutus" element={<AboutUsPage />} />
               {/* <Route
             path="/success"
             element={

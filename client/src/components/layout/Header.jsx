@@ -252,7 +252,7 @@ function AppHeader() {
                 </SimpleGrid>
               </HoverCard.Dropdown>
             </HoverCard>
-            <a href="/" className={classes.link}>
+            <a href="/aboutus" className={classes.link}>
               About Us
             </a>
           </Group>

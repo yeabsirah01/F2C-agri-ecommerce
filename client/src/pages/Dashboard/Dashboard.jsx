@@ -100,6 +100,7 @@ import AllOrders from "./AdminDashoard/AllOrders";
 import AllProducts from "./AdminDashoard/AllProducts";
 import ChatBox from "./CustomerSupportDashboard/ChatBox";
 import OrderDetails from "./AdminDashoard/OrderDetails";
+import AboutUsPage from "../about us/AboutUs";
 // import { MantineLogo } from "@mantine/ds";
 
 const useStyles = createStyles((theme) => ({
