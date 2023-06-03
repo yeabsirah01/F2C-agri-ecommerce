@@ -19,7 +19,7 @@ const ProductCard = ({ product, cartItem, deleteProduct }) => {
             <img
               src={
                 product.image
-                  ? `http://localhost:5000/${product.image}`
+                  ? `https://f2-c-agri-ecommerce.vercel.app/${product.image}`
                   : noImage
               }
               alt={product.name}

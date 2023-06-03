@@ -25,7 +25,7 @@ function AvatarIcon() {
   const { role, firstName, profilePicture, subscription, isVerified } =
     useSelector((state) => state.user);
   const [avatarUrl, setAvatarUrl] = useState(
-    "http://localhost:5000/1682238562698-DABU3586.JPEG"
+    "http://https://f2-c-agri-ecommerce.vercel.app/1682238562698-DABU3586.JPEG"
   );
 
   const styles = {
@@ -91,7 +91,7 @@ function AvatarIcon() {
               <img
                 src={
                   profilePicture
-                    ? `http://localhost:5000/${profilePicture}`
+                    ? `https://f2-c-agri-ecommerce.vercel.app/${profilePicture}`
                     : defaultImage
                 }
                 alt="Avatar"

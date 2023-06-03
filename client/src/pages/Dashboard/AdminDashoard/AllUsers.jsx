@@ -77,7 +77,7 @@ const AllUsers = () => {
               }}
               src={
                 user.profilePicture
-                  ? `http://localhost:5000/${user.profilePicture}`
+                  ? `https://f2-c-agri-ecommerce.vercel.app/${user.profilePicture}`
                   : Default_avator
               }
               crossOrigin="cross-origin"

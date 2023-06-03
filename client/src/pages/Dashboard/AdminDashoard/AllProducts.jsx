@@ -57,7 +57,9 @@ const AllProducts = () => {
           <img
             style={{ width: 50 }}
             src={
-              element.image ? `http://localhost:5000/${element.image}` : noImage
+              element.image
+                ? `https://f2-c-agri-ecommerce.vercel.app/${element.image}`
+                : noImage
             }
             alt={element.name}
             crossOrigin="cross-origin"

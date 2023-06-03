@@ -26,7 +26,9 @@ export const CartItem = ({ product, cartItem, deleteProduct }) => {
       <div style={{ display: "flex", alignItems: "center", marginTop: 10 }}>
         <img
           src={
-            product.image ? `http://localhost:5000/${product.image}` : noImage
+            product.image
+              ? `https://f2-c-agri-ecommerce.vercel.app/${product.image}`
+              : noImage
           }
           alt={product.name}
           width={80}

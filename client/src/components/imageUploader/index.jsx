@@ -6,16 +6,14 @@ import { useEffect } from "react";
 const ImageUploader = ({ onChange, image }) => {
   const [preview, setPreview] = useState(imagePlaceholder);
   useEffect(() => {
-    if (image) setPreview(`http://localhost:5000/${image}`);
+    if (image) setPreview(`https://f2-c-agri-ecommerce.vercel.app/${image}`);
   }, [image]);
   return (
     <div className="imageUploader">
       <div className="imageContainer">
         <img src={preview} alt="" crossOrigin="cross-origin" />
       </div>
-      <label style={{ zIndex: 10000 }} htmlFor="imageInput">
-        Upload Image
-      </label>
+      <label htmlFor="imageInput">Upload Image</label>
       <input
         type="file"
         name=""
