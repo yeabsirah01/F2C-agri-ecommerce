@@ -27,7 +27,7 @@ const register = async (req, res) => {
       expiresIn: "1h",
     }
   );
-  const emailToken = `http://localhost:5000/api/v1/users/confirmation/${verificationToken}`;
+  const emailToken = `https://f2-c-agri-ecommerce.vercel.app/api/v1/users/confirmation/${verificationToken}`;
 
   console.log(user._id);
   // Send the verification email

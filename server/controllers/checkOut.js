@@ -2,7 +2,8 @@
 var ypco = require("yenepaysdk");
 const User = require("../models/User");
 
-var ipnUrlReturn = "http://localhost:5000/api/v1/products/IPNDestination";
+var ipnUrlReturn =
+  "https://f2-c-agri-ecommerce.vercel.app/api/v1/products/IPNDestination";
 var cancelUrlReturn = "";
 var failureUrlReturn = "";
 var useSandbox = true;
